@@ -1,0 +1,31 @@
+#page-title {
+    text-align: center;
+}
+
+#titles-list {
+    margin-left: 2%;
+    padding: 3%;
+    width: 55%;
+
+}
+
+.mdl-list__item {
+    border: 1px dimgray solid;
+    border-radius: 5px;
+    margin: 2px;
+    padding-left: 3%;
+}
+
+h3 {
+    text-align: center;
+}
+
+#add-one-zone {
+    border: 1px dimgray solid;
+    border-radius: 5px;
+    padding: 0% 3% 3% 3%;
+    margin-left: 65%;
+    margin-bottom: 24px;
+    margin-right: 5%;
+    width: 20%;
+}
