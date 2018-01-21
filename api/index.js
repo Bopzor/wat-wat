@@ -1,6 +1,7 @@
 global.Promise = require('bluebird');
 
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3');
 const movies = require('./movies');
@@ -28,11 +29,11 @@ const db = new sqlite3.Database('./db.sqlite', err => {
       'title TEXT',
     ')'
   ].join(' ');
-  
+
   db.runAsync(query)
     .then(() => {
       app.use(provideDb);
-      app.use(api);  
+      app.use(api);
     });
 });
 
@@ -43,6 +44,7 @@ moviesRouter.put('/movie/:id', movies.update);
 moviesRouter.delete('/movie/:id', movies.remove);
 moviesRouter.post('/movie/sort', movies.sort);
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 api.use('/api', moviesRouter);
