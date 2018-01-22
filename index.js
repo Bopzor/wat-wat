@@ -1,5 +1,7 @@
 const BASE_URL = 'http://localhost:4269';
 
+const imdb = require('imdb-api');
+
 const MOVIE_TEMPLATE = '\
 <li class="list-item" id="movie-MOVIE_ID">\
     <div class="remove-button">\
@@ -11,7 +13,7 @@ const MOVIE_TEMPLATE = '\
         MOVIE_TITLE\
     </div>\
     <div class="movie-plot">\
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\
+        MOVIE_PLOT\
     </div>\
 </li>';
 
@@ -20,6 +22,7 @@ function createMovie(movie) {
 
     template = template.replace(/MOVIE_ID/g, movie.id);
     template = template.replace(/MOVIE_TITLE/g, movie.title);
+    template = template.replace(/MOVIE_PLOT/g, getMoviePlot)
 
     $("ul.movies-list").append(template);
 }
@@ -65,4 +68,10 @@ function deleteMovie(id) {
     return fetch(BASE_URL + '/api/movie/' + id, opts)
         .catch(error => console.error('Error:', error))
         .then(() => $('#movie-' + id).remove());
+}
+
+function getMoviePlot() {
+    const title = $("#newMovie").val();
+    imdb.get(title, {apiKey: '8ce98bc8', timeout: 30000})
+    .then(console.log).catch(console.log);
 }
