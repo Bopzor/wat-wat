@@ -1,6 +1,5 @@
 const BASE_URL = 'http://localhost:4269';
-
-const imdb = require('imdb-api');
+const BASE_CONTENT_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t='
 
 const MOVIE_TEMPLATE = '\
 <li class="list-item" id="movie-MOVIE_ID">\
@@ -12,17 +11,29 @@ const MOVIE_TEMPLATE = '\
     <div class="movie-title" onclick="enlarge(MOVIE_ID)">\
         MOVIE_TITLE\
     </div>\
-    <div class="movie-plot">\
-        MOVIE_PLOT\
+    <div class="movie-content">\
+        <img class="movie-poster" src="MOVIE_POSTER">\
+        <div class="movie-released">MOVIE_RELEASED</div>\
+        <div class="movie-runtime">MOVIE_RUNTIME</div>\
+        <div class="movie-plot">MOVIE_PLOT</div>\
+        <div class="movie_director">MOVIE_DIRECTOR</div>\
+        <div class="movie-writer">MOVIE_WRITER</div>\
+        <div class="movie-actors">MOVIE_ACTORS</div>\
     </div>\
 </li>';
 
 function createMovie(movie) {
     let template = MOVIE_TEMPLATE;
 
+    template= template.replace(/MOVIE_POSTER/g, movie.Poster);
+    template = template.replace(/MOVIE_RELEASED/g, movie.Released);
+    template = template.replace(/MOVIE_RUNTIME/g, movie.Runtime);
+    template = template.replace(/MOVIE_Plot/g, movie.Plot);
+    template = template.replace(/MOVIE_DIRECTOR/g, movie.Director);
+    template = template.replace(/MOVIE_WRITER/g, movie.Writer);
+    template = template.replace(/MOVIE_ACTORS/g, movie.Actors);
     template = template.replace(/MOVIE_ID/g, movie.id);
     template = template.replace(/MOVIE_TITLE/g, movie.title);
-    template = template.replace(/MOVIE_PLOT/g, getMoviePlot)
 
     $("ul.movies-list").append(template);
 }
@@ -33,21 +44,36 @@ function enlarge(id) {
 
 function addMovie() {
     const title = $("#newMovie").val();
-    const opts = {
-        method: 'POST',
-        body: JSON.stringify({ title }),
-        headers: new Headers({
-            'Content-Type': 'application/json',
-        })
-    };
 
-    return fetch(BASE_URL + '/api/movie', opts)
+    fetch (BASE_CONTENT_URL + title)
         .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(movie => {
-            console.log('Success:', movie);
-            createMovie(movie);
+        .then (content => {
+            const opts = {
+                method: 'POST',
+                body: JSON.stringify({
+                    title,
+                    Poster: content.Poster,
+                    Released: content.Released,
+                    Runtime: content.Runtime,
+                    Plot: content.Plot,
+                    Director: content.Director,
+                    Writer: content.Writer,
+                    Actors: content.Actors,
+                }),
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+            })
+        };
+
+            return fetch(BASE_URL + '/api/movie', opts)
+                .then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(movie => {
+                    console.log('Success:', movie);
+                    createMovie(movie);
+                });
         });
+
 }
 
 function getMoviesList() {
@@ -68,10 +94,4 @@ function deleteMovie(id) {
     return fetch(BASE_URL + '/api/movie/' + id, opts)
         .catch(error => console.error('Error:', error))
         .then(() => $('#movie-' + id).remove());
-}
-
-function getMoviePlot() {
-    const title = $("#newMovie").val();
-    imdb.get(title, {apiKey: '8ce98bc8', timeout: 30000})
-    .then(console.log).catch(console.log);
 }
