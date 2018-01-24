@@ -26,7 +26,14 @@ const db = new sqlite3.Database('./db.sqlite', err => {
   const query = [
     'CREATE TABLE IF NOT EXISTS movies (',
       'id INTEGER PRIMARY KEY AUTOINCREMENT,',
-      'title TEXT',
+      'title TEXT,',
+      'plot TEXT,',
+      'released DATE,',
+      'runtime INTEGER,',
+      'director TEXT,',
+      'writer TEXT,',
+      'actors TEXT,',
+      'poster TEXT',
     ')'
   ].join(' ');
 

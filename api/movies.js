@@ -1,3 +1,14 @@
+const fields = [
+  'title',
+  'plot',
+  'released',
+  'runtime',
+  'director',
+  'writer',
+  'actors',
+  'poster',
+];
+
 const list = (req, res, next) => {
   req.db.allAsync('SELECT * FROM movies')
     .then(rows => res.json(rows))
@@ -11,7 +22,19 @@ const get = (req, res, next) => {
 };
 
 const create = (req, res, next) => {
-  req.db.run('INSERT INTO movies VALUES (NULL, ?)', req.body.title, function(err) {
+  const query = 'INSERT INTO movies VALUES (NULL, ' + fields.map(field => '$' + field).join(', ') + ')';
+  const params = {};
+
+  for (let i = 0; i < fields.length; ++i) {
+    const field = fields[i];
+
+    if (!req.body[field])
+      return res.status(400).send('missing field "' + field + '"');
+
+    params['$' + field] = req.body[field];
+  }
+
+  req.db.run(query, params, function(err) {
     if (err)
       return res.status(500).send(err.toString());
 
@@ -22,7 +45,27 @@ const create = (req, res, next) => {
 };
 
 const update = (req, res, next) => {
-  req.db.run('UPDATE movies SET title = ? WHERE id = ?', req.body.title, req.params.id, function(err) {
+  const fieldsToUpdate = [];
+  const params = {
+    $id: req.params.id,
+  };
+
+  for (let i = 0; i < fields.length; ++i) {
+    const field = fields[i];
+
+    if (!req.body[field])
+      continue;
+
+    fieldsToUpdate.push(field);
+    params['$' + field] = req.body[field];
+  }
+
+  if (fieldsToUpdate.length === 0)
+    return res.status(400).send('No values to update');
+
+  const query = 'UPDATE movies SET ' + fieldsToUpdate.map(field => field + ' = $' + field).join(', ') + ' WHERE id = $id';
+
+  req.db.run(query, params, function(err) {
     if (err)
       return res.status(500).send(err.toString());
 
