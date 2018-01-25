@@ -38,13 +38,19 @@ ul {
     margin: 2px;
     padding: 1% 0 1% 3%;
     position: relative;
+    width: auto;
+}
 
+.list-item::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 .remove-button {
     position : absolute;
     max-width: 5%;
-    right: 2%
+    right: 2%;
 }
 
 .material-icons.md-18 {
@@ -64,7 +70,19 @@ ul {
     display : none;
 }
 
-#container {
+img {
+    float: left;
+    max-width: 40%;
+    height: auto;
+    margin-right: 5px;
+}
+
+.content {
+
+    font-weight: bold;
+}
+
+.container {
     position: relative;
     width: 100%;
     height: 100%;
