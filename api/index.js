@@ -33,7 +33,8 @@ const db = new sqlite3.Database('./db.sqlite', err => {
       'director TEXT,',
       'writer TEXT,',
       'actors TEXT,',
-      'poster TEXT',
+      'poster TEXT,',
+      'place INTEGER NOT NULL',
     ')'
   ].join(' ');
 
@@ -49,7 +50,7 @@ moviesRouter.get('/movie/:id', movies.get);
 moviesRouter.post('/movie', movies.create);
 moviesRouter.put('/movie/:id', movies.update);
 moviesRouter.delete('/movie/:id', movies.remove);
-moviesRouter.post('/movie/sort', movies.sort);
+moviesRouter.post('/movies/sort', movies.sort);
 
 app.use(cors());
 app.use(bodyParser.json());

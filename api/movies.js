@@ -9,39 +9,48 @@ const fields = [
   'poster',
 ];
 
+const handleError = (res, err) => {
+  console.error(err.toString(), err.stack);
+  res.status(500).end(err.toString());
+}
+
 const list = (req, res, next) => {
-  req.db.allAsync('SELECT * FROM movies')
+  req.db.allAsync('SELECT * FROM movies ORDER BY place')
     .then(rows => res.json(rows))
-    .catch(err => res.status(500).send(err.toString));
+    .catch(err => handleError(res, err));
 };
 
 const get = (req, res, next) => {
   req.db.getAsync('SELECT * FROM movies WHERE id = ?', req.params.id)
     .then(row => res.status(row ? 200 : 404).json(row))
-    .catch(err => res.status(500).send(err.toString));
+    .catch(err => handleError(res, err));
 };
 
 const create = (req, res, next) => {
-  const query = 'INSERT INTO movies VALUES (NULL, ' + fields.map(field => '$' + field).join(', ') + ')';
-  const params = {};
+  req.db.getAsync('SELECT COUNT(*) FROM movies')
+    .then(count => {
+      const query = 'INSERT INTO movies VALUES (NULL, ' + fields.map(field => '$' + field).join(', ') + ', $place)';
+      const params = { $place: count['COUNT(*)'] + 1 };
 
-  for (let i = 0; i < fields.length; ++i) {
-    const field = fields[i];
+      for (let i = 0; i < fields.length; ++i) {
+        const field = fields[i];
 
-    if (!req.body[field])
-      return res.status(400).send('missing field "' + field + '"');
+        if (!req.body[field])
+          // return res.status(400).send('missing field "' + field + '"');
+          req.body[field] = 'no ' + field;
 
-    params['$' + field] = req.body[field];
-  }
+        params['$' + field] = req.body[field];
+      }
 
-  req.db.run(query, params, function(err) {
-    if (err)
-      return res.status(500).send(err.toString());
+      req.db.run(query, params, function(err) {
+        if (err)
+          return handleError(res, err);
 
-    req.db.getAsync('SELECT * FROM movies WHERE id = ?', this.lastID)
-      .then(row => res.json(row))
-      .catch(err => res.status(500).send(err.toString));
-  });
+        req.db.getAsync('SELECT * FROM movies WHERE id = ?', this.lastID)
+        .then(row => res.json(row))
+        .catch(err => handleError(res, err));
+      });
+    });
 };
 
 const update = (req, res, next) => {
@@ -67,22 +76,45 @@ const update = (req, res, next) => {
 
   req.db.run(query, params, function(err) {
     if (err)
-      return res.status(500).send(err.toString());
+      return handleError(res, err);
 
     req.db.getAsync('SELECT * FROM movies WHERE id = ?', req.params.id)
       .then(row => res.json(row))
-      .catch(err => res.status(500).send(err.toString));
+      .catch(err => handleError(res, err));
     });
 };
 
 const remove = (req, res, next) => {
   req.db.runAsync('DELETE FROM movies WHERE id = ?', req.params.id)
     .then(() => res.end())
-    .catch(err => res.status(500).send(err.toString));
+    .catch(err => handleError(res, err));
 };
 
 const sort = (req, res, next) => {
-  res.end('Not implemented');
+  // order = { id: place }
+  // ex: { 5: 1, 2: 2, 6: 3, 1: 4 }
+
+  let order = req.body.order;
+
+  if (!order)
+    return res.status(400).end('missing field order');
+
+  try {
+    order = JSON.parse(order);
+  } catch (err) {
+    return res.status(400).end('Cannot parse ' + order);
+  }
+
+  const query = 'UPDATE movies SET place = $place WHERE id = $id';
+  const params = id => ({
+    $id: id,
+    $place: order[id],
+  });
+
+  Promise.all(Object.keys(order).map(id => req.db.runAsync(query, params(id))))
+    .then(() => req.db.allAsync('SELECT * FROM movies ORDER BY place'))
+    .then((rows) => res.json(rows))
+    .catch(err => handleError(res, err));
 };
 
 module.exports = {
