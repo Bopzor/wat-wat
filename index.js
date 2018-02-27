@@ -2,7 +2,7 @@ const BASE_URL = 'http://localhost:4269';
 const BASE_CONTENT_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t='
 
 const MOVIE_TEMPLATE = '\
-<li class="list-item" id="movie-MOVIE_ID" draggable="true" ondrag="sortMovie()">\
+<li class="list-item" id="movie-MOVIE_ID">\
     <div class="remove-button">\
         <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;" onclick="deleteMovie(MOVIE_ID)">\
             <i class="material-icons md-18">remove</i>\
@@ -60,7 +60,6 @@ function addMovie() {
                     writer: content.Writer,
                     actors: content.Actors,
                     poster: content.Poster,
-
                 }),
                 headers: new Headers({
                     'Content-Type': 'application/json',
@@ -97,23 +96,3 @@ function deleteMovie(id) {
         .catch(error => console.error('Error:', error))
         .then(() => $('#movie-' + id).remove());
 }
-
-
-/*function sortMovie() {
-    const opts = {
-        method: 'POST'
-        body: JSON.stringify(
-            //[new movies ids order]
-        ),
-        headers: new Headers({
-            'Content-Type': 'application/json',
-        })
-    };
-
-    return fetch(BASE_URL + '/api/movies/sort', opts)
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(movie => {
-            console.log('Success:', movie);
-}*/
-
