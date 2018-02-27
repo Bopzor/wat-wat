@@ -96,3 +96,34 @@ function deleteMovie(id) {
         .catch(error => console.error('Error:', error))
         .then(() => $('#movie-' + id).remove());
 }
+
+
+$( function() {
+    $( "#sortable" ).sortable({
+        axis: "y",
+        cursor: "move",
+        items: "> li",
+        scroll: true,
+        update: function(event, ui){
+            const sortedIds = $( "#sortable" ).sortable('toArray');
+            const place = {};
+
+            for (var i = 0; i < sortedIds.length; i++)
+                place[sortedIds[i]] = i + 1;
+
+            fetch (BASE_CONTENT_URL + '/api/movies/sort')
+                .then(res => res.json())
+                .then (content => {
+                    const opts = {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            order: place,
+                        }),
+                        headers: new Headers({
+                            'Content-Type': 'application/json',
+                        })
+                    };
+            })
+        }
+    });
+})
