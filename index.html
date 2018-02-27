@@ -12,7 +12,16 @@
 
         <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="index.js"></script>
+
+        <script>
+          $( function() {
+            $( "#sortable" ).sortable();
+            $( "#sortable" ).disableSelection();
+          } );
+        </script>
 
         <link rel="stylesheet" href="style.css" />
 
@@ -30,7 +39,7 @@
             <div class="mdl-cell mdl-cell--7-col">
 
                 <div id="titles-list">
-                    <ul class="movies-list"></ul>
+                    <ul class="movies-list" id="sortable"></ul>
                 </div>
             </div>
 
