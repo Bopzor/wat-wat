@@ -2,7 +2,7 @@ const BASE_URL = 'http://localhost:4269';
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t='
 
 const MOVIE_TEMPLATE = '\
-<li class="list-item" id="movie-MOVIE_ID">\
+<li class="list-item" id="movie-MOVIE_ID" data-id="MOVIE_ID">\
     <div class="remove-button">\
         <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;" onclick="deleteMovie(MOVIE_ID)">\
             <i class="material-icons md-18">remove</i>\
@@ -114,13 +114,13 @@ function sendSort(place){
 
 $(function() {
     $("#sortable").sortable({
-        axis: "y",
-        cursor: "move",
-        items: "> li",
+        axis: 'y',
+        cursor: 'move',
+        items: '> li',
         scroll: true,
         update: function(event, ui){
-            const result = $("#sortable").sortable('toArray');
-            var sortedIds = result.map(function(x){return x.replace(/movie-/g, '');});
+            let sortedIds = [];
+            $(".list-item").map(function(){sortedIds.push($(this).attr('data-id'))});
             const place = {};
 
             for (var i = 0; i < sortedIds.length; i++)
