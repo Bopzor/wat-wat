@@ -1,5 +1,5 @@
 const BASE_URL = 'http://localhost:4269';
-const BASE_CONTENT_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t='
+const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t='
 
 const MOVIE_TEMPLATE = '\
 <li class="list-item" id="movie-MOVIE_ID">\
@@ -46,7 +46,7 @@ function enlarge(id) {
 function addMovie() {
     const title = $("#newMovie").val();
 
-    fetch (BASE_CONTENT_URL + title)
+    fetch (OMDB_API_URL + title)
         .then(res => res.json())
         .then (content => {
             const opts = {
@@ -97,33 +97,36 @@ function deleteMovie(id) {
         .then(() => $('#movie-' + id).remove());
 }
 
+function sendSort(place){
+    const opts = {
+        method: 'POST',
+        body: JSON.stringify({
+            order: place,
+        }),
+        headers: new Headers({
+            'Content-Type': 'application/json',
+        })
+    };
 
-$( function() {
-    $( "#sortable" ).sortable({
+    return fetch(BASE_URL + '/api/movies/sort', opts)
+        .catch(error => console.error('Error:', error))
+}
+
+$(function() {
+    $("#sortable").sortable({
         axis: "y",
         cursor: "move",
         items: "> li",
         scroll: true,
         update: function(event, ui){
-            const sortedIds = $( "#sortable" ).sortable('toArray');
+            const result = $("#sortable").sortable('toArray');
+            var sortedIds = result.map(function(x){return x.replace(/movie-/g, '');});
             const place = {};
 
             for (var i = 0; i < sortedIds.length; i++)
                 place[sortedIds[i]] = i + 1;
 
-            fetch (BASE_CONTENT_URL + '/api/movies/sort')
-                .then(res => res.json())
-                .then (content => {
-                    const opts = {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            order: place,
-                        }),
-                        headers: new Headers({
-                            'Content-Type': 'application/json',
-                        })
-                    };
-            })
+            sendSort(place)
         }
     });
-})
+});
