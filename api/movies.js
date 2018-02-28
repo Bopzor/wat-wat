@@ -99,12 +99,6 @@ const sort = (req, res, next) => {
   if (!order)
     return res.status(400).end('missing field order');
 
-  try {
-    order = JSON.parse(order);
-  } catch (err) {
-    return res.status(400).end('Cannot parse ' + order);
-  }
-
   const query = 'UPDATE movies SET place = $place WHERE id = $id';
   const params = id => ({
     $id: id,
