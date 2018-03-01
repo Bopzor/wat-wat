@@ -8,6 +8,11 @@ const MOVIE_TEMPLATE = '\
             <i class="material-icons md-18">remove</i>\
         </button>\
     </div>\
+    <div class="sort-button handle">\
+        <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;">\
+            <i class="material-icons md-18">swap_vert</i>\
+        </a>\
+    </div>\
     </div>\
     <div class="movie-title" onclick="enlarge(MOVIE_ID)">\
         MOVIE_TITLE\
@@ -118,6 +123,7 @@ $(function() {
         cursor: 'move',
         items: '> li',
         scroll: true,
+        handle: '.handle',
         update: function(event, ui){
             let sortedIds = [];
             $(".list-item").map(function(){sortedIds.push($(this).attr('data-id'))});
