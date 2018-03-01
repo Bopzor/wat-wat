@@ -53,6 +53,12 @@ ul {
     right: 2%;
 }
 
+.sort-button {
+    position : absolute;
+    max-width: 5%;
+    right: 7%;
+}
+
 .material-icons.md-18 {
     font-size: 18px;
 }
