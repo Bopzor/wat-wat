@@ -13,20 +13,19 @@ const MOVIE_TEMPLATE = '\
             <i class="material-icons md-18">swap_vert</i>\
         </a>\
     </div>\
-    </div>\
-    <div class="movie-title" onclick="enlarge(MOVIE_ID)">\
-        MOVIE_TITLE\
-    </div>\
-    <div class="movie-content">\
-        <img class="movie-poster" src="MOVIE_POSTER" alt="MOVIE_TITLE">\
-        <div class="movie-released"><div class="content">Released:</div> MOVIE_RELEASED</div>\
-        <div class="movie-runtime"><div class="content">Runtime:</div> MOVIE_RUNTIME</div>\
-        <div class="movie-plot"><div class="content">Plot:</div> MOVIE_PLOT</div>\
-        <div class="movie_director"><div class="content">Director:</div> MOVIE_DIRECTOR</div>\
-        <div class="movie-writer"><div class="content">Writer:</div> MOVIE_WRITER</div>\
-        <div class="movie-actors"><div class="content">Actors:</div> MOVIE_ACTORS</div>\
-    </div>\
-</li>';
+        <div class="movie-title" onclick="enlarge(MOVIE_ID)">\
+            MOVIE_TITLE\
+        </div>\
+        <div class="movie-content">\
+            <img class="movie-poster" src="MOVIE_POSTER" alt="MOVIE_TITLE">\
+            <div class="movie-released"><div class="content">Released:</div> MOVIE_RELEASED</div>\
+            <div class="movie-runtime"><div class="content">Runtime:</div> MOVIE_RUNTIME</div>\
+            <div class="movie-plot"><div class="content">Plot:</div> MOVIE_PLOT</div>\
+            <div class="movie_director"><div class="content">Director:</div> MOVIE_DIRECTOR</div>\
+            <div class="movie-writer"><div class="content">Writer:</div> MOVIE_WRITER</div>\
+            <div class="movie-actors"><div class="content">Actors:</div> MOVIE_ACTORS</div>\
+        </div>\
+    </li>';
 
 function createMovie(movie) {
     let template = MOVIE_TEMPLATE;
@@ -80,6 +79,8 @@ function addMovie() {
                 });
         });
 
+    document.getElementById("form").reset();
+
 }
 
 function getMoviesList() {
@@ -125,8 +126,7 @@ $(function() {
         scroll: true,
         handle: '.handle',
         update: function(event, ui){
-            let sortedIds = [];
-            $(".list-item").map(function(){sortedIds.push($(this).attr('data-id'))});
+            const sortedIds = $(".list-item").toArray().map(elem => $(elem).data('id'));
             const place = {};
 
             for (var i = 0; i < sortedIds.length; i++)
