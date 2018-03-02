@@ -8,7 +8,6 @@ const movies = require('./movies');
 
 const PORT = process.env['PORT'] || 4269;
 
-const app = express();
 const api = express.Router();
 const moviesRouter = express.Router();
 
@@ -40,8 +39,8 @@ const db = new sqlite3.Database('./db.sqlite', err => {
 
   db.runAsync(query)
     .then(() => {
-      app.use(provideDb);
-      app.use(api);
+      api.use(provideDb);
+      api.use(moviesRouter);
     });
 });
 
@@ -52,10 +51,8 @@ moviesRouter.put('/movie/:id', movies.update);
 moviesRouter.delete('/movie/:id', movies.remove);
 moviesRouter.post('/movies/sort', movies.sort);
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-api.use('/api', moviesRouter);
+api.use(cors());
+api.use(bodyParser.json());
+api.use(bodyParser.urlencoded({ extended: true }));
 
-console.log('Starting server on port ' + PORT);
-app.listen(PORT);
+module.exports = api;
