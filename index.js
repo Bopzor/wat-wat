@@ -47,9 +47,19 @@ function enlarge(id) {
     $("#movie-" + id + " .movie-content").slideToggle("slow");
 }
 
-function addMovie() {
+function checkInput() {
     const title = $("#newMovie").val();
 
+    fetch (OMDB_API_URL + title)
+        .then(res => res.json())
+        .then(content => {
+            if (title.length === 0 || (title.length !== 0 && content.Response === "False")) {
+                console.log('Error:', content.Error);
+            } else {addMovie(title)}
+        });
+}
+
+function addMovie(title) {
     fetch (OMDB_API_URL + title)
         .then(res => res.json())
         .then (content => {
@@ -80,7 +90,6 @@ function addMovie() {
         });
 
     document.getElementById("form").reset();
-
 }
 
 function getMoviesList() {
@@ -125,6 +134,7 @@ $(function() {
         items: '> li',
         scroll: true,
         handle: '.handle',
+        placeholder: "ui-sortable-placeholder",
         update: function(event, ui){
             const sortedIds = $(".list-item").toArray().map(elem => $(elem).data('id'));
             const place = {};
@@ -133,6 +143,8 @@ $(function() {
                 place[sortedIds[i]] = i + 1;
 
             sendSort(place)
+
         }
     });
+    $( ".sortable" ).disableSelection();
 });
