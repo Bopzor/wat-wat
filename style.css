@@ -39,6 +39,7 @@ ul {
     padding: 1% 0 1% 3%;
     position: relative;
     width: auto;
+    background-color: whitesmoke;
 }
 
 .list-item::after {
@@ -114,4 +115,11 @@ h3 {
 #add-button {
     position: relative;
     right : -78%
+}
+
+.ui-sortable-placeholder {
+    background-color: lightgrey;
+    border: 1px dimgray solid;
+    border-radius: 5px;
+    height: 45px;
 }
