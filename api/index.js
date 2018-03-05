@@ -22,7 +22,7 @@ const db = new sqlite3.Database('./db.sqlite', err => {
     next();
   };
 
-  const query = [
+  const createMoviesQuery = [
     'CREATE TABLE IF NOT EXISTS movies (',
       'id INTEGER PRIMARY KEY AUTOINCREMENT,',
       'title TEXT,',
@@ -34,10 +34,21 @@ const db = new sqlite3.Database('./db.sqlite', err => {
       'actors TEXT,',
       'poster TEXT,',
       'place INTEGER NOT NULL',
-    ')'
+    ')',
   ].join(' ');
 
-  db.runAsync(query)
+  const createCommentsQuery = [
+    'CREATE TABLE IF NOT EXISTS comments (',
+      'id INTEGER PRIMARY KEY AUTOINCREMENT,',
+      'comment TEXT,',
+      'created DATETIME DEFAULTS CURRENT_TIMESTAMP',
+    ')',
+  ].join(' ');
+
+  Promise.all([
+      db.runAsync(createMoviesQuery),
+      db.runAsync(createCommentsQuery),
+    ])
     .then(() => {
       api.use(provideDb);
       api.use(moviesRouter);
