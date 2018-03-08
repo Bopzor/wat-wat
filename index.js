@@ -32,21 +32,24 @@ function createMovieTitle(movie) {
 function createMovieDetails(movie) {
     return `
 <div id="movie-details">
-    <img class="movie-poster" src="${movie.poster}" alt="${movie.title}">
+    <div id="movie-img">
+    <div class="movie-poster"><img id="poster" src="${movie.poster}" alt="${movie.title}"></div>
     <div class="movie-infos">
+        <div class="details-movie-title"><h4>${movie.title}</h4></div>
         <div class="movie-released"><div class="content">Released:</div> ${movie.released}</div>
         <div class="movie-runtime"><div class="content">Runtime:</div> ${movie.runtime}</div>
         <div class="movie_director"><div class="content">Director:</div> ${movie.director}</div>
         <div class="movie-writer"><div class="content">Writer:</div> ${movie.writer}</div>
         <div class="movie-actors"><div class="content">Actors:</div> ${movie.actors}</div>
     </div>
-    <div class="movie-plot"><div class="content">Plot:</div> ${movie.plot}</div>  
+    </div>
+    <div class="movie-plot">${movie.plot}</div>
+    <textarea class="comments" rows="4" cols="50">Say it!</textarea>  
 </div>`;
 }
 
 function createMovie(movie) {
     $("ul.movies-list").append(createMovieTitle(movie));
-    show(movie.id);
 }
 
 function show(id) {
