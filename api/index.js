@@ -41,7 +41,9 @@ const db = new sqlite3.Database('./db.sqlite', err => {
     'CREATE TABLE IF NOT EXISTS comments (',
       'id INTEGER PRIMARY KEY AUTOINCREMENT,',
       'comment TEXT,',
-      'created DATETIME DEFAULTS CURRENT_TIMESTAMP',
+      'movieid INTEGER',
+      'created DATETIME DEFAULTS CURRENT_TIMESTAMP,',
+      'FOREIGN KEY(movieid) REFERENCES movies(id)',
     ')',
   ].join(' ');
 
@@ -61,6 +63,7 @@ moviesRouter.post('/movie', movies.create);
 moviesRouter.put('/movie/:id', movies.update);
 moviesRouter.delete('/movie/:id', movies.remove);
 moviesRouter.post('/movies/sort', movies.sort);
+moviesRouter.post('/movie/:id/comment', movies.comment);
 
 api.use(cors());
 api.use(bodyParser.json());
