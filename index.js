@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:4269';
+const BASE_URL = 'http://wat-wat.nilslayet.com';
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t='
 
 const MOVIE_TEMPLATE = '\
