@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "nodemon main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,12 @@
     "bluebird": "^3.5.1",
     "cors": "^2.8.4",
     "express": "^4.16.2",
-    "sqlite3": "^3.1.13"
+    "sqlite3": "^3.1.13",
+    "webpack": "^4.1.1"
   },
   "devDependencies": {
-    "nodemon": "^1.17.1"
+    "nodemon": "^1.17.1",
+    "uglifyjs-webpack-plugin": "^1.2.3",
+    "webpack-cli": "^2.0.11"
   }
 }
