@@ -20,7 +20,7 @@ function createMovieTitle(movie) {
                 </a>
             </div>
             <div class="remove-button">
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;" onclick="deleteMovie(${movie.id})">
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;" id="delete" onclick="deleteMovie(${movie.id})">
                     <i class="material-icons md-18">remove</i>
                 </button>
             </div>
@@ -155,6 +155,10 @@ function sendSort(place){
 }
 
 $(function() {
+    $('#form').on('submit', checkInput);
+
+    getMoviesList();
+
     $("#sortable").sortable({
         axis: 'y',
         cursor: 'move',
