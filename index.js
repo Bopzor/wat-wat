@@ -44,8 +44,19 @@ function createMovieDetails(movie) {
     </div>
     </div>
     <div class="movie-plot">${movie.plot}</div>
-    <textarea class="comments" rows="4" cols="50">Say it!</textarea>  
-</div>`;
+        <div class="comment-form">
+            <form class="text-form">
+                <input class="author-name" type="text" name="NickName" placeholder="Name" maxlenght="4" required>
+                <textarea class="comment" rows="4" cols="50">Say it!</textarea> 
+            </form>
+            <div class="add-button add-comment" style="width: 35px; height: 35px; min-width: initial;">
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 35px; height: 35px; min-width: initial;">
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>    
+</div>
+`;
 }
 
 function createMovie(movie) {
@@ -60,7 +71,7 @@ function show(id) {
     } else {
         const idx = state.movies.findIndex(m => m.id === id);
 
-        $("div.details-container").append(createMovieDetails(state.movies[idx]));
+        $(".details-container").append(createMovieDetails(state.movies[idx]));
         state.displayMovieId = id;
     }
 }
