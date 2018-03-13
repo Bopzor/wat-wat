@@ -1,4 +1,4 @@
-const BASE_URL = 'baseurl';
+const BASE_URL = 'http://localhost:4269';
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t=';
 
 const state = {
