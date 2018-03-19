@@ -1,126 +1,130 @@
-const fields = [
-  'title',
-  'plot',
-  'released',
-  'runtime',
-  'director',
-  'writer',
-  'actors',
-  'poster',
-];
+const express = require('express');
+const Sequelize = require('sequelize');
 
-const handleError = (res, err) => {
-  console.error(err.toString(), err.stack);
-  res.status(500).end(err.toString());
-}
+const router = express.Router();
+const Op = Sequelize.Op;
+
+const getMovie = (req, res, next, id) => {
+  const Movie = req.models.Movie;
+
+  Movie.findById(id, { include: [{ all: true }] })
+    .then(movie => {
+      if (!movie)
+        res.status(404).end('Movie not found');
+      else {
+        req.movie = movie;
+        next();
+      }
+    })
+    .catch(next);
+};
 
 const list = (req, res, next) => {
-  req.db.allAsync('SELECT * FROM movies ORDER BY place')
-    .then(rows => res.json(rows))
-    .catch(err => handleError(res, err));
+  const Movie = req.models.Movie;
+
+  Movie.findAll({
+    order: ['place'],
+    include: [{ all: true }],
+  })
+    .then(movies => res.json(movies))
+    .catch(next);
 };
 
 const get = (req, res, next) => {
-  req.db.getAsync('SELECT * FROM movies WHERE id = ?', req.params.id)
-    .then(row => res.status(row ? 200 : 404).json(row))
-    .catch(err => handleError(res, err));
+  res.json(req.movie);
 };
 
 const create = (req, res, next) => {
-  req.db.getAsync('SELECT COUNT(*) FROM movies')
-    .then(count => {
-      const query = 'INSERT INTO movies VALUES (NULL, ' + fields.map(field => '$' + field).join(', ') + ', $place)';
-      const params = { $place: count['COUNT(*)'] + 1 };
+  const Movie = req.models.Movie;
 
-      for (let i = 0; i < fields.length; ++i) {
-        const field = fields[i];
+  const body = {
+    title: req.body.title || 'Unknown',
+    plot: req.body.plot || 'Unknown',
+    released: req.body.released || 'Unknown',
+    runtime: req.body.runtime || 'Unknown',
+    director: req.body.director || 'Unknown',
+    writer: req.body.writer || 'Unknown',
+    actors: req.body.actors || 'Unknown',
+    poster: req.body.poster || 'Unknown',
+  };
 
-        if (!req.body[field])
-          // return res.status(400).send('missing field "' + field + '"');
-          req.body[field] = 'no ' + field;
-
-        params['$' + field] = req.body[field];
-      }
-
-      req.db.run(query, params, function(err) {
-        if (err)
-          return handleError(res, err);
-
-        req.db.getAsync('SELECT * FROM movies WHERE id = ?', this.lastID)
-        .then(row => res.json(row))
-        .catch(err => handleError(res, err));
-      });
-    });
+  Movie.count()
+    .then(count => Movie.create({ ...body, place: count + 1 }))
+    .then(movie => Movie.findById(movie.id, { include: [{ all: true }] }))
+    .then(movie => res.status(201).json(movie))
+    .catch(next);
 };
 
 const update = (req, res, next) => {
-  const fieldsToUpdate = [];
-  const params = {
-    $id: req.params.id,
-  };
-
-  for (let i = 0; i < fields.length; ++i) {
-    const field = fields[i];
-
-    if (!req.body[field])
-      continue;
-
-    fieldsToUpdate.push(field);
-    params['$' + field] = req.body[field];
-  }
-
-  if (fieldsToUpdate.length === 0)
-    return res.status(400).send('No values to update');
-
-  const query = 'UPDATE movies SET ' + fieldsToUpdate.map(field => field + ' = $' + field).join(', ') + ' WHERE id = $id';
-
-  req.db.run(query, params, function(err) {
-    if (err)
-      return handleError(res, err);
-
-    req.db.getAsync('SELECT * FROM movies WHERE id = ?', req.params.id)
-      .then(row => res.json(row))
-      .catch(err => handleError(res, err));
-    });
+  req.movie.update(req.body)
+    .then(movie => res.json(movie))
+    .catch(next);
 };
 
 const remove = (req, res, next) => {
-  req.db.runAsync('DELETE FROM movies WHERE id = ?', req.params.id)
+  req.movie.destroy()
     .then(() => res.end())
-    .catch(err => handleError(res, err));
+    .catch(next);
 };
 
 const sort = (req, res, next) => {
   // order = { id: place }
   // ex: { 5: 1, 2: 2, 6: 3, 1: 4 }
 
+  const Movie = req.models.Movie;
   let order = req.body.order;
 
   if (!order)
     return res.status(400).end('missing field order');
 
-  const query = 'UPDATE movies SET place = $place WHERE id = $id';
-  const params = id => ({
-    $id: id,
-    $place: order[id],
+  const updateMovies = movies => req.sequelize.transaction(function(t) {
+    const updateMovie = movie => movie.update({ place: -order[movie.id] }, { transaction: t });
+
+    return Promise.resolve()
+      .then(() => Promise.all(movies.map(updateMovie)))
+      .then(() => Promise.all(movies.map(m => m.update({ place: -m.previous('place') }, { transaction: t }))));
   });
 
-  Promise.all(Object.keys(order).map(id => req.db.runAsync(query, params(id))))
-    .then(() => req.db.allAsync('SELECT * FROM movies ORDER BY place'))
-    .then((rows) => res.json(rows))
-    .catch(err => handleError(res, err));
+  return Movie.findAll({
+      where: {
+        id: {
+          [Op.in]: Object.keys(order),
+        },
+      },
+    })
+    .then(updateMovies)
+    .then(() => Movie.findAll({
+      order: ['place'],
+      include: [{ all: true }],
+    }))
+    .then(movies => res.json(movies))
+    .catch(next);
 };
 
 const comment = (req, res, next) => {
-  res.end('Not implemented yet');
+  const Movie = req.models.Movie;
+
+  const body = {
+    comment: req.body.comment || '',
+    author: req.body.author || 'Anonymous',
+  };
+
+  console.log(comment);
+
+  req.movie.createComment(body)
+    .then(() => Movie.findById(req.params.id, { include: [{ all: true }] }))
+    .then(movie => res.json(movie))
+    .catch(next);
 };
 
-module.exports = {
-  list,
-  get,
-  create,
-  update,
-  remove,
-  sort,
-  comment,
-};
+router.param('id', getMovie);
+
+router.get('/', list);
+router.get('/:id', get);
+router.post('/', create);
+router.put('/:id', update);
+router.delete('/:id', remove);
+router.post('/sort', sort);
+router.post('/:id/comment', comment);
+
+module.exports = router;

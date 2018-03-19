@@ -3,70 +3,54 @@ global.Promise = require('bluebird');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const sqlite3 = require('sqlite3');
+const Sequelize = require('sequelize');
 const movies = require('./movies');
 
 const PORT = process.env['PORT'] || 4269;
 
 const api = express.Router();
-const moviesRouter = express.Router();
+const sequelize = new Sequelize('sqlite:db.sqlite');
 
-const db = new sqlite3.Database('./db.sqlite', err => {
-  if (err)
-    throw err;
-
-  Promise.promisifyAll(db);
-
-  const provideDb = (req, res, next) => {
-    req.db = db;
-    next();
-  };
-
-  const createMoviesQuery = [
-    'CREATE TABLE IF NOT EXISTS movies (',
-      'id INTEGER PRIMARY KEY AUTOINCREMENT,',
-      'title TEXT,',
-      'plot TEXT,',
-      'released DATE,',
-      'runtime INTEGER,',
-      'director TEXT,',
-      'writer TEXT,',
-      'actors TEXT,',
-      'poster TEXT,',
-      'place INTEGER NOT NULL',
-    ')',
-  ].join(' ');
-
-  const createCommentsQuery = [
-    'CREATE TABLE IF NOT EXISTS comments (',
-      'id INTEGER PRIMARY KEY AUTOINCREMENT,',
-      'comment TEXT,',
-      'movieid INTEGER',
-      'created DATETIME DEFAULTS CURRENT_TIMESTAMP,',
-      'FOREIGN KEY(movieid) REFERENCES movies(id)',
-    ')',
-  ].join(' ');
-
-  Promise.all([
-      db.runAsync(createMoviesQuery),
-      db.runAsync(createCommentsQuery),
-    ])
-    .then(() => {
-      api.use(provideDb);
-      api.use(moviesRouter);
-    });
+const Movie = sequelize.define('movie', {
+  title: Sequelize.STRING,
+  plot: Sequelize.STRING,
+  released: Sequelize.STRING,
+  runtime: Sequelize.INTEGER,
+  director: Sequelize.STRING,
+  writer: Sequelize.STRING,
+  actors: Sequelize.STRING,
+  poster: Sequelize.STRING,
+  place: { type: Sequelize.INTEGER, allowNull: false, unique: true },
 });
 
-moviesRouter.get('/movies', movies.list);
-moviesRouter.get('/movie/:id', movies.get);
-moviesRouter.post('/movie', movies.create);
-moviesRouter.put('/movie/:id', movies.update);
-moviesRouter.delete('/movie/:id', movies.remove);
-moviesRouter.post('/movies/sort', movies.sort);
-moviesRouter.post('/movie/:id/comment', movies.comment);
+const Comment = sequelize.define('comment', {
+  comment: Sequelize.STRING,
+  author: Sequelize.STRING,
+});
+
+Movie.hasMany(Comment);
 
 api.use(cors());
 api.use(bodyParser.json());
 api.use(bodyParser.urlencoded({ extended: true }));
+
+Promise.all([
+    Movie.sync(),
+    Comment.sync(),
+  ])
+  .then(() => {
+    api.use((req, res, next) => {
+      req.sequelize = sequelize;
+      req.models = { Movie, Comment };
+      next();
+    });
+
+    api.use('/movies', movies);
+    api.use((err, req, res, next) => {
+      console.error(err.stack);
+      res.status(500).end(err.toString());
+    });
+  })
+  .catch(err => console.error(err));
 
 module.exports = api;
