@@ -21,6 +21,7 @@ const Movie = sequelize.define('movie', {
   actors: Sequelize.STRING,
   poster: Sequelize.STRING,
   place: { type: Sequelize.INTEGER, allowNull: false, unique: true },
+  seen: Sequelize.BOOLEAN,
 });
 
 const Comment = sequelize.define('comment', {

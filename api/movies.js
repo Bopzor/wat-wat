@@ -46,6 +46,7 @@ const create = (req, res, next) => {
     writer: req.body.writer || 'Unknown',
     actors: req.body.actors || 'Unknown',
     poster: req.body.poster || 'Unknown',
+    seen: req.body.seen || false,
   };
 
   Movie.count()
