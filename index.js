@@ -44,7 +44,6 @@ function createMovieDetails(movie) {
     </div>
     </div>
     <div class="movie-plot">${movie.plot}</div>
-    <textarea class="comments" rows="4" cols="50">Say it!</textarea>  
 </div>`;
 }
 
