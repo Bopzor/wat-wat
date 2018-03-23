@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3');
 const movies = require('./movies');
+const pkg = require('../package');
 
 const PORT = process.env['PORT'] || 4269;
 
@@ -68,5 +69,7 @@ moviesRouter.post('/movie/:id/comment', movies.comment);
 api.use(cors());
 api.use(bodyParser.json());
 api.use(bodyParser.urlencoded({ extended: true }));
+
+api.get('/version', (req, res) => res.end(pkg.version));
 
 module.exports = api;
