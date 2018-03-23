@@ -116,8 +116,11 @@ h3#sub-title {
 }
 
 /* Style for the details container */
+.right-side {
+        width: 50%;
+}
+
 .details-container{
-    width: 50%;
     margin: 0 0 0 3%;
 }
 
