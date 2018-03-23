@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-const BASE_URL = 'http://wat-wat.nilslayet.com';
+const BASE_URL = 'baseurl';
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t='
 
 const state = {
