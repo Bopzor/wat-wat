@@ -70,6 +70,6 @@ api.use(cors());
 api.use(bodyParser.json());
 api.use(bodyParser.urlencoded({ extended: true }));
 
-api.use('/version', (req, res) => res.end(pkg.version));
+api.get('/version', (req, res) => res.end(pkg.version));
 
 module.exports = api;
