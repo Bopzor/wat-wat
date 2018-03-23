@@ -111,6 +111,10 @@ const sort = (req, res, next) => {
     .catch(err => handleError(res, err));
 };
 
+const comment = (req, res, next) => {
+  res.end('Not implemented yet');
+};
+
 module.exports = {
   list,
   get,
@@ -118,4 +122,5 @@ module.exports = {
   update,
   remove,
   sort,
+  comment,
 };

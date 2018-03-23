@@ -1,79 +1,103 @@
+<<<<<<< HEAD
 const BASE_URL = 'http://wat-wat.nilslayet.com';
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t='
 
-const MOVIE_TEMPLATE = '\
-<li class="list-item" id="movie-MOVIE_ID" data-id="MOVIE_ID">\
-    <div class="remove-button">\
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;" onclick="deleteMovie(MOVIE_ID)">\
-            <i class="material-icons md-18">remove</i>\
-        </button>\
-    </div>\
-    <div class="sort-button handle">\
-        <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;">\
-            <i class="material-icons md-18">swap_vert</i>\
-        </a>\
-    </div>\
-        <div class="movie-title" onclick="enlarge(MOVIE_ID)">\
-            MOVIE_TITLE\
-        </div>\
-        <div class="movie-content">\
-            <img class="movie-poster" src="MOVIE_POSTER" alt="MOVIE_TITLE">\
-            <div class="movie-released"><div class="content">Released:</div> MOVIE_RELEASED</div>\
-            <div class="movie-runtime"><div class="content">Runtime:</div> MOVIE_RUNTIME</div>\
-            <div class="movie-plot"><div class="content">Plot:</div> MOVIE_PLOT</div>\
-            <div class="movie_director"><div class="content">Director:</div> MOVIE_DIRECTOR</div>\
-            <div class="movie-writer"><div class="content">Writer:</div> MOVIE_WRITER</div>\
-            <div class="movie-actors"><div class="content">Actors:</div> MOVIE_ACTORS</div>\
-        </div>\
-    </li>';
+const state = {
+    movies: [],
+    displayMovieId: null,
+};
 
-function createMovie(movie) {
-    let template = MOVIE_TEMPLATE;
-
-    template= template.replace(/MOVIE_POSTER/g, movie.poster);
-    template = template.replace(/MOVIE_RELEASED/g, movie.released);
-    template = template.replace(/MOVIE_RUNTIME/g, movie.runtime);
-    template = template.replace(/MOVIE_PLOT/g, movie.plot);
-    template = template.replace(/MOVIE_DIRECTOR/g, movie.director);
-    template = template.replace(/MOVIE_WRITER/g, movie.writer);
-    template = template.replace(/MOVIE_ACTORS/g, movie.actors);
-    template = template.replace(/MOVIE_ID/g, movie.id);
-    template = template.replace(/MOVIE_TITLE/g, movie.title);
-
-    $("ul.movies-list").append(template);
+function createMovieTitle(movie) {
+    return `
+<li class="list-item" id="movie-item-${movie.id}" data-id="${movie.id}">
+    <div class="item-list-zone">
+        <div class="movie-title" onclick="show(${movie.id})">
+            ${movie.title}
+        </div>
+        <div class="list-button">
+            <div class="sort-button handle">
+                <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;">
+                    <i class="material-icons md-18">swap_vert</i>
+                </a>
+            </div>
+            <div class="remove-button">
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;" id="delete" onclick="deleteMovie(${movie.id})">
+                    <i class="material-icons md-18">remove</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</li>`;
 }
 
-function enlarge(id) {
-    $("#movie-" + id + " .movie-content").slideToggle("slow");
+function createMovieDetails(movie) {
+    return `
+<div id="movie-details">
+    <div id="movie-img">
+    <div class="movie-poster"><img id="poster" src="${movie.poster}" alt="${movie.title}"></div>
+    <div class="movie-infos">
+        <div class="details-movie-title"><h4>${movie.title}</h4></div>
+        <div class="movie-released"><div class="content">Released:</div> ${movie.released}</div>
+        <div class="movie-runtime"><div class="content">Runtime:</div> ${movie.runtime}</div>
+        <div class="movie_director"><div class="content">Director:</div> ${movie.director}</div>
+        <div class="movie-writer"><div class="content">Writer:</div> ${movie.writer}</div>
+        <div class="movie-actors"><div class="content">Actors:</div> ${movie.actors}</div>
+    </div>
+    </div>
+    <div class="movie-plot">${movie.plot}</div>
+</div>`;
+}
+
+function createMovie(movie) {
+    $("ul.movies-list").append(createMovieTitle(movie));
+}
+
+function show(id) {
+    $("#movie-details").remove();
+
+    if (state.displayMovieId === id) {
+        state.displayMovieId = null;
+    } else {
+        const idx = state.movies.findIndex(m => m.id === id);
+
+        $("div.details-container").append(createMovieDetails(state.movies[idx]));
+        state.displayMovieId = id;
+    }
 }
 
 function checkInput() {
-    const title = $("#newMovie").val();
+    const title = $("#newMovie").val().trim();
+
+    if (title.length === 0) {
+        console.log('Error: Enter a movie title');
+    }
 
     fetch (OMDB_API_URL + title)
         .then(res => res.json())
-        .then(content => {
-            if (title.length === 0 || (title.length !== 0 && content.Response === "False")) {
-                console.log('Error:', content.Error);
-            } else {addMovie(title)}
+        .then(description => {
+            if (description.Response === "False") {
+                console.log('Error:', description.Error);
+            } else {
+                addMovie(title);
+            }
         });
 }
 
 function addMovie(title) {
     fetch (OMDB_API_URL + title)
         .then(res => res.json())
-        .then (content => {
+        .then (details => {
             const opts = {
                 method: 'POST',
                 body: JSON.stringify({
                     title,
-                    plot: content.Plot,
-                    released: content.Released,
-                    runtime: content.Runtime,
-                    director: content.Director,
-                    writer: content.Writer,
-                    actors: content.Actors,
-                    poster: content.Poster,
+                    plot: details.Plot,
+                    released: details.Released,
+                    runtime: details.Runtime,
+                    director: details.Director,
+                    writer: details.Writer,
+                    actors: details.Actors,
+                    poster: details.Poster,
                 }),
                 headers: new Headers({
                     'Content-Type': 'application/json',
@@ -85,6 +109,7 @@ function addMovie(title) {
                 .catch(error => console.error('Error:', error))
                 .then(movie => {
                     console.log('Success:', movie);
+                    state.movies.push(movie);
                     createMovie(movie);
                 });
         });
@@ -98,6 +123,7 @@ function getMoviesList() {
         .catch(error => console.error('Error:', error))
         .then(movies => {
             console.log('Success:', movies);
+            state.movies = movies;
             movies.forEach(createMovie);
         });
 }
@@ -109,7 +135,8 @@ function deleteMovie(id) {
 
     return fetch(BASE_URL + '/api/movie/' + id, opts)
         .catch(error => console.error('Error:', error))
-        .then(() => $('#movie-' + id).remove());
+        .then(() => $('#movie-item-' + id).remove())
+        .then(() => state.movies.splice(state.movies.findIndex(m => m.id === id), 1));
 }
 
 function sendSort(place){
@@ -128,6 +155,10 @@ function sendSort(place){
 }
 
 $(function() {
+    $('#form').on('submit', checkInput);
+
+    getMoviesList();
+
     $("#sortable").sortable({
         axis: 'y',
         cursor: 'move',
@@ -139,11 +170,11 @@ $(function() {
             const sortedIds = $(".list-item").toArray().map(elem => $(elem).data('id'));
             const place = {};
 
-            for (var i = 0; i < sortedIds.length; i++)
+            for (let i = 0; i < sortedIds.length; i++)
                 place[sortedIds[i]] = i + 1;
 
             sendSort(place)
-
+                .then(movies => state.movies = movies);
         }
     });
     $( ".sortable" ).disableSelection();

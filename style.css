@@ -7,61 +7,87 @@ body {
     background-color: whitesmoke;
 }
 
-#page-title {
-    text-align: center;
-    height: 15%;
-}
-
-h1 {
-    font-family: 'Bangers', cursive;
-    margin: 0;
-    font-size: 72px;
-}
-
-.grid {
-    height: 85%;
-    padding: 0;
-}
-
-ul {
-    list-style: none;
-}
-
-#titles-list {
+.page {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style for the title and sub title */
+.title-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+h1#page-title {
+    margin: 0;
+    font-family: Bangers, cursive;
+}
+
+h3#sub-title {
+    margin: 0 0 2% 0;
+    font-family: Bangers, cursive;
+}
+
+/* Style for content below the title */
+.page-content {
+    height: 100%;
+    display: flex;
+}
+
+/* Style for the left content */
+.left-side{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px gainsboro dashed;
+}
+
+/* Style for the add movie zone */
+.add-movie {
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 3%;
+    width: 90%;
+}
+
+.overflow {
+    height: 77%;
+    width: 100%;
     overflow: auto;
+}
+
+/* Style for the movie list zone */
+.list-zone {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.movies-list {
+    height: 100%;
+    list-style: none;
+    max-width: 90%;
+    padding: 0 1% 0 2.7%;
+    margin: 0;
+}
+
+/* Style for the item list zone */
+.item-list-zone {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .list-item {
     border: 1px dimgray solid;
     border-radius: 5px;
     margin: 2px;
-    padding: 1% 0 1% 3%;
-    position: relative;
-    width: auto;
+    padding: 1% 1% 1% 3%;
     background-color: whitesmoke;
-}
-
-.list-item::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-.remove-button {
-    position : absolute;
-    max-width: 5%;
-    right: 2%;
-}
-
-.sort-button {
-    position : absolute;
-    max-width: 5%;
-    right: 7%;
-}
-
-.material-icons.md-18 {
-    font-size: 18px;
 }
 
 .movie-title {
@@ -73,53 +99,56 @@ ul {
     font-size: 24px;
 }
 
-.movie-content {
-    display : none;
+.ui-sortable-placeholder {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    height: 45px;
 }
 
-img {
-    float: left;
-    max-width: 40%;
-    height: auto;
-    margin-right: 5px;
+/* Style for the list buttons */
+.list-button {
+    display: flex;
+    flex-direction: row;
+}
+
+.sort-button {
+    padding: 0 7px 0 0;
+}
+
+/* Style for the details container */
+.details-container{
+    width: 50%;
+    margin: 0 0 0 3%;
+}
+
+#movie-details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 1% 1% 3% 1%;
 }
 
 .content {
-
     font-weight: bold;
 }
 
-.container {
-    position: relative;
-    width: 100%;
-    height: 100%;
+.movie-poster {
+    margin: 0 2% 0 3%;
+    display: block;
+    max-width: 230px;
 }
 
-h3 {
-    font-family: 'Bangers', cursive;
-    margin : 2px;
+#poster {
+    max-width: 100%;
+}
+
+#movie-img{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.movie-plot{
+    margin: 2% 0 3% 3%;
     text-align: center;
-}
-
-#one-more-zone {
-    border: 1px dimgray solid;
-    border-radius: 5px;
-    padding: 0 3% 3% 3%;
-    width: 80%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#add-button {
-    position: relative;
-    right : -78%
-}
-
-.ui-sortable-placeholder {
-    background-color: lightgrey;
-    border: 1px dimgray solid;
-    border-radius: 5px;
-    height: 45px;
 }
