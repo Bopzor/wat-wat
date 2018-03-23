@@ -150,6 +150,7 @@ function sendSort(place){
     };
 
     return fetch(BASE_URL + '/api/movies/sort', opts)
+        .then(res => res.json())
         .catch(error => console.error('Error:', error))
 }
 
