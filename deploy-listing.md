@@ -1,17 +1,12 @@
-#THINGS TO DO FOR DEPLOYED:  
+# THINGS TO DO FOR DEPLOYED  
 
+## TABLE CONTENT
+1. [BEFORE MERGE](#before)
+2. [MERGE](#merge)
+3. [AFTER MERGE](#after)
+4. [DEPLOY](#deploy)  
 
-####1.BEFORE MERGE  
-####2.MERGE  
-####3.AFTER MERGE  
-####4.DEPLOY  
-  + START SERVER WITH TMUX
-
-
-___________________________
-
-###1.BEFORE MERGE
-
+## 1. BEFORE MERGE <a name="before"></a> 
 Test show, hide, add, delete, sort. And all other feature of wat-wat.  
 Fix what is needed to.  
 Test show, hide, add, delete, sort. And all other feature of wat-wat.  
@@ -22,50 +17,33 @@ Test show, hide, add, delete, sort. And all other feature of wat-wat.
 `git push`  
 `git checkout mep`  
 
-___________________________
+## 2. MERGE <a name="merge"></a> 
+`git merge <branch to merge>`  
 
-###2.MERGE
-
-`git merge <branch to merge>`
-
-
-___________________________
-
-###3.AFTER MERGE
-
+## 3. AFTER MERGE <a name="after"></a> 
 Change version in package.json  
 `git add package.json`  
 `git commit -m 'bump version'`  
 `git tag -a <version> -m 'v<version>'`  
 `git push`  
 `git push --tags`
-
-
-___________________________
-
-###4.DEPLOY
-
+  
+## 4. DEPLOY <a name="deploy"></a> 
 `ssh twix`  
 `source /opt/nvm/nvm.sh`  
 `cd /var/www/movies-list`  
 `git status`  
-`git pull origin mep`  
-`rm -rf node_modules`  
-`npm install`  
-`sh .bundle.sh "http://wat-wat.nilslayet.com"`
-
-
-___________________________
-
-+ ####START SERVER WITH TWIX
-
-    + to attach an existing tmux session  
+`git pull origin mep`: update repository  
+`rm -rf node_modules`: remove dependencies   
+`npm install`: install dependencies  
+`sh .bundle.sh "http://wat-wat.nilslayet.com"`. get output.js file  
+Start server with tmux 
++ to attach an existing tmux session  
     `tmux a`  
-    + in a tmuxm sessionm to detached  
++ in a tmux session to detached  
     `ctrl-b`  
-    + to start a new tmux session  
++ to start a new tmux session  
     `tmux`  
-
 `source /opt/nvm/nvm.ssh`    
-`NODE_ENV=production PORT=$$$$ node ./main.js`    
-`ctrl-b d`  
+`NODE_ENV=production PORT=$$$$ node ./main.js`: start server    
+`ctrl-b d`: press ctrl and b, realese, then press *d* to quit tmux without killing it  
