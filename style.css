@@ -145,13 +145,18 @@ h3#sub-title {
     max-width: 100%;
 }
 
-#movie-img{
+#details{
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .movie-plot{
     margin: 2% 0 3% 3%;
     text-align: center;
+}
+
+.details-movie-title{
+    font-size: 2em;
+    font-weight: bold;
 }

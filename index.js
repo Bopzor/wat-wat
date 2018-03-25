@@ -32,10 +32,10 @@ function createMovieTitle(movie) {
 function createMovieDetails(movie) {
     return `
 <div id="movie-details">
-    <div id="movie-img">
+    <div id="details">
     <div class="movie-poster"><img id="poster" src="${movie.poster}" alt="${movie.title}"></div>
     <div class="movie-infos">
-        <div class="details-movie-title"><h4>${movie.title}</h4></div>
+        <div class="details-movie-title">${movie.title}</div><br>
         <div class="movie-released"><div class="content">Released:</div> ${movie.released}</div>
         <div class="movie-runtime"><div class="content">Runtime:</div> ${movie.runtime}</div>
         <div class="movie_director"><div class="content">Director:</div> ${movie.director}</div>
@@ -83,7 +83,7 @@ function checkInput() {
 }
 
 function addMovie(title) {
-    fetch (OMDB_API_URL + title)
+    fetch (OMDB_API_URL + title +)
         .then(res => res.json())
         .then (details => {
             const opts = {
