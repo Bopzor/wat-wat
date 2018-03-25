@@ -99,6 +99,14 @@ h3#sub-title {
     font-size: 24px;
 }
 
+.ui-sortable-helper {
+    border: 1px dimgray solid;
+    border-radius: 5px;
+    margin: 2px;
+    background-color: whitesmoke;
+    padding: 1% 1% 1% 1%;
+}
+
 .ui-sortable-placeholder {
     background-color: whitesmoke;
     border-radius: 5px;
@@ -145,18 +153,18 @@ h3#sub-title {
     max-width: 100%;
 }
 
-#details{
+#details {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.movie-plot{
+.movie-plot {
     margin: 2% 0 3% 3%;
     text-align: center;
 }
 
-.details-movie-title{
+.details-movie-title {
     font-size: 2em;
     font-weight: bold;
 }

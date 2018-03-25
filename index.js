@@ -164,6 +164,7 @@ $(function() {
         cursor: 'move',
         items: '> li',
         scroll: true,
+        helper: 'original',
         handle: '.handle',
         placeholder: "ui-sortable-placeholder",
         update: function(event, ui){
