@@ -33,7 +33,8 @@ function createMovieDetails(movie) {
     return `
 <div id="movie-details">
     <div id="movie-img">
-    <div class="movie-poster"><img id="poster" src="${movie.poster}" alt="${movie.title}"></div>
+        <div class="movie-poster"><img id="poster" src="${movie.poster}" alt="${movie.title}"></div>
+    </div>
     <div class="movie-infos">
         <div class="details-movie-title"><h4>${movie.title}</h4></div>
         <div class="movie-released"><div class="content">Released:</div> ${movie.released}</div>
@@ -42,19 +43,18 @@ function createMovieDetails(movie) {
         <div class="movie-writer"><div class="content">Writer:</div> ${movie.writer}</div>
         <div class="movie-actors"><div class="content">Actors:</div> ${movie.actors}</div>
     </div>
-    </div>
     <div class="movie-plot">${movie.plot}</div>
-        <div class="comment-form">
-            <form class="text-form">
-                <input class="author-name" type="text" name="NickName" placeholder="Name" maxlenght="4" required>
-                <textarea class="comment" rows="4" cols="50">Say it!</textarea> 
-            </form>
-            <div class="add-button add-comment" style="width: 35px; height: 35px; min-width: initial;">
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 35px; height: 35px; min-width: initial;">
-                    <i class="material-icons">add</i>
-                </button>
-            </div>
-        </div>    
+    <div class="comment-form">
+        <form class="text-form">
+            <input class="author-name" type="text" name="NickName" placeholder="Name" maxlenght="4" required>
+            <textarea class="comment-input" rows="4" cols="50">Say it!</textarea> 
+        </form>
+        <div class="add-button add-comment" style="width: 35px; height: 35px; min-width: initial;">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 35px; height: 35px; min-width: initial;" onclick="postComment(${movie.id})">
+                <i class="material-icons">add</i>
+            </button>
+        </div>
+    </div>
 </div>
 `;
 }
@@ -65,6 +65,7 @@ function createMovie(movie) {
 
 function show(id) {
     $("#movie-details").remove();
+    $(".comment").remove();    
 
     if (state.displayMovieId === id) {
         state.displayMovieId = null;
@@ -72,6 +73,7 @@ function show(id) {
         const idx = state.movies.findIndex(m => m.id === id);
 
         $(".details-container").append(createMovieDetails(state.movies[idx]));
+        $(".comments-section").append(createCommentHTML(state.movies[idx]));
         state.displayMovieId = id;
     }
 }
@@ -115,7 +117,7 @@ function addMovie(title) {
                 })
             };
 
-            return fetch(BASE_URL + '/api/movie', opts)
+            return fetch(BASE_URL + '/api/movies', opts)
                 .then(res => res.json())
                 .catch(error => console.error('Error:', error))
                 .then(movie => {
@@ -148,6 +150,9 @@ function deleteMovie(id) {
         .catch(error => console.error('Error:', error))
         .then(() => $('#movie-item-' + id).remove())
         .then(() => state.movies.splice(state.movies.findIndex(m => m.id === id), 1));
+
+    $("#movie-details").remove();
+    $(".comment").remove();
 }
 
 function sendSort(place){
@@ -162,6 +167,7 @@ function sendSort(place){
     };
 
     return fetch(BASE_URL + '/api/movies/sort', opts)
+        .then(res => res.json())
         .catch(error => console.error('Error:', error))
 }
 
@@ -177,7 +183,7 @@ $(function() {
         scroll: true,
         handle: '.handle',
         placeholder: "ui-sortable-placeholder",
-        update: function(event, ui){
+        update: function(event, ui) {
             const sortedIds = $(".list-item").toArray().map(elem => $(elem).data('id'));
             const place = {};
 
@@ -190,3 +196,33 @@ $(function() {
     });
     $( ".sortable" ).disableSelection();
 });
+
+function postComment(id) {
+    const author = $(".author-name").val().trim();
+    const comment = $(".comment-input").val().trim();
+    const opts = {
+        method: 'POST',
+        body: JSON.stringify({
+            comment: comment,
+            author: author,
+        }),
+        headers: new Headers({
+            'Content-Type': 'application/json',
+        })
+    };
+
+    return fetch(BASE_URL + '/api/movies/' + id + '/comment', opts)
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(comments => console.log('Success:', comment, ' by:', author)); 
+}
+
+function createCommentHTML(movie) {
+    const comments = movie.comments;
+    let html = '';
+
+    for (let i = 0; i < comments.length; i++)
+        html += '<div class="comment"><div class="comment-author">' + comments[i].author + ':</div><div class="comment-message">' + comments[i].comment + '</div></div>'
+
+    return html;
+}
