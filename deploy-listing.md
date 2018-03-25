@@ -1,12 +1,12 @@
-# THINGS TO DO FOR DEPLOYED  
+# Thing to do before deploy
 
-## TABLE CONTENT
-1. [BEFORE MERGE](#before)
-2. [MERGE](#merge)
-3. [AFTER MERGE](#after)
-4. [DEPLOY](#deploy)  
+## Table content
+1. Before merge  
+2. Merge  
+3. After merge  
+4. Deploy    
 
-## 1. BEFORE MERGE <a name="before"></a> 
+## 1. Before merge   
 Test show, hide, add, delete, sort. And all other feature of wat-wat.  
 Fix what is needed to.  
 Test show, hide, add, delete, sort. And all other feature of wat-wat.  
@@ -17,10 +17,10 @@ Test show, hide, add, delete, sort. And all other feature of wat-wat.
 `git push`  
 `git checkout mep`  
 
-## 2. MERGE <a name="merge"></a> 
+## 2. Merge  
 `git merge <branch to merge>`  
 
-## 3. AFTER MERGE <a name="after"></a> 
+## 3. After merge   
 Change version in package.json  
 `git add package.json`  
 `git commit -m 'bump version'`  
@@ -28,7 +28,7 @@ Change version in package.json
 `git push`  
 `git push --tags`
   
-## 4. DEPLOY <a name="deploy"></a> 
+## 4. Deploy   
 `ssh twix`  
 `source /opt/nvm/nvm.sh`  
 `cd /var/www/movies-list`  
@@ -39,12 +39,10 @@ Change version in package.json
 `sh .bundle.sh "http://wat-wat.nilslayet.com"`. get output.js file  
 Start server with tmux 
 + to attach an existing tmux session  
-    `tmux a`  
-+ in a tmux session to detached  
-    `ctrl-b`  
+    `tmux a`    
 + to start a new tmux session  
     `tmux`  
     
 `source /opt/nvm/nvm.ssh`    
 `NODE_ENV=production PORT=$$$$ node ./main.js`: start server    
-`ctrl-b d`: press ctrl and b, realese, then press *d* to quit tmux without killing it  
+`ctrl-b d`: press ctrl and b, realese, then press *d* to detach the current session 
