@@ -44,6 +44,7 @@ Start server with tmux
     `ctrl-b`  
 + to start a new tmux session  
     `tmux`  
+    
 `source /opt/nvm/nvm.ssh`    
 `NODE_ENV=production PORT=$$$$ node ./main.js`: start server    
 `ctrl-b d`: press ctrl and b, realese, then press *d* to quit tmux without killing it  
