@@ -83,7 +83,7 @@ function checkInput() {
 }
 
 function addMovie(title) {
-    fetch (OMDB_API_URL + title +)
+    fetch (OMDB_API_URL + title)
         .then(res => res.json())
         .then (details => {
             const opts = {
