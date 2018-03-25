@@ -146,11 +146,11 @@ h3#sub-title {
 .movie-poster {
     margin: 0 2% 0 3%;
     display: block;
-    max-width: 230px;
 }
 
-#poster {
-    max-width: 100%;
+img#poster {
+    max-width: 250px;
+    height: auto;
 }
 
 #details {
