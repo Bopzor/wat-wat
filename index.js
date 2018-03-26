@@ -135,7 +135,10 @@ function deleteMovie(id) {
     return fetch(BASE_URL + '/api/movie/' + id, opts)
         .catch(error => console.error('Error:', error))
         .then(() => $('#movie-item-' + id).remove())
-        .then(() => state.movies.splice(state.movies.findIndex(m => m.id === id), 1));
+        .then(() => {
+            state.movies.splice(state.movies.findIndex(m => m.id === id), 1)
+            $("#movie-details").remove();
+        });
 }
 
 function sendSort(place){
