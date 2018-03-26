@@ -143,17 +143,17 @@ h3#sub-title {
 .movie-poster {
     margin: 0 2% 0 3%;
     display: block;
-    max-width: 230px;
 }
 
-#poster {
-    max-width: 100%;
+img#poster {
+    max-width: 250px;
+    height: auto;
 }
 
-#movie-img {
+#details{
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .movie-plot {
@@ -163,6 +163,10 @@ h3#sub-title {
     border-bottom: 1px gainsboro dashed;
 }
 
+.details-movie-title {
+    font-size: 2em;
+    font-weight: bold;
+}
 
 /* Style for the comments section */
 .comment-form {
