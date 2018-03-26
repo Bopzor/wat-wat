@@ -118,6 +118,8 @@ const comment = (req, res, next) => {
     .catch(next);
 };
 
+const noimplem = (req, res) => res.status(501).end('This feature is not yet implemented');
+
 router.param('id', getMovie);
 
 router.get('/', list);
@@ -126,6 +128,9 @@ router.post('/', create);
 router.put('/:id', update);
 router.delete('/:id', remove);
 router.post('/sort', sort);
-router.post('/:id/comment', comment);
+
+router.post('/:id/comments', comment);
+router.put('/:id/comment/:commentId', noimplem);
+router.delete('/:id/comment/:commentId', noimplem);
 
 module.exports = router;
