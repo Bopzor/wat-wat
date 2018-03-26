@@ -99,6 +99,14 @@ h3#sub-title {
     font-size: 24px;
 }
 
+.ui-sortable-helper {
+    border: 1px dimgray solid;
+    border-radius: 5px;
+    margin: 2px;
+    background-color: whitesmoke;
+    padding: 1% 1% 1% 1%;
+}
+
 .ui-sortable-placeholder {
     background-color: whitesmoke;
     border-radius: 5px;
@@ -116,8 +124,11 @@ h3#sub-title {
 }
 
 /* Style for the details container */
+.right-side {
+        width: 50%;
+}
+
 .details-container{
-    width: 50%;
     margin: 0 0 0 3%;
 }
 
@@ -135,20 +146,25 @@ h3#sub-title {
 .movie-poster {
     margin: 0 2% 0 3%;
     display: block;
-    max-width: 230px;
 }
 
-#poster {
-    max-width: 100%;
+img#poster {
+    max-width: 250px;
+    height: auto;
 }
 
-#movie-img{
+#details {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
 }
 
-.movie-plot{
+.movie-plot {
     margin: 2% 0 3% 3%;
     text-align: center;
+}
+
+.details-movie-title {
+    font-size: 2em;
+    font-weight: bold;
 }

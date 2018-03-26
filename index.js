@@ -32,10 +32,10 @@ function createMovieTitle(movie) {
 function createMovieDetails(movie) {
     return `
 <div id="movie-details">
-    <div id="movie-img">
+    <div id="details">
     <div class="movie-poster"><img id="poster" src="${movie.poster}" alt="${movie.title}"></div>
     <div class="movie-infos">
-        <div class="details-movie-title"><h4>${movie.title}</h4></div>
+        <div class="details-movie-title">${movie.title}</div><br>
         <div class="movie-released"><div class="content">Released:</div> ${movie.released}</div>
         <div class="movie-runtime"><div class="content">Runtime:</div> ${movie.runtime}</div>
         <div class="movie_director"><div class="content">Director:</div> ${movie.director}</div>
@@ -135,7 +135,10 @@ function deleteMovie(id) {
     return fetch(BASE_URL + '/api/movie/' + id, opts)
         .catch(error => console.error('Error:', error))
         .then(() => $('#movie-item-' + id).remove())
-        .then(() => state.movies.splice(state.movies.findIndex(m => m.id === id), 1));
+        .then(() => {
+            state.movies.splice(state.movies.findIndex(m => m.id === id), 1)
+            $("#movie-details").remove();
+        });
 }
 
 function sendSort(place){
@@ -164,6 +167,7 @@ $(function() {
         cursor: 'move',
         items: '> li',
         scroll: true,
+        helper: 'original',
         handle: '.handle',
         placeholder: "ui-sortable-placeholder",
         update: function(event, ui){
