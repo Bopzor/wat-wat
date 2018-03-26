@@ -16,12 +16,14 @@ function createMovieTitle(movie) {
         </div>
         <div class="list-button">
             <div class="sort-button handle">
-                <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;">
+                <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                style="width: 20px; height: 20px; min-width: initial;">
                     <i class="material-icons md-18">swap_vert</i>
                 </a>
             </div>
             <div class="remove-button">
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 20px; height: 20px; min-width: initial;" id="delete" onclick="deleteMovie(${movie.id})">
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                style="width: 20px; height: 20px; min-width: initial;" id="delete" onclick="deleteMovie(${movie.id})">
                     <i class="material-icons md-18">remove</i>
                 </button>
             </div>
@@ -51,7 +53,8 @@ function createMovieDetails(movie) {
             <textarea class="comment-input" rows="4" cols="50">Say it!</textarea> 
         </form>
         <div class="add-button add-comment" style="width: 35px; height: 35px; min-width: initial;">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 35px; height: 35px; min-width: initial;" onclick="postComment(${movie.id})">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+            style="width: 35px; height: 35px; min-width: initial;" onclick="postComment(${movie.id})">
                 <i class="material-icons">add</i>
             </button>
         </div>
@@ -66,7 +69,7 @@ function createMovie(movie) {
 
 function show(id) {
     $("#movie-details").remove();
-    $(".comment").remove();    
+    $(".comment-container").remove();    
 
     if (state.displayMovieId === id) {
         state.displayMovieId = null;
@@ -150,10 +153,11 @@ function deleteMovie(id) {
     return fetch(BASE_URL + BASE_API_URL + '/' + id, opts)
         .catch(error => console.error('Error:', error))
         .then(() => $('#movie-item-' + id).remove())
-        .then(() => state.movies.splice(state.movies.findIndex(m => m.id === id), 1));
-
-    $("#movie-details").remove();
-    $(".comment").remove();
+        .then(() => {
+            state.movies.splice(state.movies.findIndex(m => m.id === id), 1)
+            $("#movie-details").remove();
+            $(".comment-container").remove();
+            });  
 }
 
 function sendSort(place){
@@ -220,8 +224,28 @@ function postComment(id) {
         .then(movie => {
             const idx = state.movies.findIndex(m => m.id === id);
             const comment = movie.comments[movie.comments.length - 1];
-            const html = '<div class="comment"><div class="comment-author">' + comment.author + ':</div><div class="comment-message">' + comment.comment + '</div></div>'
-            
+            const html =`
+<div class="comment-container">
+    <div class="comment" id="comment-id-${comment.id}">
+        <div class="comment-author">${comment.author} :</div>
+        <div class="comment-message">${comment.comment}</div>
+    </div>
+    <div class="comment-buttons">
+        <div class="edit-button">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+            style="width: 20px; height: 20px; min-width: initial;">
+                <i class="material-icons md-18">mode_edit</i>
+            </button>
+        </div>
+        <div class="remove-button">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+            style="width: 20px; height: 20px; min-width: initial;" onclick="deleteComment(${movie.id}, ${comment.id})">
+                <i class="material-icons md-18">remove</i>
+            </button>
+        </div>
+    </div>
+</div>
+`            
             console.log('Success:', comment.author, 'said:', comment.comment);
             
             state.movies.splice(idx, 1, movie);
@@ -234,7 +258,47 @@ function createCommentHTML(movie) {
     let html = '';
 
     for (let i = 0; i < comments.length; i++)
-        html += '<div class="comment"><div class="comment-author">' + comments[i].author + ':</div><div class="comment-message">' + comments[i].comment + '</div></div>'
+    html +=`
+<div class="comment-container">
+    <div class="comment" id="comment-id-${comments[i].id}">
+        <div class="comment-author">${comments[i].author} :</div>
+        <div class="comment-message">${comments[i].comment}</div>
+    </div>
+    <div class="comment-buttons">
+        <div class="edit-button">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+            style="width: 20px; height: 20px; min-width: initial;">
+                <i class="material-icons md-18">mode_edit</i>
+            </button>
+        </div>
+        <div class="remove-button">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+            style="width: 20px; height: 20px; min-width: initial;" 
+            onclick="deleteComment(${movie.id}, ${comments[i].id})">
+                <i class="material-icons md-18">remove</i>
+            </button>
+        </div>
+    </div>
+</div>
+        `
 
     return html;
+}
+
+function deleteComment(movieId, commentId) {
+    const opts = {
+        method: 'DELETE',
+    };
+
+    return fetch(BASE_URL + BASE_API_URL + '/' + movieId + '/comment/' + commentId, opts)
+        .catch(error => console.error('Error:', error))
+        .then(() => {
+            const movieIdx = state.movies.findIndex(m => m.id === movieId);
+            const movie = state.movies[movieIdx];
+            const commentIdx = movie.comments.findIndex(c => c.id === commentId);
+            const comment = movie.comments[commentIdx];
+            $('#comment-id-' + commentIdx).remove();
+            state.movies[movieIdx].comments.splice(commentIdx, 1);
+            
+        });
 }
