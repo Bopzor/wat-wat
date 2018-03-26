@@ -99,6 +99,14 @@ h3#sub-title {
     font-size: 24px;
 }
 
+.ui-sortable-helper {
+    border: 1px dimgray solid;
+    border-radius: 5px;
+    margin: 2px;
+    background-color: whitesmoke;
+    padding: 1% 1% 1% 1%;
+}
+
 .ui-sortable-placeholder {
     background-color: whitesmoke;
     border-radius: 5px;
@@ -115,6 +123,7 @@ h3#sub-title {
     padding: 0 7px 0 0;
 }
 
+
 .right-side {
     width: 100%;
 }
@@ -125,7 +134,7 @@ h3#sub-title {
 }
 
 /* Style for the details container */
-.details-container {
+.details-container{
     margin: 0 0 0 3%;
 }
 

@@ -36,7 +36,7 @@ function createMovieDetails(movie) {
     <div id="details">
         <div class="movie-poster"><img id="poster" src="${movie.poster}" alt="${movie.title}"></div>
         <div class="movie-infos">
-            <div class="details-movie-title">${movie.title}</div></br>
+            <div class="details-movie-title">${movie.title}</div><br>
             <div class="movie-released"><div class="content">Released:</div> ${movie.released}</div>
             <div class="movie-runtime"><div class="content">Runtime:</div> ${movie.runtime}</div>
             <div class="movie_director"><div class="content">Director:</div> ${movie.director}</div>
@@ -168,6 +168,7 @@ function sendSort(place){
     };
 
     return fetch(BASE_URL + BASE_API_URL + '/sort', opts)
+
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
 }
@@ -182,6 +183,7 @@ $(function() {
         cursor: 'move',
         items: '> li',
         scroll: true,
+        helper: 'original',
         handle: '.handle',
         placeholder: "ui-sortable-placeholder",
         update: function(event, ui) {
