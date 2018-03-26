@@ -12,7 +12,7 @@ To keep a trace of changes.
 ### Fixed  
 + The two sides of the page stay at the same size when movie detail is showed  
 + Better management of the poster size  
-+ Movie detail remove when the movie is delete  
++ Movie detail is removed when the movie is delete  
   
 
 ## [1.2.0] - 2018-03-23  
