@@ -196,6 +196,18 @@ img#poster {
 }
 
 .comment {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     margin-left: 4%;
     margin-right: 3%;
     border: 1px solid #B3B3B3;
@@ -203,6 +215,12 @@ img#poster {
     background-color: #D9D9D9;
 }
 
-.comment-author {
-    font-weight: bold;
+.comment-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.edit-button {
+    padding: 0 7px 0 0;
 }
