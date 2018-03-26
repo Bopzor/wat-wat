@@ -218,7 +218,7 @@ function postComment(id) {
         })
     };
 
-    return fetch(BASE_URL + BASE_API_URL + '/' + id + '/comment', opts)
+    return fetch(BASE_URL + BASE_API_URL + '/' + id + '/comments', opts)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(movie => {
