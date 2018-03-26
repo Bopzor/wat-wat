@@ -105,27 +105,31 @@ The full movies list is now:
   {
     "id": 12,
     "title": "great movie",
-    "place": 1
+    "place": 1,
+    "comments": []
   },
   {
     "id": 8,
     "title": "awesome movie",
-    "place": 2
+    "place": 2,
+    "comments": []
   },
   {
     "id": 23,
     "title": "fantastic movie",
-    "place": 3
+    "place": 3,
+    "comments": []
   },
   {
     "id": 17,
     "title": "amazing movie",
-    "place": 4
+    "place": 4,
+    "comments": []
   }
 ]
 ```
 
-> For readability reason, we will only display the movie id, title and place, but all other fields still exist!
+> For readability reason, we will only display the movie id, title, place and comment, but all other fields still exist!
 
 If we need to fetch information about one only movie, based on its id:
 `curl <base_url>/api/movies/23`
@@ -133,7 +137,8 @@ If we need to fetch information about one only movie, based on its id:
 {
   "id": 23,
   "title": "fantastic movie",
-  "place": 3
+  "place": 3,
+  "comments": []
 }
 ```
 
@@ -143,7 +148,8 @@ Now, let's edit an existing movie:
 {
   id: 8,
   title: "pretty good",
-  place: 2
+  place: 2,
+  "comments": []
 }
 ```
 
@@ -159,17 +165,20 @@ The order of the movies is kept by the `place` field, but it can't be edited man
   {
     "id": 12,
     "title": "great movie",
-    "place": 1
+    "place": 1,
+    "comments": []
   },
   {
     "id": 17,
     "title": "amazing movie",
-    "place": 2
+    "place": 2,
+    "comments": []
   },
   {
     "id": 8,
     "title": "awesome movie",
-    "place": 3
+    "place": 3,
+    "comments": []
   }
 ]
 ```
@@ -231,7 +240,8 @@ Let's recap:
   {
     "id": 8,
     "title": "awesome movie",
-    "place": 3
+    "place": 3,
+    "comments": []
   }
 ]
 ```
