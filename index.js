@@ -1,4 +1,5 @@
 const BASE_URL = 'baseurl';
+const BASE_API_URL = '/api/movies'
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t=';
 
 const state = {
@@ -117,7 +118,7 @@ function addMovie(title) {
                 })
             };
 
-            return fetch(BASE_URL + '/api/movies', opts)
+            return fetch(BASE_URL + BASE_API_URL, opts)
                 .then(res => res.json())
                 .catch(error => console.error('Error:', error))
                 .then(movie => {
@@ -131,7 +132,7 @@ function addMovie(title) {
 }
 
 function getMoviesList() {
-    return fetch(BASE_URL + '/api/movies')
+    return fetch(BASE_URL + BASE_API_URL)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(movies => {
@@ -146,7 +147,7 @@ function deleteMovie(id) {
         method: 'DELETE',
     };
 
-    return fetch(BASE_URL + '/api/movie/' + id, opts)
+    return fetch(BASE_URL + BASE_API_URL + '/' + id, opts)
         .catch(error => console.error('Error:', error))
         .then(() => $('#movie-item-' + id).remove())
         .then(() => state.movies.splice(state.movies.findIndex(m => m.id === id), 1));
@@ -166,7 +167,7 @@ function sendSort(place){
         })
     };
 
-    return fetch(BASE_URL + '/api/movies/sort', opts)
+    return fetch(BASE_URL + BASE_API_URL + '/sort', opts)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
 }
@@ -211,10 +212,19 @@ function postComment(id) {
         })
     };
 
-    return fetch(BASE_URL + '/api/movies/' + id + '/comment', opts)
+    return fetch(BASE_URL + BASE_API_URL + '/' + id + '/comment', opts)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(comments => console.log('Success:', comment, ' by:', author)); 
+        .then(movie => {
+            const idx = state.movies.findIndex(m => m.id === id);
+            const comment = movie.comments[movie.comments.length - 1];
+            const html = '<div class="comment"><div class="comment-author">' + comment.author + ':</div><div class="comment-message">' + comment.comment + '</div></div>'
+            
+            console.log('Success:', comment.author, 'said:', comment.comment);
+            
+            state.movies.splice(idx, 1, movie);
+            $(".comments-section").append(html);
+        });
 }
 
 function createCommentHTML(movie) {
