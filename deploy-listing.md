@@ -21,6 +21,9 @@ Test show, hide, add, delete, sort. And all other feature of wat-wat.
 `git merge <branch to merge>`  
 
 ## 3. After merge   
+Edit CHANGELOG.md file
+`git add package.json`  
+`git commit -m 'update CHANGELOG.md'`
 Change version in package.json  
 `git add package.json`  
 `git commit -m 'bump version'`  
