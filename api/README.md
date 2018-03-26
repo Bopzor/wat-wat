@@ -146,9 +146,9 @@ Now, let's edit an existing movie:
 `curl -X PUT <base_url>/api/movies/8 --title="pretty good movie"`
 ```JSON
 {
-  id: 8,
-  title: "pretty good",
-  place: 2,
+  "id": 8,
+  "title": "pretty good",
+  "place": 2,
   "comments": []
 }
 ```
