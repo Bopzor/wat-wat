@@ -37,14 +37,6 @@ h3#sub-title {
     display: flex;
 }
 
-.not-seen {
-    display: none;
-}
-
-.is-seen {
-    display: none;
-}
-
 /* Style for the left content */
 .left-side {
     width: 50%;

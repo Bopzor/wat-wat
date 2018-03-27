@@ -170,7 +170,7 @@ function deleteMovie(id) {
             state.movies.splice(state.movies.findIndex(m => m.id === id), 1)
             $("#movie-details").remove();
             $(".comment-container").remove();
-            });  
+        });  
 }
 
 function sendSort(place){
@@ -344,4 +344,20 @@ function setSeen(id) {
             };
         });
        
+}
+
+function filterSeen() {
+    for (let i = 0; i < state.movies.length; i++){
+        if(state.movies[i].seen === false){
+             $('#movie-item-' + state.movies[i].id).remove();
+        }
+    }
+}
+
+function filterNotSeen() {
+    for (let i = 0; i < state.movies.length; i++){
+        if(state.movies[i].seen === true){
+             $('#movie-item-' + state.movies[i].id).remove();
+        }
+    }
 }
