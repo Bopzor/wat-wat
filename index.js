@@ -45,6 +45,11 @@ function createMovieDetails(movie) {
             <div class="movie-writer"><div class="content">Writer:</div> ${movie.writer}</div>
             <div class="movie-actors"><div class="content">Actors:</div> ${movie.actors}</div>
         </div>
+        <div class="seen-icon">
+            <button class="seen-button" onclick="setSeen(${movie.id})">
+                <i id="seen" class="material-icons md-48 md-inactive">done_all</i>
+            </button>    
+        </div>
     </div>
     <div class="movie-plot">${movie.plot}</div>
     <div class="comment-form">
@@ -75,8 +80,16 @@ function show(id) {
         state.displayMovieId = null;
     } else {
         const idx = state.movies.findIndex(m => m.id === id);
+        const seen = state.movies[idx].seen;
 
         $(".details-container").append(createMovieDetails(state.movies[idx]));
+
+        if(seen === true){
+            $("#seen").removeClass("md-inactive").addClass("seen");
+        } else {
+            $("#seen").removeClass("seen").addClass("md-inactive");
+        };
+    
         $(".comments-section").append(createCommentHTML(state.movies[idx]));
         state.displayMovieId = id;
     }
@@ -301,4 +314,34 @@ function deleteComment(movieId, commentId) {
             state.movies[movieIdx].comments.splice(commentIdx, 1);
             
         });
+}
+
+function setSeen(id) {
+    const idx = state.movies.findIndex(m => m.id === id);
+    const seen = state.movies[idx].seen;
+    const isSeen = !seen;
+
+    const opts = {
+        method: 'PUT',
+        body: JSON.stringify({
+            seen: isSeen,
+        }),
+        headers: new Headers({
+            'Content-Type': 'application/json',
+        })
+    };
+
+    return fetch(BASE_URL + BASE_API_URL + '/' + id, opts)  
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(movie => {
+            console.log('last:', state.movies[idx].seen, ' new: ', isSeen);
+            state.movies[idx].seen = isSeen;
+            if(isSeen === true){
+                $("#seen").removeClass("md-inactive").addClass("seen");
+            } else {
+                $("#seen").removeClass("seen").addClass("md-inactive");
+            };
+        });
+       
 }
