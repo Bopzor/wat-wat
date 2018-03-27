@@ -177,6 +177,11 @@ img#poster {
     font-weight: bold;
 }
 
+.seen-icon {
+    align-self: flex-start;
+    flex: 5;
+}
+
 /* Style for the comments section */
 .comment-form {
     display: flex;
@@ -223,4 +228,37 @@ img#poster {
 
 .edit-button {
     padding: 0 7px 0 0;
+}
+
+/*Material design style*/
+.material-icons.md-18 { 
+    font-size: 18px; 
+}
+
+.material-icons.md-48 { 
+    font-size: 48px; 
+}
+
+.material-icons.md-48.md-inactive { 
+    color: rgba(0, 0, 0, 0.26); 
+}
+
+.material-icons.md-48.seen {
+    color: #5CA850;
+}
+
+.seen-button {
+    background: none;
+    border: none; 
+    outline: none;
+} 
+
+#seen:hover {
+    color : gray;
+    opacity: 0.6;
+}
+
+#seen.md-inactive:hover {
+    color: #5CA850;
+    opacity: 0.6;
 }
