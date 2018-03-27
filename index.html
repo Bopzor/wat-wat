@@ -34,19 +34,29 @@
             <div class="page-content">
 
                 <div class="left-side">
-                    <div class="add-movie">
-                        <!-- Textfield with Floating Label -->
-                        <form action="#" id="form">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="newMovie">
-                                <label class="mdl-textfield__label" for="newMovie" >New movie</label>
+                    
+                    <div class="input">
+                        <div class="add-movie">
+                            <form action="#" id="form">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="newMovie">
+                                    <label class="mdl-textfield__label" for="newMovie" >New movie</label>
+                                </div>
+                            </form>
+                            <div class="add-button" style="width: 35px; height: 35px; min-width: initial;">
+                                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 35px; height: 35px; min-width: initial;" 
+                                onclick="CheckInput()">
+                                    <i class="material-icons">add</i>
+                                </button>
                             </div>
-                        </form>
-                        <!-- Colored mini FAB button -->
-                        <div class="add-button" style="width: 35px; height: 35px; min-width: initial;">
-                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 35px; height: 35px; min-width: initial;" onclick="checkInput()">
-                                <i class="material-icons">add</i>
-                            </button>
+                        </div>
+                        <div class="filter">
+                            <button class="seen-button" onclick="filterNotSeen()">
+                                <i id="filter-not-seen" class="material-icons md-24 md-inactive">done_all</i>
+                            </button>    
+                            <button class="seen-button" onclick="filterSeen()">
+                                <i id="filter-seen" class="material-icons md-24 seen">done_all</i>
+                            </button>    
                         </div>
                     </div>
 

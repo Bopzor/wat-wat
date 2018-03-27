@@ -37,6 +37,14 @@ h3#sub-title {
     display: flex;
 }
 
+.not-seen {
+    display: none;
+}
+
+.is-seen {
+    display: none;
+}
+
 /* Style for the left content */
 .left-side {
     width: 50%;
@@ -46,11 +54,26 @@ h3#sub-title {
 }
 
 /* Style for the add movie zone */
+.input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 93%;
+}
+
 .add-movie {
     display: flex;
     align-items: center;
     margin-left: 3%;
-    width: 90%;
+}
+
+#filter-seen:hover {
+    opacity: 0.8;
+}
+
+#filter-not-seen:hover {
+    opacity: 0.8;
 }
 
 .left-overflow {
@@ -177,6 +200,26 @@ img#poster {
     font-weight: bold;
 }
 
+.seen-icon {
+    align-self: flex-start;
+}
+
+#seen:hover {
+    color : gray;
+    opacity: 0.6;
+}
+
+#seen.md-inactive:hover {
+    color: #5CA850;
+    opacity: 0.6;
+}
+
+.seen-button {
+    background: none;
+    border: none; 
+    outline: none;
+} 
+
 /* Style for the comments section */
 .comment-form {
     display: flex;
@@ -223,4 +266,25 @@ img#poster {
 
 .edit-button {
     padding: 0 7px 0 0;
+}
+
+/*Material design style*/
+.material-icons.md-18 { 
+    font-size: 18px; 
+}
+
+.material-icons.md-24 { 
+    font-size: 24px; 
+}
+
+.material-icons.md-48 { 
+    font-size: 48px; 
+}
+
+.material-icons.md-inactive { 
+    color: rgba(0, 0, 0, 0.26); 
+}
+
+.material-icons.seen {
+    color: #5CA850;
 }
