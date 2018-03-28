@@ -61,10 +61,12 @@ h3#sub-title {
 }
 
 #filter-seen:hover {
-    opacity: 0.8;
+    cursor: pointer;
+    opacity: 0.9;
 }
 
 #filter-not-seen:hover {
+    cursor: pointer;
     opacity: 0.8;
 }
 
@@ -197,12 +199,12 @@ img#poster {
 }
 
 #seen:hover {
-    color : gray;
-    opacity: 0.6;
+    cursor: pointer;
+    opacity: 0.7;
 }
 
 #seen.md-inactive:hover {
-    color: #5CA850;
+    cursor: pointer;
     opacity: 0.6;
 }
 
