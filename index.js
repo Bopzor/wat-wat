@@ -1,6 +1,9 @@
-const BASE_URL = 'baseurl';
+const BASE_URL = '{{baseurl}}';
 const BASE_API_URL = '/api/movies'
-const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t=';
+const OMDB_API_URL = 'http://www.omdbapi.com';
+const OMDB_API_KEY = '8ce98bc8';
+
+// STATE
 
 /**
 
@@ -36,11 +39,65 @@ Comment: {
 const state = {
     movies: [],
     displayMovieId: null,
+    searchResult: null,
     filter: {
         seen: true,
         notSeen: true,
     },
 };
+
+// OMDB STUFF
+
+function buildUrl(baseurl, params) {
+    let url = baseurl;
+    const paramsStr = Object.keys(params).map(key => key + '=' + params[key]);
+
+    if (!url.endsWith('/')) {
+        url += '/';
+    }
+
+    if (paramsStr.length > 0) {
+        url += '?';
+        url += paramsStr.join('&');
+    }
+
+    return url;
+}
+
+function searchMovie(query) {
+    const url = buildUrl(OMDB_API_URL, {
+        apiKey: OMDB_API_KEY,
+        s: query,
+    });
+
+    return fetch(url)
+        .then(res => res.json())
+        .then(json => {
+            if (json.Response !== 'True')
+                throw json;
+
+            return json.Search.map(movie => movie.Title);
+        })
+        .catch(err => console.error(err)); 
+}
+
+function getMovieDetails(title) {
+    const url = buildUrl(OMDB_API_URL, {
+        apiKey: OMDB_API_KEY,
+        t: title,
+    });
+
+    return myFetch(url)
+        .then(json => {
+            if (json.Response !== 'True')
+                throw json;
+
+            return json;
+        })
+        .catch(err => console.error(err));
+}
+
+// CUSTOM FETCH
 
 function myFetch(route, opts) {
     opts = opts || {};
@@ -83,34 +140,57 @@ function print_state() {
     console.log('state: ', $.extend({}, state));
 }
 
+// INITIALIZATION
+
+$(function() {
+    $('#form').on('submit', checkInput);
+
+    getMoviesList()
+        .then(refresh);
+});
+
 function getMoviesList() {
     return fetch(BASE_URL + BASE_API_URL)
         .then(res => res.json())
-        .catch(error => console.error('Error:', error))
         .then(movies => {
             console.log('Success:', movies);
             state.movies = movies;
             movies.forEach(DOM.addMovieTitleToList);
-        });
+        })
+        .catch(error => console.error('Error:', error));
 }
 
-function refresh() {
-    let filtered = [];
+// DOM HANDLERS
 
-    if ((state.filter.seen && state.filter.notSeen) || (!state.filter.seen && !state.filter.notSeen))
-        $("li.list-item").replaceWith(state.movies.forEach(createMovie)); 
-    else if (state.filter.seen && !state.filter.notSeen) {
-        filtered = state.movies.filter(m => m.seen);
-        $("li.list-item").replaceWith(filtered.forEach(createMovie));
-    } else { 
-        filtered = state.movies.filter(m => !m.seen);
-        $("li.list-item").replaceWith(filtered.forEach(createMovie));                     
+let debounceTimeout = null;
+
+function onMovieInputKeyPress() {
+    const title = $("#newMovie").val().trim();
+
+    if (debounceTimeout) {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = null;
     }
+
+    if (title.length < 3) 
+        return;
+
+    debounceTimeout = setTimeout(() => {
+        searchMovie(title)
+            .then(titlesArray => state.searchResult = titlesArray)
+            .then(() => console.log(state.searchResult));
+    }, 2000);
 }
 
-function addMovie(title) {
-    myFetch(OMDB_API_URL + title)
-        .then (details => {
+function checkInput() {
+    const title = $("#newMovie").val().trim();
+
+    if (title.length === 0) {
+        console.log('Error: Enter a movie title');
+    }
+
+    getMovieDetails(title)
+        .then(details => {
             const opts = {
                 method: 'POST',
                 body: JSON.stringify({
@@ -130,30 +210,13 @@ function addMovie(title) {
 
             return myFetch(BASE_URL + BASE_API_URL, opts)
                 .then(movie => {
+                    document.getElementById("form").reset();
                     state.movies.push(movie);
                     DOM.addMovieTitleToList(movie);
                 })
                 .catch(error => console.error('Error:', error));
-        });
-
-    document.getElementById("form").reset();
-}
-
-function checkInput() {
-    const title = $("#newMovie").val().trim();
-
-    if (title.length === 0) {
-        console.log('Error: Enter a movie title');
-    }
-
-    myFetch(OMDB_API_URL + title)
-        .then(description => {
-            if (description.Response === "False") {
-                console.log('Error:', description.Error);
-            } else {
-                addMovie(title);
-            }
-        });
+        })        
+        .then(console.log);
 }
 
 function deleteMovie(id) {
@@ -171,7 +234,7 @@ function deleteMovie(id) {
         .catch(error => console.error('Error:', error));
 }
 
-function sendSort(place){
+function sendSort(place) {
     const opts = {
         method: 'POST',
         body: JSON.stringify({
@@ -186,40 +249,11 @@ function sendSort(place){
         .catch(error => console.error('Error:', error));
 }
 
-$(function() {
-    $('#form').on('submit', checkInput);
-
-    getMoviesList()
-        .then(refresh);
-
-    $("#sortable").sortable({
-        axis: 'y',
-        cursor: 'move',
-        items: '> li',
-        scroll: true,
-        helper: 'original',
-        handle: '.handle',
-        placeholder: "ui-sortable-placeholder",
-        update: function(event, ui) {
-            const sortedIds = $(".list-item").toArray().map(elem => $(elem).data('id'));
-            const place = {};
-
-            for (let i = 0; i < sortedIds.length; i++)
-                place[sortedIds[i]] = i + 1;
-
-            sendSort(place)
-                .then(movies => state.movies = movies);
-        }
-    });
-    $(".sortable").disableSelection();
-});
-
 function show(id) {
     if (state.displayMovieId === id) {
         state.displayMovieId = null;
         DOM.hideMovieDetails();
-    }
-    else {
+    } else {
         const idx = state.movies.findIndex(m => m.id === id);
         const seen = state.movies[idx].seen;
 
@@ -315,6 +349,8 @@ function postComment(id) {
         .catch(error => console.error('Error:', error));
 }
 
+// DOM MANIPULATION
+
 function refresh() {
     let currentMovieIdx = state.movies.findIndex(m => m.id === state.displayMovieId);
 
@@ -395,6 +431,27 @@ const DOM = {
         </div>`;
 
         $('.page-content').replaceWith(html);
+
+        $("#sortable").sortable({
+            axis: 'y',
+            cursor: 'move',
+            items: '> li',
+            scroll: true,
+            helper: 'original',
+            handle: '.handle',
+            placeholder: "ui-sortable-placeholder",
+            update: function(event, ui) {
+                const sortedIds = $(".list-item").toArray().map(elem => $(elem).data('id'));
+                const place = {};
+
+                for (let i = 0; i < sortedIds.length; i++)
+                    place[sortedIds[i]] = i + 1;
+
+                sendSort(place)
+                    .then(movies => state.movies = movies);
+            }
+        });
+        $(".sortable").disableSelection();
     },
 
     /**
@@ -406,7 +463,7 @@ const DOM = {
             <div class="add-movie">
                 <form action="#" id="form">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="newMovie">
+                        <input class="mdl-textfield__input" type="text" id="newMovie" onkeypress="onMovieInputKeyPress()">
                         <label class="mdl-textfield__label" for="newMovie" >New movie</label>
                     </div>
                 </form>
