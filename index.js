@@ -83,30 +83,30 @@ function print_state() {
     console.log('state: ', $.extend({}, state));
 }
 
-function refresh() {
-    return myFetch(BASE_URL + BASE_API_URL)
+function getMoviesList() {
+    return fetch(BASE_URL + BASE_API_URL)
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
         .then(movies => {
+            console.log('Success:', movies);
             state.movies = movies;
-            let filtered = [];
-
-            if ((state.filter.seen && state.filter.notSeen) || (!state.filter.seen && !state.filter.notSeen))
-                $("li.list-item").replaceWith(movies.forEach(createMovie)); 
-            else if (state.filter.seen && !state.filter.notSeen) {
-                filtered = movies.filter(m => m.seen);
-                $("li.list-item").replaceWith(filtered.forEach(createMovie));
-            } else { 
-                filtered = movies.filter(m => !m.seen);
-                $("li.list-item").replaceWith(filtered.forEach(createMovie));                     
-            }
-                    
-        })
-        .catch(error => console.error('Error:', error));
+            movies.forEach(DOM.addMovieTitleToList);
+        });
 }
 
-function createMovie(movie) {
-    $("ul.movies-list").append(createMovieTitle(movie));
-}
+function refresh() {
+    let filtered = [];
 
+    if ((state.filter.seen && state.filter.notSeen) || (!state.filter.seen && !state.filter.notSeen))
+        $("li.list-item").replaceWith(state.movies.forEach(createMovie)); 
+    else if (state.filter.seen && !state.filter.notSeen) {
+        filtered = state.movies.filter(m => m.seen);
+        $("li.list-item").replaceWith(filtered.forEach(createMovie));
+    } else { 
+        filtered = state.movies.filter(m => !m.seen);
+        $("li.list-item").replaceWith(filtered.forEach(createMovie));                     
+    }
+}
 
 function addMovie(title) {
     myFetch(OMDB_API_URL + title)
@@ -131,7 +131,7 @@ function addMovie(title) {
             return myFetch(BASE_URL + BASE_API_URL, opts)
                 .then(movie => {
                     state.movies.push(movie);
-                    createMovie(movie);
+                    DOM.addMovieTitleToList(movie);
                 })
                 .catch(error => console.error('Error:', error));
         });
@@ -189,7 +189,8 @@ function sendSort(place){
 $(function() {
     $('#form').on('submit', checkInput);
 
-    refresh();
+    getMoviesList()
+        .then(refresh);
 
     $("#sortable").sortable({
         axis: 'y',
@@ -210,21 +211,19 @@ $(function() {
                 .then(movies => state.movies = movies);
         }
     });
-    $( ".sortable" ).disableSelection();
+    $(".sortable").disableSelection();
 });
 
 function show(id) {
-    $("#movie-details").remove();
-    $(".comment-container").remove();    
-
-    if (state.displayMovieId === id)
+    if (state.displayMovieId === id) {
         state.displayMovieId = null;
+        DOM.hideMovieDetails();
+    }
     else {
         const idx = state.movies.findIndex(m => m.id === id);
         const seen = state.movies[idx].seen;
-    
-        $(".details-container").append(createMovieDetails(state.movies[idx]));
-        $(".comments-section").append(createCommentHTML(state.movies[idx]));
+
+        DOM.showMovieDetails(state.movies[idx]);    
 
         if (seen)
             $("#seen").removeClass("md-inactive").addClass("seen");
@@ -291,38 +290,6 @@ function deleteComment(movieId, commentId) {
         .catch(error => console.error('Error:', error));
 }
 
-function createCommentHTML(movie) {
-    const comments = movie.comments;
-    let html = '';
-
-    for (let i = 0; i < comments.length; i++)
-    html +=`
-<div class="comment-container">
-    <div class="comment" id="comment-id-${comments[i].id}">
-        <div class="comment-author">${comments[i].author} :</div>
-        <div class="comment-message">${comments[i].comment}</div>
-    </div>
-    <div class="comment-buttons">
-        <div class="edit-button">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-            style="width: 20px; height: 20px; min-width: initial;">
-                <i class="material-icons md-18">mode_edit</i>
-            </button>
-        </div>
-        <div class="remove-button">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-            style="width: 20px; height: 20px; min-width: initial;" 
-            onclick="deleteComment(${movie.id}, ${comments[i].id})">
-                <i class="material-icons md-18">remove</i>
-            </button>
-        </div>
-    </div>
-</div>
-        `
-
-    return html;
-}
-
 function postComment(id) {
     const author = $(".author-name").val().trim();
     const comment = $(".comment-input").val().trim();
@@ -334,100 +301,224 @@ function postComment(id) {
         }),
         headers: new Headers({
             'Content-Type': 'application/json',
-        })
+        }),
     };
 
     return myFetch(BASE_URL + BASE_API_URL + '/' + id + '/comments', opts)
         .then(movie => {
             const idx = state.movies.findIndex(m => m.id === id);
             const comment = movie.comments[movie.comments.length - 1];
-            const html =`
-<div class="comment-container">
-    <div class="comment" id="comment-id-${comment.id}">
-        <div class="comment-author">${comment.author} :</div>
-        <div class="comment-message">${comment.comment}</div>
-    </div>
-    <div class="comment-buttons">
-        <div class="edit-button">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-            style="width: 20px; height: 20px; min-width: initial;">
-                <i class="material-icons md-18">mode_edit</i>
-            </button>
-        </div>
-        <div class="remove-button">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-            style="width: 20px; height: 20px; min-width: initial;" onclick="deleteComment(${movie.id}, ${comment.id})">
-                <i class="material-icons md-18">remove</i>
-            </button>
-        </div>
-    </div>
-</div>
-`            
+            const html = DOM.createComment(movie.id, comment);
             state.movies.splice(idx, 1, movie);
             $(".comments-section").append(html);
         })
         .catch(error => console.error('Error:', error));
 }
 
+function refresh() {
+    let currentMovieIdx = state.movies.findIndex(m => m.id === state.displayMovieId);
 
-function createMovieTitle(movie) {
-    return `
-<li class="list-item" id="movie-item-${movie.id}" data-id="${movie.id}">
-    <div class="item-list-zone">
-        <div class="movie-title" onclick="show(${movie.id})">
-            ${movie.title}
-        </div>
-        <div class="list-button">
-            <div class="sort-button handle">
-                <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-                style="width: 20px; height: 20px; min-width: initial;">
-                    <i class="material-icons md-18">swap_vert</i>
-                </a>
-            </div>
-            <div class="remove-button">
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-                style="width: 20px; height: 20px; min-width: initial;" id="delete" onclick="deleteMovie(${movie.id})">
-                    <i class="material-icons md-18">remove</i>
-                </button>
-            </div>
-        </div>
-    </div>
-</li>`;
+    if (currentMovieIdx === -1)
+        currentMovieIdx = null;
+
+    DOM.refresh(state.movies, currentMovieIdx);
 }
 
-function createMovieDetails(movie) {
-    return `
-<div id="movie-details" data-id="${movie.id}">
-    <div id="details">
-        <div class="movie-poster"><img id="poster" src="${movie.poster}" alt="${movie.title}"></div>
-        <div class="movie-infos">
-            <div class="details-movie-title">${movie.title}</div><br>
-            <div class="movie-released"><div class="content">Released:</div> ${movie.released}</div>
-            <div class="movie-runtime"><div class="content">Runtime:</div> ${movie.runtime}</div>
-            <div class="movie_director"><div class="content">Director:</div> ${movie.director}</div>
-            <div class="movie-writer"><div class="content">Writer:</div> ${movie.writer}</div>
-            <div class="movie-actors"><div class="content">Actors:</div> ${movie.actors}</div>
-        </div>
-        <div class="seen-icon">
-            <button class="seen-button" onclick="setSeen(${movie.id})">
-                <i id="seen" class="material-icons md-48 md-inactive">done_all</i>
-            </button>    
-        </div>
-    </div>
-    <div class="movie-plot">${movie.plot}</div>
-    <div class="comment-form">
-        <form class="text-form">
-            <input class="author-name" type="text" name="NickName" placeholder="Name" maxlenght="4" required>
-            <textarea class="comment-input" rows="4" cols="50">Say it!</textarea> 
-        </form>
-        <div class="add-button add-comment" style="width: 35px; height: 35px; min-width: initial;">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-            style="width: 35px; height: 35px; min-width: initial;" onclick="postComment(${movie.id})">
-                <i class="material-icons">add</i>
-            </button>
-        </div>
-    </div>
-</div>
-`;
-}
+const DOM = {
 
+    /**
+     * Replace the .right-side div with a new movie
+     */
+    showMovieDetails: function showMovieDetails(movie) {
+        const html = `
+        <div class="right-side">
+            <div class="details-container">
+                ${DOM.createMovieDetails(movie)}
+            </div>
+            <div class="comments-section">
+                ${movie.comments.map(DOM.createComment)}
+            </div>
+        </div>`;
+
+        $('.right-side').replaceWith(html);
+    },
+
+    /**
+     * Hide the currently displayed movie details
+     */
+    hideMovieDetails: function hideMovieDetails() {
+        $('.right-side').empty();
+    },
+
+    /**
+     * Add a movie title to the list
+     */
+    addMovieTitleToList: function addMovieTitleToList(movie) {
+        $("ul.movies-list").append(DOM.createMovieTitle(movie));
+    },
+
+    /**
+     * Refresh the whole page with new data
+     */
+    refresh: function refreshHTML(movies, currentMovieIdx) {
+        let rightSideHtml = `<div class="right-side"></div>`;
+
+        if (currentMovieIdx) {
+            const movie = movies[currentMovieIdx];
+
+            rightSideHtml = `
+            <div class="right-side">
+                <div class="details-container">
+                    ${DOM.createMovieDetails(movie)}
+                </div>
+                <div class="comments-section">
+                    ${movie.comments.map(DOM.createComment).join('')}
+                </div>
+            </div>`;
+        }
+
+        const html = `
+        <div class="page-content">
+            <div class="left-side">
+                ${DOM.createAddMovieInput()}
+                <div class="left-overflow">
+                    <div class="list-zone">
+                        <ul class="movies-list" id="sortable">
+                            ${movies.map(DOM.createMovieTitle).join('')}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="right-overflow">
+                ${rightSideHtml}
+            </div>
+        </div>`;
+
+        $('.page-content').replaceWith(html);
+    },
+
+    /**
+     * Create the HTML string for the input to add a movie
+     */
+    createAddMovieInput: function createAddMovieInputHTML() {
+        return `
+        <div class="input">
+            <div class="add-movie">
+                <form action="#" id="form">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="newMovie">
+                        <label class="mdl-textfield__label" for="newMovie" >New movie</label>
+                    </div>
+                </form>
+                <div class="add-button" style="width: 35px; height: 35px; min-width: initial;">
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 35px; height: 35px; min-width: initial;" 
+                    onclick="checkInput()">
+                        <i class="material-icons">add</i>
+                    </button>
+                </div>
+            </div>
+            <div class="filter">
+                <button class="seen-button" onclick="filterNotSeen()">
+                    <i id="filter-not-seen" class="material-icons md-24 md-inactive">done_all</i>
+                </button>    
+                <button class="seen-button" onclick="filterSeen()">
+                    <i id="filter-seen" class="material-icons md-24 seen">done_all</i>
+                </button>    
+            </div>
+        </div>`;
+    },
+
+    /**
+     * Create the HTML string for a comment in a movie details
+     */
+    createComment: function createCommentHTML(movieId, comment) {
+        return `
+        <div class="comment-container">
+            <div class="comment" id="comment-id-${comment.id}">
+                <div class="comment-author">${comment.author} :</div>
+                <div class="comment-message">${comment.comment}</div>
+            </div>
+            <div class="comment-buttons">
+                <div class="edit-button">
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                    style="width: 20px; height: 20px; min-width: initial;">
+                        <i class="material-icons md-18">mode_edit</i>
+                    </button>
+                </div>
+                <div class="remove-button">
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                    style="width: 20px; height: 20px; min-width: initial;" 
+                    onclick="deleteComment(${movieId}, ${comment.id})">
+                        <i class="material-icons md-18">remove</i>
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    },
+
+    /**
+     * Create the HTML string for a movie title in the list
+     */
+    createMovieTitle: function createMovieTitleHTML(movie) {
+        return `
+        <li class="list-item" id="movie-item-${movie.id}" data-id="${movie.id}">
+            <div class="item-list-zone">
+                <div class="movie-title" onclick="show(${movie.id})">
+                    ${movie.title}
+                </div>
+                <div class="list-button">
+                    <div class="sort-button handle">
+                        <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                        style="width: 20px; height: 20px; min-width: initial;">
+                            <i class="material-icons md-18">swap_vert</i>
+                        </a>
+                    </div>
+                    <div class="remove-button">
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                        style="width: 20px; height: 20px; min-width: initial;" id="delete" onclick="deleteMovie(${movie.id})">
+                            <i class="material-icons md-18">remove</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </li>`;
+    },
+
+    /**
+     * Create the HTML string for a movie detail
+     */
+    createMovieDetails: function createMovieDetailsHTML(movie) {
+        return `
+        <div id="movie-details" data-id="${movie.id}">
+            <div id="details">
+                <div class="movie-poster"><img id="poster" src="${movie.poster}" alt="${movie.title}"></div>
+                <div class="movie-infos">
+                    <div class="details-movie-title">${movie.title}</div><br>
+                    <div class="movie-released"><div class="content">Released:</div> ${movie.released}</div>
+                    <div class="movie-runtime"><div class="content">Runtime:</div> ${movie.runtime}</div>
+                    <div class="movie_director"><div class="content">Director:</div> ${movie.director}</div>
+                    <div class="movie-writer"><div class="content">Writer:</div> ${movie.writer}</div>
+                    <div class="movie-actors"><div class="content">Actors:</div> ${movie.actors}</div>
+                </div>
+                <div class="seen-icon">
+                    <button class="seen-button" onclick="setSeen(${movie.id})">
+                        <i id="seen" class="material-icons md-48 md-inactive">done_all</i>
+                    </button>    
+                </div>
+            </div>
+            <div class="movie-plot">${movie.plot}</div>
+            <div class="comment-form">
+                <form class="text-form">
+                    <input class="author-name" type="text" name="NickName" placeholder="Name" maxlenght="4" required>
+                    <textarea class="comment-input" rows="4" cols="50">Say it!</textarea> 
+                </form>
+                <div class="add-button add-comment" style="width: 35px; height: 35px; min-width: initial;">
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                    style="width: 35px; height: 35px; min-width: initial;" onclick="postComment(${movie.id})">
+                        <i class="material-icons">add</i>
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    },
+};
