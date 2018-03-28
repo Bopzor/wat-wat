@@ -1,0 +1,5 @@
+.idea
+*.sqlite
+node_modules
+output.js
+*.log
