@@ -2,10 +2,95 @@ const BASE_URL = 'baseurl';
 const BASE_API_URL = '/api/movies'
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t=';
 
+/**
+
+state: {
+    movies: Movie[],
+    displayMovieId: number | null,
+    filter: {
+        seen: boolean,
+        notSeen: boolean,
+    },
+}
+
+Movie: {
+    id: number,    
+    title: string,
+    plot: string,
+    // other details
+    seen: boolean,
+    place: number,
+    comments: Comment[],
+}
+
+Comment: {
+    id: number,
+    author: string,
+    comment: string,
+    createdAt: date,
+    updatedAt: date,
+}
+
+*/
+
 const state = {
     movies: [],
     displayMovieId: null,
+    filter: {
+        seen: true,
+        notSeen: true,
+    },
 };
+
+function myFetch(route, opts) {
+    opts = opts || {};
+
+    print_state();
+
+    return fetch(route, opts)
+        .then(res => {
+            let promise = null;
+
+            if (/application\/json/.exec(res.headers.get('Content-Type')))
+                promise = res.json();  
+            else 
+                promise = res.text();
+
+            return promise
+                .then(json => {
+                    print_fetch_result(route, opts, res, json);
+                    return json;
+                })
+                .catch(error => {
+                    print_fetch_result(route, opts, res, error);
+                    throw error;
+                });
+        });
+}
+
+function print_fetch_result(route, opts, res, json) {
+    console.log([
+            'fetch:',
+            opts.method || 'GET',
+            route,
+            '->',
+            res.status
+        ].join(' '),
+        json);
+}
+
+function print_state() {
+    console.log('state: ', $.extend({}, state));
+}
+
+function getMoviesList() {
+    return myFetch(BASE_URL + BASE_API_URL)
+        .then(movies => {
+            state.movies = movies;
+            movies.forEach(createMovie);
+        })
+        .catch(error => console.error('Error:', error));
+}
 
 function createMovieTitle(movie) {
     return `
@@ -34,7 +119,7 @@ function createMovieTitle(movie) {
 
 function createMovieDetails(movie) {
     return `
-<div id="movie-details">
+<div id="movie-details" data-id="${movie.id}">
     <div id="details">
         <div class="movie-poster"><img id="poster" src="${movie.poster}" alt="${movie.title}"></div>
         <div class="movie-infos">
@@ -102,8 +187,7 @@ function checkInput() {
         console.log('Error: Enter a movie title');
     }
 
-    fetch (OMDB_API_URL + title)
-        .then(res => res.json())
+    myFetch(OMDB_API_URL + title)
         .then(description => {
             if (description.Response === "False") {
                 console.log('Error:', description.Error);
@@ -114,8 +198,7 @@ function checkInput() {
 }
 
 function addMovie(title) {
-    fetch (OMDB_API_URL + title)
-        .then(res => res.json())
+    myFetch(OMDB_API_URL + title)
         .then (details => {
             const opts = {
                 method: 'POST',
@@ -134,43 +217,31 @@ function addMovie(title) {
                 })
             };
 
-            return fetch(BASE_URL + BASE_API_URL, opts)
-                .then(res => res.json())
-                .catch(error => console.error('Error:', error))
+            return myFetch(BASE_URL + BASE_API_URL, opts)
                 .then(movie => {
-                    console.log('Success:', movie);
                     state.movies.push(movie);
                     createMovie(movie);
-                });
+                })
+                .catch(error => console.error('Error:', error));
         });
 
     document.getElementById("form").reset();
 }
 
-function getMoviesList() {
-    return fetch(BASE_URL + BASE_API_URL)
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(movies => {
-            console.log('Success:', movies);
-            state.movies = movies;
-            movies.forEach(createMovie);
-        });
-}
 
 function deleteMovie(id) {
     const opts = {
         method: 'DELETE',
     };
 
-    return fetch(BASE_URL + BASE_API_URL + '/' + id, opts)
-        .catch(error => console.error('Error:', error))
+    return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)
         .then(() => $('#movie-item-' + id).remove())
         .then(() => {
             state.movies.splice(state.movies.findIndex(m => m.id === id), 1)
             $("#movie-details").remove();
             $(".comment-container").remove();
-        });  
+        })  
+        .catch(error => console.error('Error:', error));
 }
 
 function sendSort(place){
@@ -184,10 +255,8 @@ function sendSort(place){
         })
     };
 
-    return fetch(BASE_URL + BASE_API_URL + '/sort', opts)
-
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
+    return myFetch(BASE_URL + BASE_API_URL + '/sort', opts)
+        .catch(error => console.error('Error:', error));
 }
 
 $(function() {
@@ -231,9 +300,7 @@ function postComment(id) {
         })
     };
 
-    return fetch(BASE_URL + BASE_API_URL + '/' + id + '/comments', opts)
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
+    return myFetch(BASE_URL + BASE_API_URL + '/' + id + '/comments', opts)
         .then(movie => {
             const idx = state.movies.findIndex(m => m.id === id);
             const comment = movie.comments[movie.comments.length - 1];
@@ -259,11 +326,10 @@ function postComment(id) {
     </div>
 </div>
 `            
-            console.log('Success:', comment.author, 'said:', comment.comment);
-            
             state.movies.splice(idx, 1, movie);
             $(".comments-section").append(html);
-        });
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 function createCommentHTML(movie) {
@@ -303,17 +369,16 @@ function deleteComment(movieId, commentId) {
         method: 'DELETE',
     };
 
-    return fetch(BASE_URL + BASE_API_URL + '/' + movieId + '/comment/' + commentId, opts)
-        .catch(error => console.error('Error:', error))
+    return myFetch(BASE_URL + BASE_API_URL + '/' + movieId + '/comment/' + commentId, opts)
         .then(() => {
             const movieIdx = state.movies.findIndex(m => m.id === movieId);
             const movie = state.movies[movieIdx];
             const commentIdx = movie.comments.findIndex(c => c.id === commentId);
             const comment = movie.comments[commentIdx];
             $('#comment-id-' + commentIdx).remove();
-            state.movies[movieIdx].comments.splice(commentIdx, 1);
-            
-        });
+            state.movies[movieIdx].comments.splice(commentIdx, 1); 
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 function setSeen(id) {
@@ -331,33 +396,43 @@ function setSeen(id) {
         })
     };
 
-    return fetch(BASE_URL + BASE_API_URL + '/' + id, opts)  
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
+    return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)  
         .then(movie => {
             console.log('last:', state.movies[idx].seen, ' new: ', isSeen);
             state.movies[idx].seen = isSeen;
-            if(isSeen === true){
+            if (isSeen) {
                 $("#seen").removeClass("md-inactive").addClass("seen");
             } else {
                 $("#seen").removeClass("seen").addClass("md-inactive");
-            };
-        });
+            }
+        })
+        .catch(error => console.error('Error:', error));
        
 }
 
 function filterSeen() {
-    for (let i = 0; i < state.movies.length; i++){
-        if(state.movies[i].seen === false){
-             $('#movie-item-' + state.movies[i].id).remove();
-        }
-    }
+    state.filter.notSeen = !state.filter.notSeen;
+    refresh();
 }
 
 function filterNotSeen() {
-    for (let i = 0; i < state.movies.length; i++){
-        if(state.movies[i].seen === true){
-             $('#movie-item-' + state.movies[i].id).remove();
-        }
-    }
+    state.filter.seen = !state.filter.seen;
+    refresh();
 }
+
+function refresh() {
+    let filtered = [];
+
+    if ((state.filter.seen && state.filter.notSeen) || (!state.filter.seen && !state.filter.notSeen))
+        $("li.list-item").replaceWith(state.movies.forEach(createMovie)); 
+    else if (state.filter.seen && !state.filter.notSeen) {
+        filtered = state.movies.filter(m => m.seen);
+        $("li.list-item").replaceWith(filtered.forEach(createMovie));
+    } else { 
+        filtered = state.movies.filter(m => !m.seen);
+        $("li.list-item").replaceWith(filtered.forEach(createMovie));                     
+    }
+
+    print_state();
+}
+
