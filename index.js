@@ -1,11 +1,63 @@
-const BASE_URL = 'baseurl';
+const BASE_URL = '{{baseurl}}';
 const BASE_API_URL = '/api/movies'
-const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8&t=';
+const OMDB_API_URL = 'http://www.omdbapi.com';
+const OMDB_API_KEY = '8ce98bc8';
 
 const state = {
     movies: [],
     displayMovieId: null,
+    searchResult: null,
 };
+
+function buildUrl(baseurl, params) {
+    let url = baseurl;
+    const paramsStr = Object.keys(params).map(key => key + '=' + params[key]);
+
+    if (!url.endsWith('/')) {
+        url += '/';
+    }
+
+    if (paramsStr.length > 0) {
+        url += '?';
+        url += paramsStr.join('&');
+    }
+
+    return url;
+}
+
+function searchMovie(query) {
+    const url = buildUrl(OMDB_API_URL, {
+        apiKey: OMDB_API_KEY,
+        s: query,
+    });
+
+    return fetch(url)
+        .then(res => res.json())
+        .then(json => {
+            if (json.Response !== 'True')
+                throw json;
+
+            return json.Search.map(movie => movie.Title);
+        })
+        .catch(err => console.error(err)); 
+}
+
+function getMovieDetails(title) {
+    const url = buildUrl(OMDB_API_URL, {
+        apiKey: OMDB_API_KEY,
+        t: title,
+    });
+
+    return fetch(url)
+        .then(res => res.json())
+        .then(json => {
+            if (json.Response !== 'True')
+                throw json;
+
+            return json;
+        })
+        .catch(err => console.error(err));
+}
 
 function createMovieTitle(movie) {
     return `
@@ -82,6 +134,25 @@ function show(id) {
     }
 }
 
+let debounceTimeout = null;
+
+function onMovieInputKeyPress() {
+    const title = $("#newMovie").val().trim();
+
+    if (debounceTimeout) {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = null;
+    }
+
+    if (title.length < 3) 
+        return;
+
+    debounceTimeout = setTimeout(() => {
+        searchMovie(title)
+            .then(titlesArray => state.searchResult = titlesArray);
+    }, 2000);
+}
+
 function checkInput() {
     const title = $("#newMovie").val().trim();
 
@@ -89,21 +160,13 @@ function checkInput() {
         console.log('Error: Enter a movie title');
     }
 
-    fetch (OMDB_API_URL + title)
-        .then(res => res.json())
-        .then(description => {
-            if (description.Response === "False") {
-                console.log('Error:', description.Error);
-            } else {
-                addMovie(title);
-            }
-        });
+    addMovie(title)
+        .then(console.log);
 }
 
 function addMovie(title) {
-    fetch (OMDB_API_URL + title)
-        .then(res => res.json())
-        .then (details => {
+    getMovieDetails(title)
+        .then(details => {
             const opts = {
                 method: 'POST',
                 body: JSON.stringify({
@@ -160,7 +223,7 @@ function deleteMovie(id) {
             });  
 }
 
-function sendSort(place){
+function sendSort(place) {
     const opts = {
         method: 'POST',
         body: JSON.stringify({
