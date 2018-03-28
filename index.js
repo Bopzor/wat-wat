@@ -83,14 +83,292 @@ function print_state() {
     console.log('state: ', $.extend({}, state));
 }
 
-function getMoviesList() {
+function refresh() {
     return myFetch(BASE_URL + BASE_API_URL)
         .then(movies => {
             state.movies = movies;
-            movies.forEach(createMovie);
+            let filtered = [];
+
+            if ((state.filter.seen && state.filter.notSeen) || (!state.filter.seen && !state.filter.notSeen))
+                $("li.list-item").replaceWith(movies.forEach(createMovie)); 
+            else if (state.filter.seen && !state.filter.notSeen) {
+                filtered = movies.filter(m => m.seen);
+                $("li.list-item").replaceWith(filtered.forEach(createMovie));
+            } else { 
+                filtered = movies.filter(m => !m.seen);
+                $("li.list-item").replaceWith(filtered.forEach(createMovie));                     
+            }
+                    
         })
         .catch(error => console.error('Error:', error));
 }
+
+function createMovie(movie) {
+    $("ul.movies-list").append(createMovieTitle(movie));
+}
+
+
+function addMovie(title) {
+    myFetch(OMDB_API_URL + title)
+        .then (details => {
+            const opts = {
+                method: 'POST',
+                body: JSON.stringify({
+                    title,
+                    plot: details.Plot,
+                    released: details.Released,
+                    runtime: details.Runtime,
+                    director: details.Director,
+                    writer: details.Writer,
+                    actors: details.Actors,
+                    poster: details.Poster,
+                }),
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                })
+            };
+
+            return myFetch(BASE_URL + BASE_API_URL, opts)
+                .then(movie => {
+                    state.movies.push(movie);
+                    createMovie(movie);
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+    document.getElementById("form").reset();
+}
+
+function checkInput() {
+    const title = $("#newMovie").val().trim();
+
+    if (title.length === 0) {
+        console.log('Error: Enter a movie title');
+    }
+
+    myFetch(OMDB_API_URL + title)
+        .then(description => {
+            if (description.Response === "False") {
+                console.log('Error:', description.Error);
+            } else {
+                addMovie(title);
+            }
+        });
+}
+
+function deleteMovie(id) {
+    const opts = {
+        method: 'DELETE',
+    };
+
+    return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)
+        .then(() => $('#movie-item-' + id).remove())
+        .then(() => {
+            state.movies.splice(state.movies.findIndex(m => m.id === id), 1)
+            $("#movie-details").remove();
+            $(".comment-container").remove();
+        })  
+        .catch(error => console.error('Error:', error));
+}
+
+function sendSort(place){
+    const opts = {
+        method: 'POST',
+        body: JSON.stringify({
+            order: place,
+        }),
+        headers: new Headers({
+            'Content-Type': 'application/json',
+        })
+    };
+
+    return myFetch(BASE_URL + BASE_API_URL + '/sort', opts)
+        .catch(error => console.error('Error:', error));
+}
+
+$(function() {
+    $('#form').on('submit', checkInput);
+
+    refresh();
+
+    $("#sortable").sortable({
+        axis: 'y',
+        cursor: 'move',
+        items: '> li',
+        scroll: true,
+        helper: 'original',
+        handle: '.handle',
+        placeholder: "ui-sortable-placeholder",
+        update: function(event, ui) {
+            const sortedIds = $(".list-item").toArray().map(elem => $(elem).data('id'));
+            const place = {};
+
+            for (let i = 0; i < sortedIds.length; i++)
+                place[sortedIds[i]] = i + 1;
+
+            sendSort(place)
+                .then(movies => state.movies = movies);
+        }
+    });
+    $( ".sortable" ).disableSelection();
+});
+
+function show(id) {
+    $("#movie-details").remove();
+    $(".comment-container").remove();    
+
+    if (state.displayMovieId === id)
+        state.displayMovieId = null;
+    else {
+        const idx = state.movies.findIndex(m => m.id === id);
+        const seen = state.movies[idx].seen;
+    
+        $(".details-container").append(createMovieDetails(state.movies[idx]));
+        $(".comments-section").append(createCommentHTML(state.movies[idx]));
+
+        if (seen)
+            $("#seen").removeClass("md-inactive").addClass("seen");
+        else
+            $("#seen").removeClass("seen").addClass("md-inactive");
+
+        state.displayMovieId = id;
+    }
+}
+
+function setSeen(id) {
+    const idx = state.movies.findIndex(m => m.id === id);
+    const seen = state.movies[idx].seen;
+    const isSeen = !seen;
+
+    const opts = {
+        method: 'PUT',
+        body: JSON.stringify({
+            seen: isSeen,
+        }),
+        headers: new Headers({
+            'Content-Type': 'application/json',
+        })
+    };
+
+    return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)  
+        .then(movie => {
+            console.log('last:', state.movies[idx].seen, ' new: ', isSeen);
+            state.movies[idx].seen = isSeen;
+            if (isSeen) {
+                $("#seen").removeClass("md-inactive").addClass("seen");
+            } else {
+                $("#seen").removeClass("seen").addClass("md-inactive");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+       
+}
+
+function filterSeen() {
+    state.filter.notSeen = !state.filter.notSeen;
+    refresh();
+}
+
+function filterNotSeen() {
+    state.filter.seen = !state.filter.seen;
+    refresh();
+}
+
+function deleteComment(movieId, commentId) {
+    const opts = {
+        method: 'DELETE',
+    };
+
+    return myFetch(BASE_URL + BASE_API_URL + '/' + movieId + '/comment/' + commentId, opts)
+        .then(() => {
+            const movieIdx = state.movies.findIndex(m => m.id === movieId);
+            const movie = state.movies[movieIdx];
+            const commentIdx = movie.comments.findIndex(c => c.id === commentId);
+            const comment = movie.comments[commentIdx];
+            $('#comment-id-' + commentIdx).remove();
+            state.movies[movieIdx].comments.splice(commentIdx, 1); 
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function createCommentHTML(movie) {
+    const comments = movie.comments;
+    let html = '';
+
+    for (let i = 0; i < comments.length; i++)
+    html +=`
+<div class="comment-container">
+    <div class="comment" id="comment-id-${comments[i].id}">
+        <div class="comment-author">${comments[i].author} :</div>
+        <div class="comment-message">${comments[i].comment}</div>
+    </div>
+    <div class="comment-buttons">
+        <div class="edit-button">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+            style="width: 20px; height: 20px; min-width: initial;">
+                <i class="material-icons md-18">mode_edit</i>
+            </button>
+        </div>
+        <div class="remove-button">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+            style="width: 20px; height: 20px; min-width: initial;" 
+            onclick="deleteComment(${movie.id}, ${comments[i].id})">
+                <i class="material-icons md-18">remove</i>
+            </button>
+        </div>
+    </div>
+</div>
+        `
+
+    return html;
+}
+
+function postComment(id) {
+    const author = $(".author-name").val().trim();
+    const comment = $(".comment-input").val().trim();
+    const opts = {
+        method: 'POST',
+        body: JSON.stringify({
+            comment: comment,
+            author: author,
+        }),
+        headers: new Headers({
+            'Content-Type': 'application/json',
+        })
+    };
+
+    return myFetch(BASE_URL + BASE_API_URL + '/' + id + '/comments', opts)
+        .then(movie => {
+            const idx = state.movies.findIndex(m => m.id === id);
+            const comment = movie.comments[movie.comments.length - 1];
+            const html =`
+<div class="comment-container">
+    <div class="comment" id="comment-id-${comment.id}">
+        <div class="comment-author">${comment.author} :</div>
+        <div class="comment-message">${comment.comment}</div>
+    </div>
+    <div class="comment-buttons">
+        <div class="edit-button">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+            style="width: 20px; height: 20px; min-width: initial;">
+                <i class="material-icons md-18">mode_edit</i>
+            </button>
+        </div>
+        <div class="remove-button">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+            style="width: 20px; height: 20px; min-width: initial;" onclick="deleteComment(${movie.id}, ${comment.id})">
+                <i class="material-icons md-18">remove</i>
+            </button>
+        </div>
+    </div>
+</div>
+`            
+            state.movies.splice(idx, 1, movie);
+            $(".comments-section").append(html);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
 
 function createMovieTitle(movie) {
     return `
@@ -151,288 +429,5 @@ function createMovieDetails(movie) {
     </div>
 </div>
 `;
-}
-
-function createMovie(movie) {
-    $("ul.movies-list").append(createMovieTitle(movie));
-}
-
-function show(id) {
-    $("#movie-details").remove();
-    $(".comment-container").remove();    
-
-    if (state.displayMovieId === id) {
-        state.displayMovieId = null;
-    } else {
-        const idx = state.movies.findIndex(m => m.id === id);
-        const seen = state.movies[idx].seen;
-
-        $(".details-container").append(createMovieDetails(state.movies[idx]));
-
-        if(seen === true){
-            $("#seen").removeClass("md-inactive").addClass("seen");
-        } else {
-            $("#seen").removeClass("seen").addClass("md-inactive");
-        };
-    
-        $(".comments-section").append(createCommentHTML(state.movies[idx]));
-        state.displayMovieId = id;
-    }
-}
-
-function checkInput() {
-    const title = $("#newMovie").val().trim();
-
-    if (title.length === 0) {
-        console.log('Error: Enter a movie title');
-    }
-
-    myFetch(OMDB_API_URL + title)
-        .then(description => {
-            if (description.Response === "False") {
-                console.log('Error:', description.Error);
-            } else {
-                addMovie(title);
-            }
-        });
-}
-
-function addMovie(title) {
-    myFetch(OMDB_API_URL + title)
-        .then (details => {
-            const opts = {
-                method: 'POST',
-                body: JSON.stringify({
-                    title,
-                    plot: details.Plot,
-                    released: details.Released,
-                    runtime: details.Runtime,
-                    director: details.Director,
-                    writer: details.Writer,
-                    actors: details.Actors,
-                    poster: details.Poster,
-                }),
-                headers: new Headers({
-                    'Content-Type': 'application/json',
-                })
-            };
-
-            return myFetch(BASE_URL + BASE_API_URL, opts)
-                .then(movie => {
-                    state.movies.push(movie);
-                    createMovie(movie);
-                })
-                .catch(error => console.error('Error:', error));
-        });
-
-    document.getElementById("form").reset();
-}
-
-
-function deleteMovie(id) {
-    const opts = {
-        method: 'DELETE',
-    };
-
-    return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)
-        .then(() => $('#movie-item-' + id).remove())
-        .then(() => {
-            state.movies.splice(state.movies.findIndex(m => m.id === id), 1)
-            $("#movie-details").remove();
-            $(".comment-container").remove();
-        })  
-        .catch(error => console.error('Error:', error));
-}
-
-function sendSort(place){
-    const opts = {
-        method: 'POST',
-        body: JSON.stringify({
-            order: place,
-        }),
-        headers: new Headers({
-            'Content-Type': 'application/json',
-        })
-    };
-
-    return myFetch(BASE_URL + BASE_API_URL + '/sort', opts)
-        .catch(error => console.error('Error:', error));
-}
-
-$(function() {
-    $('#form').on('submit', checkInput);
-
-    getMoviesList();
-
-    $("#sortable").sortable({
-        axis: 'y',
-        cursor: 'move',
-        items: '> li',
-        scroll: true,
-        helper: 'original',
-        handle: '.handle',
-        placeholder: "ui-sortable-placeholder",
-        update: function(event, ui) {
-            const sortedIds = $(".list-item").toArray().map(elem => $(elem).data('id'));
-            const place = {};
-
-            for (let i = 0; i < sortedIds.length; i++)
-                place[sortedIds[i]] = i + 1;
-
-            sendSort(place)
-                .then(movies => state.movies = movies);
-        }
-    });
-    $( ".sortable" ).disableSelection();
-});
-
-function postComment(id) {
-    const author = $(".author-name").val().trim();
-    const comment = $(".comment-input").val().trim();
-    const opts = {
-        method: 'POST',
-        body: JSON.stringify({
-            comment: comment,
-            author: author,
-        }),
-        headers: new Headers({
-            'Content-Type': 'application/json',
-        })
-    };
-
-    return myFetch(BASE_URL + BASE_API_URL + '/' + id + '/comments', opts)
-        .then(movie => {
-            const idx = state.movies.findIndex(m => m.id === id);
-            const comment = movie.comments[movie.comments.length - 1];
-            const html =`
-<div class="comment-container">
-    <div class="comment" id="comment-id-${comment.id}">
-        <div class="comment-author">${comment.author} :</div>
-        <div class="comment-message">${comment.comment}</div>
-    </div>
-    <div class="comment-buttons">
-        <div class="edit-button">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-            style="width: 20px; height: 20px; min-width: initial;">
-                <i class="material-icons md-18">mode_edit</i>
-            </button>
-        </div>
-        <div class="remove-button">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-            style="width: 20px; height: 20px; min-width: initial;" onclick="deleteComment(${movie.id}, ${comment.id})">
-                <i class="material-icons md-18">remove</i>
-            </button>
-        </div>
-    </div>
-</div>
-`            
-            state.movies.splice(idx, 1, movie);
-            $(".comments-section").append(html);
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-function createCommentHTML(movie) {
-    const comments = movie.comments;
-    let html = '';
-
-    for (let i = 0; i < comments.length; i++)
-    html +=`
-<div class="comment-container">
-    <div class="comment" id="comment-id-${comments[i].id}">
-        <div class="comment-author">${comments[i].author} :</div>
-        <div class="comment-message">${comments[i].comment}</div>
-    </div>
-    <div class="comment-buttons">
-        <div class="edit-button">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-            style="width: 20px; height: 20px; min-width: initial;">
-                <i class="material-icons md-18">mode_edit</i>
-            </button>
-        </div>
-        <div class="remove-button">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-            style="width: 20px; height: 20px; min-width: initial;" 
-            onclick="deleteComment(${movie.id}, ${comments[i].id})">
-                <i class="material-icons md-18">remove</i>
-            </button>
-        </div>
-    </div>
-</div>
-        `
-
-    return html;
-}
-
-function deleteComment(movieId, commentId) {
-    const opts = {
-        method: 'DELETE',
-    };
-
-    return myFetch(BASE_URL + BASE_API_URL + '/' + movieId + '/comment/' + commentId, opts)
-        .then(() => {
-            const movieIdx = state.movies.findIndex(m => m.id === movieId);
-            const movie = state.movies[movieIdx];
-            const commentIdx = movie.comments.findIndex(c => c.id === commentId);
-            const comment = movie.comments[commentIdx];
-            $('#comment-id-' + commentIdx).remove();
-            state.movies[movieIdx].comments.splice(commentIdx, 1); 
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-function setSeen(id) {
-    const idx = state.movies.findIndex(m => m.id === id);
-    const seen = state.movies[idx].seen;
-    const isSeen = !seen;
-
-    const opts = {
-        method: 'PUT',
-        body: JSON.stringify({
-            seen: isSeen,
-        }),
-        headers: new Headers({
-            'Content-Type': 'application/json',
-        })
-    };
-
-    return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)  
-        .then(movie => {
-            console.log('last:', state.movies[idx].seen, ' new: ', isSeen);
-            state.movies[idx].seen = isSeen;
-            if (isSeen) {
-                $("#seen").removeClass("md-inactive").addClass("seen");
-            } else {
-                $("#seen").removeClass("seen").addClass("md-inactive");
-            }
-        })
-        .catch(error => console.error('Error:', error));
-       
-}
-
-function filterSeen() {
-    state.filter.notSeen = !state.filter.notSeen;
-    refresh();
-}
-
-function filterNotSeen() {
-    state.filter.seen = !state.filter.seen;
-    refresh();
-}
-
-function refresh() {
-    let filtered = [];
-
-    if ((state.filter.seen && state.filter.notSeen) || (!state.filter.seen && !state.filter.notSeen))
-        $("li.list-item").replaceWith(state.movies.forEach(createMovie)); 
-    else if (state.filter.seen && !state.filter.notSeen) {
-        filtered = state.movies.filter(m => m.seen);
-        $("li.list-item").replaceWith(filtered.forEach(createMovie));
-    } else { 
-        filtered = state.movies.filter(m => !m.seen);
-        $("li.list-item").replaceWith(filtered.forEach(createMovie));                     
-    }
-
-    print_state();
 }
 
