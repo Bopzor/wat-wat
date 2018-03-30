@@ -10,6 +10,7 @@ const OMDB_API_KEY = '8ce98bc8';
 state: {
     movies: Movie[],
     displayMovieId: number | null,
+    searchResult: null | MovieTitle[]
     filter: {
         seen: boolean,
         notSeen: boolean,
