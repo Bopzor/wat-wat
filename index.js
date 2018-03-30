@@ -229,8 +229,8 @@ function deleteMovie(id) {
         .then(() => $('#movie-item-' + id).remove())
         .then(() => {
             state.movies.splice(state.movies.findIndex(m => m.id === id), 1)
-            if (id === displayMovieId)
-                $(".right-side").remove();
+            $("#movie-details").remove();
+            $(".comment-container").remove();
         })  
         .catch(error => console.error('Error:', error));
 }
