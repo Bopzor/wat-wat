@@ -173,13 +173,20 @@ function onMovieInputKeyUp() {
         debounceTimeout = null;
     }
 
-    if (title.length < 3) 
+    if (title.length < 3) {
         return;
+    }
 
     debounceTimeout = setTimeout(() => {
         searchMovie(title)
             .then(titlesArray => state.searchResult = titlesArray)
-            .then(() => console.log(state.searchResult));
+            .then(() => console.log(state.searchResult))
+            .then(() => {
+                if (state.searchResult) {
+                    $("#titlesSearch").remove; 
+                    DOM.createDropDownSearchMenu(state.searchResult);
+                }
+            })
     }, 2000);
 }
 
@@ -475,6 +482,17 @@ const DOM = {
     },
 
     /**
+     * Create the HTML for all dropdown menu when autocompletion
+     */    
+    createDropDownSearchMenu: function createDropDownSearchMenuHTML(titlesArray) {
+        titlesArray.forEach(title => {
+            let option = document.createElement('option');
+            option.value = title;
+            $("#titlesSearch").append(option);
+        })
+    },
+
+    /**
      * Create the HTML string for the input to add a movie
      */
     createAddMovieInput: function createAddMovieInputHTML() {
@@ -483,9 +501,10 @@ const DOM = {
             <div class="add-movie">
                 <form action="#" id="form">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="newMovie" onkeyup="onMovieInputKeyUp()">
+                        <input class="mdl-textfield__input" type="text"list="titlesSearch" id="newMovie" onkeyup="onMovieInputKeyUp()">
                         <label class="mdl-textfield__label" for="newMovie" >New movie</label>
                     </div>
+                    <datalist id="titlesSearch"></datalist>
                 </form>
                 <div class="add-button" style="width: 35px; height: 35px; min-width: initial;">
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 35px; height: 35px; min-width: initial;" 
