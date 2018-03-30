@@ -164,7 +164,7 @@ function getMoviesList() {
 
 let debounceTimeout = null;
 
-function onMovieInputKeyPress() {
+function onMovieInputKeyUp() {
     const title = $("#newMovie").val().trim();
 
     if (debounceTimeout) {
@@ -482,7 +482,7 @@ const DOM = {
             <div class="add-movie">
                 <form action="#" id="form">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="newMovie" onkeypress="onMovieInputKeyPress()">
+                        <input class="mdl-textfield__input" type="text" id="newMovie" onkeyup="onMovieInputKeyUp()">
                         <label class="mdl-textfield__label" for="newMovie" >New movie</label>
                     </div>
                 </form>
