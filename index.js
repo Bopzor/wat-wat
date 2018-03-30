@@ -41,8 +41,8 @@ const state = {
     displayMovieId: null,
     searchResult: null,
     filter: {
-        seen: true,
-        notSeen: true,
+        seen: false,
+        notSeen: false,
     },
 };
 
@@ -285,7 +285,6 @@ function setSeen(id) {
 
     return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)  
         .then(movie => {
-            console.log('last:', state.movies[idx].seen, ' new: ', isSeen);
             state.movies[idx].seen = isSeen;
             if (isSeen) {
                 $("#seen").removeClass("md-inactive").addClass("seen");
@@ -298,13 +297,33 @@ function setSeen(id) {
 }
 
 function filterSeen() {
-    state.filter.notSeen = !state.filter.notSeen;
-    refresh();
+    const movies = state.movies.filter(m => m.seen);
+    const currentMovieIdx = null;
+
+    state.filter.seen = !state.filter.seen;
+    state.filter.notSeen = false;
+
+    if (state.filter.seen === state.filter.notSeen)
+        refresh();
+    else
+        DOM.refresh(movies, currentMovieIdx);
+
+    print_state();
 }
 
 function filterNotSeen() {
-    state.filter.seen = !state.filter.seen;
-    refresh();
+    const movies = state.movies.filter(m => !m.seen);
+    const currentMovieIdx = null;
+
+    state.filter.notSeen = !state.filter.notSeen;
+    state.filter.seen = false;
+
+    if (state.filter.seen === state.filter.notSeen)
+        refresh();
+    else 
+        DOM.refresh(movies, currentMovieIdx);
+
+    print_state();
 }
 
 function deleteComment(movieId, commentId) {
