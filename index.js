@@ -183,7 +183,7 @@ function onMovieInputKeyUp() {
             .then(() => console.log(state.searchResult))
             .then(() => {
                 if (state.searchResult) {
-                    $("#titlesSearch").remove; 
+                    $("#titlesSearch").remove(); 
                     DOM.createDropDownSearchMenu(state.searchResult);
                 }
             })
@@ -369,7 +369,7 @@ function postComment(id) {
         .then(movie => {
             const idx = state.movies.findIndex(m => m.id === id);
             const comment = movie.comments[movie.comments.length - 1];
-            const html = DOM.createComment(movie.id, comment);
+            const html = DOM.createComment(comment);
             state.movies.splice(idx, 1, movie);
             $(".comments-section").append(html);
         })
@@ -527,7 +527,7 @@ const DOM = {
     /**
      * Create the HTML string for a comment in a movie details
      */
-    createComment: function createCommentHTML(movieId, comment) {
+    createComment: function createCommentHTML(comment) {
         return `
         <div class="comment-container">
             <div class="comment" id="comment-id-${comment.id}">
@@ -544,7 +544,7 @@ const DOM = {
                 <div class="remove-button">
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
                     style="width: 20px; height: 20px; min-width: initial;" 
-                    onclick="deleteComment(${movieId}, ${comment.id})">
+                    onclick="deleteComment(${comment.id})">
                         <i class="material-icons md-18">remove</i>
                     </button>
                 </div>
