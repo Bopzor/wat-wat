@@ -488,7 +488,8 @@ const DOM = {
                     </div>
                 </form>
                 <div class="add-button" style="width: 35px; height: 35px; min-width: initial;">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" style="width: 35px; height: 35px; min-width: initial;" 
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                    style="width: 35px; height: 35px; min-width: initial;" 
                     onclick="checkInput()">
                         <i class="material-icons">add</i>
                     </button>
@@ -508,7 +509,7 @@ const DOM = {
     /**
      * Create the HTML string for a comment in a movie details
      */
-    createComment: function createCommentHTML(movieId, comment) {
+    createComment: function createCommentHTML(comment) {
         return `
         <div class="comment-container">
             <div class="comment" id="comment-id-${comment.id}">
@@ -525,7 +526,7 @@ const DOM = {
                 <div class="remove-button">
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
                     style="width: 20px; height: 20px; min-width: initial;" 
-                    onclick="deleteComment(${movieId}, ${comment.id})">
+                    onclick="deleteComment(${comment.id})">
                         <i class="material-icons md-18">remove</i>
                     </button>
                 </div>
