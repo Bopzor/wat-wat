@@ -107,9 +107,16 @@ h3#sub-title {
     background-color: whitesmoke;
 }
 
+.display-seen {
+    padding-top: 1%;
+    align-self: center;
+}
+
 .movie-title {
     font-size: 20px;
     cursor: pointer;
+    padding-left: 2.7%;
+    flex: 5;
 }
 
 .movie-title:hover {
@@ -134,6 +141,8 @@ h3#sub-title {
 .list-button {
     display: flex;
     flex-direction: row;
+    align-self: center;
+    padding-bottom: 1%;
 }
 
 .sort-button {
