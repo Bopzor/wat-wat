@@ -49,8 +49,8 @@ const create = (req, res, next) => {
     seen: req.body.seen || false,
   };
 
-  Movie.count()
-    .then(count => Movie.create({ ...body, place: count + 1 }))
+  Movie.max('place')
+    .then(place => Movie.create({ ...body, place: place + 1 }))
     .then(movie => Movie.findById(movie.id, { include: [{ all: true }] }))
     .then(movie => res.status(201).json(movie))
     .catch(next);

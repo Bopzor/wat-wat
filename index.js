@@ -18,7 +18,7 @@ state: {
 }
 
 Movie: {
-    id: number,    
+    id: number,
     title: string,
     plot: string,
     // other details
@@ -79,7 +79,7 @@ function searchMovie(query) {
 
             return json.Search.map(movie => movie.Title);
         })
-        .catch(err => console.error(err)); 
+        .catch(err => console.error(err));
 }
 
 function getMovieDetails(title) {
@@ -110,8 +110,8 @@ function myFetch(route, opts) {
             let promise = null;
 
             if (/application\/json/.exec(res.headers.get('Content-Type')))
-                promise = res.json();  
-            else 
+                promise = res.json();
+            else
                 promise = res.text();
 
             return promise
@@ -173,14 +173,20 @@ function onMovieInputKeyUp() {
         debounceTimeout = null;
     }
 
-    if (title.length < 3) 
+    if (title.length < 3)
         return;
 
     debounceTimeout = setTimeout(() => {
         searchMovie(title)
             .then(titlesArray => state.searchResult = titlesArray)
-            .then(() => console.log(state.searchResult));
-    }, 2000);
+            .then(() => console.log(state.searchResult))
+            .then(() => {
+                if (state.searchResult) {
+                    DOM.removeFromDOM("option");
+                    DOM.createDropDownSearchMenu(state.searchResult);
+                }
+            })
+    }, 1000);
 }
 
 function checkInput() {
@@ -216,7 +222,7 @@ function checkInput() {
                     DOM.addMovieTitleToList(movie);
                 })
                 .catch(error => console.error('Error:', error));
-        })        
+        })
         .then(console.log);
 }
 
@@ -226,12 +232,12 @@ function deleteMovie(id) {
     };
 
     return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)
-        .then(() => $('#movie-item-' + id).remove())
+        .then(() => DOM.removeFromDOM("#movie-item-" + id))
         .then(() => {
             state.movies.splice(state.movies.findIndex(m => m.id === id), 1)
             if (id === state.displayMovieId)
-                $(".right-side").remove();
-        })  
+                DOM.removeFromDOM(".right-side");
+        })
         .catch(error => console.error('Error:', error));
 }
 
@@ -258,12 +264,12 @@ function show(id) {
         const idx = state.movies.findIndex(m => m.id === id);
         const seen = state.movies[idx].seen;
 
-        DOM.showMovieDetails(state.movies[idx]);    
+        DOM.showMovieDetails(state.movies[idx]);
 
         if (seen)
-            $("#seen").removeClass("md-inactive").addClass("seen");
+            DOM.replaceHTMLClass("#seen", "md-inactive", "seen");
         else
-            $("#seen").removeClass("seen").addClass("md-inactive");
+            DOM.replaceHTMLClass("#seen", "seen", "md-inactive");
 
         state.displayMovieId = id;
     }
@@ -284,17 +290,17 @@ function setSeen(id) {
         })
     };
 
-    return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)  
+    return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)
         .then(movie => {
             state.movies[idx].seen = isSeen;
             if (isSeen) {
-                $("#seen").removeClass("md-inactive").addClass("seen");
+                DOM.replaceHTMLClass("#seen", "md-inactive", "seen");
             } else {
-                $("#seen").removeClass("seen").addClass("md-inactive");
+                DOM.replaceHTMLClass("#seen", "seen", "md-inactive");
             }
         })
         .catch(error => console.error('Error:', error));
-       
+
 }
 
 function filterSeen() {
@@ -321,7 +327,7 @@ function filterNotSeen() {
 
     if (state.filter.seen === state.filter.notSeen)
         refresh();
-    else 
+    else
         DOM.refresh(movies, currentMovieIdx);
 
     print_state();
@@ -338,15 +344,15 @@ function deleteComment(movieId, commentId) {
             const movie = state.movies[movieIdx];
             const commentIdx = movie.comments.findIndex(c => c.id === commentId);
             const comment = movie.comments[commentIdx];
-            $('#comment-id-' + commentIdx).remove();
-            state.movies[movieIdx].comments.splice(commentIdx, 1); 
+            DOM.removeFromDOM("#comment-id-" + commentIdx);
+            state.movies[movieIdx].comments.splice(commentIdx, 1);
         })
         .catch(error => console.error('Error:', error));
 }
 
 function postComment(id) {
-    const author = $(".author-name").val().trim();
-    const comment = $(".comment-input").val().trim();
+    const author = DOM.getInput("#author-name");
+    const comment = DOM.getInput("#comment-input");
     const opts = {
         method: 'POST',
         body: JSON.stringify({
@@ -362,7 +368,7 @@ function postComment(id) {
         .then(movie => {
             const idx = state.movies.findIndex(m => m.id === id);
             const comment = movie.comments[movie.comments.length - 1];
-            const html = DOM.createComment(movie.id, comment);
+            const html = DOM.createComment(comment);
             state.movies.splice(idx, 1, movie);
             $(".comments-section").append(html);
         })
@@ -392,7 +398,7 @@ const DOM = {
                 ${DOM.createMovieDetails(movie)}
             </div>
             <div class="comments-section">
-                ${movie.comments.map(DOM.createComment)}
+                ${movie.comments.map(DOM.createComment).join('')}
             </div>
         </div>`;
 
@@ -411,6 +417,29 @@ const DOM = {
      */
     addMovieTitleToList: function addMovieTitleToList(movie) {
         $("ul.movies-list").append(DOM.createMovieTitle(movie));
+    },
+
+    /**
+    * Remove element from DOM
+    */
+
+    removeFromDOM: function removeFromDOM(query) {
+        $(query).remove();
+    },
+
+    /**
+    * Return input form
+    */
+    getInput: function getInput(query) {
+        return $(query).val().trim();
+    },
+
+    /**
+     * Remove a class from a HTML tag and add the other one
+     */
+
+    replaceHTMLClass: function replaceHTMLClass(query, remove, add) {
+        $(query).removeClass(remove).addClass(add);
     },
 
     /**
@@ -475,6 +504,17 @@ const DOM = {
     },
 
     /**
+    * Create the HTML for all dropdown menu when autocompletion
+    */
+    createDropDownSearchMenu: function createDropDownSearchMenuHTML(titlesArray) {
+        titlesArray.forEach(title => {
+            let option = document.createElement('option');
+            option.value = title;
+            $("#titlesSearch").append(option);
+        })
+    },
+
+    /**
      * Create the HTML string for the input to add a movie
      */
     createAddMovieInput: function createAddMovieInputHTML() {
@@ -483,13 +523,14 @@ const DOM = {
             <div class="add-movie">
                 <form action="#" id="form">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="newMovie" onkeyup="onMovieInputKeyUp()">
+                        <input class="mdl-textfield__input" type="text" list="titlesSearch" id="newMovie" onkeyup="onMovieInputKeyUp()">
                         <label class="mdl-textfield__label" for="newMovie" >New movie</label>
                     </div>
+                    <datalist id="titlesSearch"></datalist>
                 </form>
                 <div class="add-button" style="width: 35px; height: 35px; min-width: initial;">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-                    style="width: 35px; height: 35px; min-width: initial;" 
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                    style="width: 35px; height: 35px; min-width: initial;"
                     onclick="checkInput()">
                         <i class="material-icons">add</i>
                     </button>
@@ -498,10 +539,10 @@ const DOM = {
             <div class="filter">
                 <button class="seen-button" onclick="filterNotSeen()">
                     <i id="filter-not-seen" class="material-icons md-24 md-inactive">done_all</i>
-                </button>    
+                </button>
                 <button class="seen-button" onclick="filterSeen()">
                     <i id="filter-seen" class="material-icons md-24 seen">done_all</i>
-                </button>    
+                </button>
             </div>
         </div>`;
     },
@@ -518,14 +559,14 @@ const DOM = {
             </div>
             <div class="comment-buttons">
                 <div class="edit-button">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
                     style="width: 20px; height: 20px; min-width: initial;">
                         <i class="material-icons md-18">mode_edit</i>
                     </button>
                 </div>
                 <div class="remove-button">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
-                    style="width: 20px; height: 20px; min-width: initial;" 
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                    style="width: 20px; height: 20px; min-width: initial;"
                     onclick="deleteComment(${comment.id})">
                         <i class="material-icons md-18">remove</i>
                     </button>
@@ -546,13 +587,13 @@ const DOM = {
                 </div>
                 <div class="list-button">
                     <div class="sort-button handle">
-                        <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                        <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
                         style="width: 20px; height: 20px; min-width: initial;">
                             <i class="material-icons md-18">swap_vert</i>
                         </a>
                     </div>
                     <div class="remove-button">
-                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
                         style="width: 20px; height: 20px; min-width: initial;" id="delete" onclick="deleteMovie(${movie.id})">
                             <i class="material-icons md-18">remove</i>
                         </button>
@@ -581,17 +622,17 @@ const DOM = {
                 <div class="seen-icon">
                     <button class="seen-button" onclick="setSeen(${movie.id})">
                         <i id="seen" class="material-icons md-48 md-inactive">done_all</i>
-                    </button>    
+                    </button>
                 </div>
             </div>
             <div class="movie-plot">${movie.plot}</div>
             <div class="comment-form">
                 <form class="text-form">
-                    <input class="author-name" type="text" name="NickName" placeholder="Name" maxlenght="4" required>
-                    <textarea class="comment-input" rows="4" cols="50">Say it!</textarea> 
+                    <input id="author-name" type="text" name="NickName" placeholder="Name" maxlenght="4" required>
+                    <textarea id="comment-input" rows="4" cols="50">Say it!</textarea>
                 </form>
                 <div class="add-button add-comment" style="width: 35px; height: 35px; min-width: initial;">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" 
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
                     style="width: 35px; height: 35px; min-width: initial;" onclick="postComment(${movie.id})">
                         <i class="material-icons">add</i>
                     </button>
