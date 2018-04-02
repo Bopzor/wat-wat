@@ -266,11 +266,6 @@ function show(id) {
 
         DOM.showMovieDetails(state.movies[idx]);
 
-        if (seen)
-            DOM.replaceHTMLClass("#seen", "md-inactive", "seen");
-        else
-            DOM.replaceHTMLClass("#seen", "seen", "md-inactive");
-
         state.displayMovieId = id;
     }
 }
@@ -294,9 +289,11 @@ function setSeen(id) {
         .then(movie => {
             state.movies[idx].seen = isSeen;
             if (isSeen) {
-                DOM.replaceHTMLClass("#seen", "md-inactive", "seen");
+                DOM.replaceHTMLClass(".set-seen", "false", "true");
+                DOM.replaceHTMLClass("#seen-movie-id-" + id, "false", "true");
             } else {
-                DOM.replaceHTMLClass("#seen", "seen", "md-inactive");
+                DOM.replaceHTMLClass(".set-seen", "true", "false");
+                DOM.replaceHTMLClass("#seen-movie-id-" + id, "true", "false");
             }
         })
         .catch(error => console.error('Error:', error));
@@ -538,10 +535,10 @@ const DOM = {
             </div>
             <div class="filter">
                 <button class="seen-button" onclick="filterNotSeen()">
-                    <i id="filter-not-seen" class="material-icons md-24 md-inactive">done_all</i>
+                    <i id="filter-not-seen" class="material-icons md-24 false">done_all</i>
                 </button>
                 <button class="seen-button" onclick="filterSeen()">
-                    <i id="filter-seen" class="material-icons md-24 seen">done_all</i>
+                    <i id="filter-seen" class="material-icons md-24 true">done_all</i>
                 </button>
             </div>
         </div>`;
@@ -582,6 +579,7 @@ const DOM = {
         return `
         <li class="list-item" id="movie-item-${movie.id}" data-id="${movie.id}">
             <div class="item-list-zone">
+                <div><i data-id="${movie.id}" id="seen-movie-id-${movie.id}" class="material-icons md-18 ${movie.seen} display-seen">done_all</i></div>
                 <div class="movie-title" onclick="show(${movie.id})">
                     ${movie.title}
                 </div>
@@ -621,7 +619,7 @@ const DOM = {
                 </div>
                 <div class="seen-icon">
                     <button class="seen-button" onclick="setSeen(${movie.id})">
-                        <i id="seen" class="material-icons md-48 md-inactive">done_all</i>
+                        <i class="material-icons md-48 ${movie.seen} set-seen" data-id="${movie.id}">done_all</i>
                     </button>
                 </div>
             </div>

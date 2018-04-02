@@ -207,12 +207,12 @@ img#poster {
     align-self: flex-start;
 }
 
-#seen:hover {
+.set-seen.md-48:hover {
     cursor: pointer;
     opacity: 0.7;
 }
 
-#seen.md-inactive:hover {
+.set-seen.false.md-48:hover {
     cursor: pointer;
     opacity: 0.6;
 }
@@ -284,10 +284,10 @@ img#poster {
     font-size: 48px; 
 }
 
-.material-icons.md-inactive { 
+.material-icons.false { 
     color: rgba(0, 0, 0, 0.26); 
 }
 
-.material-icons.seen {
+.material-icons.true {
     color: #5CA850;
 }
