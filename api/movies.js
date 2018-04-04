@@ -50,7 +50,7 @@ const create = (req, res, next) => {
   };
 
   Movie.max('place')
-    .then(place => Movie.create({ ...body, place: place + 1 }))
+    .then(place => Movie.create({ ...body, place: (place || 0) + 1 }))
     .then(movie => Movie.findById(movie.id, { include: [{ all: true }] }))
     .then(movie => res.status(201).json(movie))
     .catch(next);
