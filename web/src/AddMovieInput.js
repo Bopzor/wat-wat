@@ -17,11 +17,11 @@ class AddMovieInput extends Component {
 		return (
 				<form onSubmit={onSubmit}>
 					<input
-						id="add-movie-title"  
-						className="add-movie-input" 
-						type="text" 
-						name="NewMovie" 
-						placeholder="New Movie Title..."
+						id='add-movie-title'  
+						className='add-movie-input' 
+						type='text'
+						name='NewMovie'
+						placeholder='New Movie Title...'
 						value={this.state.title}
 						onChange={e => this.setState({ title: e.target.value })}
 					/>
