@@ -1,34 +1,24 @@
 import React, { Component } from 'react';
+import MovieDetailsBlockInfos from './MovieDetailsBlockInfos.js'
 
 class MovieDetails extends Component {
 	createMovieDetails(movie) {
 		return (
 			<div className='movie-details'>
-				<img 
-					className='movie-poster'
-					src={movie && movie.poster}
-					alt={movie && movie.title}
-				/>
-				<div className='movie-title'>
-					{movie && movie.title}
-				</div>
-				<div className='movie-realesed'>
-					{movie && movie.realesed}
-				</div>
-				<div className='movie-runtime'>
-					{movie && movie.runtime}
-				</div>
-				<div className='movie-director'>
-					{movie && movie.director}
+				<MovieDetailsBlockInfos movie={movie} />
+				<div className='movie-details-plot'>
+					{movie.plot}
 				</div>
 			</div>				
 		)
 	};
 
 	render() {
-		return (
-			this.createMovieDetails(this.props.movie)
-		);
+		if (!this.props.movie) {
+			return <div className='movie-details' />;
+		}
+
+		return this.createMovieDetails(this.props.movie);
 	}
 }
 

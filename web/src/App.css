@@ -35,7 +35,7 @@ h3.page-title {
 	flex-direction: column;
 	flex: 1;
 	border-right: 1px dashed #CCC;
-	margin: 0 2%
+	margin-left: 2%;
 }
 
 .add-movie-input {
@@ -51,12 +51,11 @@ h3.page-title {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 2% 0 0 0;
 }
 
 .title-item {
 	margin-right: 5%;
-	padding: 1%;
+	padding: 2%;
 	border-bottom: 1px solid #CCC;
 	flex: 2;
 	font-size: 16pt;
@@ -64,13 +63,61 @@ h3.page-title {
 
 .remove-movie-button {
 	align-self: center;
-}
-
-.movie-details {
-	flex: 1;
+	padding-right: 2%;
 }
 
 .remove-movie-button > button {
 	max-width: 24px;
 	max-height: 24px;
+}
+
+.movie-details {
+	flex: 1;
+	display: flex;
+	flex-direction: column;	
+}
+
+.movie-details-block-infos {
+	display: flex;
+	flex-direction: row;
+	margin-left: 4%;
+}
+
+img {
+	max-width: 250px;
+	height: auto;
+}
+
+.movie-details-poster {
+	height: fit-content;
+	margin-right: 4%;
+}
+
+.movie-details-with-title-infos {
+	display: flex;
+	flex-direction: column;	
+}
+
+.movie-details-title {
+	font-weight: bold;
+	font-size: 20pt;
+}
+
+.movie-details-infos {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.movie-details-name-info {
+	font-size: 12pt;
+	font-weight: bold;
+	margin: 0.4% 0;
+}
+
+.movie-details-plot {
+	text-align: center;
+	border-bottom: 1px dashed #CCC;
+	padding: 2% 0;
 }
