@@ -79,6 +79,21 @@ function removeMovie(movie) {
 	    return myFetch(url, opts);
 }
 
+function setMovieSeen(movie, seen) {
+	const url = BASE_URL + BASE_API_URL + '/' + movie.id
+	const opts = {
+	        method: 'PUT',
+	        headers: new Headers({
+	    	   'Content-Type': 'application/json',
+		    }),
+	        body: JSON.stringify({
+	        	seen: seen,
+	        }),
+	    };
+
+    return myFetch(url, opts);	
+}
+
 /**
  * Requests to OMDB API:
  */
@@ -121,5 +136,6 @@ export {
 	getMovies,
 	addMovie,
 	removeMovie,
+	setMovieSeen,
 	getMovieDetails,
 };

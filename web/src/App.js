@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MoviesList from './MoviesList.js';
 import MovieDetails from './MovieDetails.js';
 import AddMovieInput from './AddMovieInput.js';
-import { getMovies, addMovie, removeMovie, getMovieDetails } from './actionsToApis.js';
+import { getMovies, addMovie, removeMovie, setMovieSeen, getMovieDetails } from './actionsToApis.js';
 import './reset.css';
 import './App.css';
 
@@ -52,6 +52,12 @@ class App extends Component {
                 displayMovieId: movie.id,
             });
         }
+    }
+
+    handleSetSeenClick(movie) {
+        const changedSeen = !movie.seen;
+
+        setMovieSeen(movie, changedSeen);
     }
 
     handleRemoveMovie(movie) {
