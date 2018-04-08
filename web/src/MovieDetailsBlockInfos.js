@@ -1,4 +1,5 @@
 import React from 'react';
+import { SeenButton } from './IconsButton.js';
 
 const MovieDetailsBlockInfos = (props) => {
 	return (
@@ -36,6 +37,7 @@ const MovieDetailsBlockInfos = (props) => {
 					</div>
 				</div>
 			</div>
+			<SeenButton />
 		</div>
 	)
 }

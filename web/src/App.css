@@ -61,6 +61,12 @@ h3.page-title {
 	font-size: 16pt;
 }
 
+.title-item:hover {
+	font-size: 18pt;
+	cursor: pointer;
+	padding: 1.7% 0 1.7% 1.7%;
+}
+
 .remove-movie-button {
 	align-self: center;
 	padding-right: 2%;
@@ -81,6 +87,7 @@ h3.page-title {
 	display: flex;
 	flex-direction: row;
 	margin-left: 4%;
+	justify-content: space-between;
 }
 
 img {
@@ -96,6 +103,7 @@ img {
 .movie-details-with-title-infos {
 	display: flex;
 	flex-direction: column;	
+	flex: 2;
 }
 
 .movie-details-title {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RemoveIconButton from './IconsButton.js';
+import { RemoveIconButton } from './IconsButton.js';
 
 class MoviesList extends Component {
 
