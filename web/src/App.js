@@ -12,6 +12,10 @@ class App extends Component {
         this.state = {
             movies: [],
             displayMovieId: null,
+            filter: {
+                seen: false,
+                notSeen: false,
+            },    
         }
     }
 
@@ -42,6 +46,28 @@ class App extends Component {
             .catch(error => console.error('Error:', error));
     }
 
+    handleFilterSeenClick() {
+        const isSeen = this.state.filter.seen;
+        
+        this.setState({
+            filter: {
+                seen: !isSeen,
+                notSeen: false,
+            }
+        });    
+    }
+
+    handleFilterNotSeenClick() {
+        const isSeen = this.state.filter.notSeen;
+        
+        this.setState({ 
+            filter: {
+                seen: false,
+                notSeen: !isSeen,
+            }
+        });
+    }
+
     handleTitleClick(movie) {
         if (movie.id === this.state.displayMovieId) { 
             this.setState({
@@ -52,6 +78,18 @@ class App extends Component {
                 displayMovieId: movie.id,
             });
         }
+    }
+
+    handleRemoveMovie(movie) {
+        return removeMovie(movie)
+            .then(() => {
+                const movies = this.state.movies.slice();
+
+                movies.splice(movies.findIndex(m => m.id === movie.id), 1);
+
+                this.setState({ movies });
+            })
+            .catch(error => console.error('Error: ', error))
     }
 
     handleSetSeenClick(movie) {
@@ -68,20 +106,15 @@ class App extends Component {
             })
     }
 
-    handleRemoveMovie(movie) {
-        return removeMovie(movie)
-            .then(() => {
-                const movies = this.state.movies.slice();
-
-                movies.splice(movies.findIndex(m => m.id === movie.id), 1);
-
-                this.setState({ movies });
-            })
-            .catch(error => console.error('Error: ', error))
-    }
-
     render() {
         const displayMovie = this.state.movies.find(m => m.id === this.state.displayMovieId);
+        let moviesDisplay = this.state.movies;
+
+        if (!this.state.filter.seen && this.state.filter.notSeen) {
+            moviesDisplay = this.state.movies.filter(m => !m.seen);
+        } else if (this.state.filter.seen && !this.state.filter.notSeen) {
+            moviesDisplay = this.state.movies.filter(m => m.seen);
+        }
 
         return (
             <div className='page'>
@@ -89,11 +122,15 @@ class App extends Component {
                 <h3 className='page-title'>(Wat-Wat?)</h3>
                 <div className='content-page'>
                     <div className='left-side'>
-                        <AddMovieInput onSubmitMovieTitle={(title) => this.handleSubmitTitle(title)}/>
+                        <AddMovieInput 
+                            onSubmitMovieTitle={title => this.handleSubmitTitle(title)}
+                            onFilterNotSeenClick={() => this.handleFilterNotSeenClick()}
+                            onFilterSeenClick={() => this.handleFilterSeenClick()} 
+                        />
                         <MoviesList 
-                          movies={this.state.movies} 
-                          onTitleClick={movie => this.handleTitleClick(movie)} 
-                          removeMovie={movie => this.handleRemoveMovie(movie)}
+                            movies={moviesDisplay} 
+                            onTitleClick={movie => this.handleTitleClick(movie)} 
+                            removeMovie={movie => this.handleRemoveMovie(movie)}
                         />
                     </div>
                         <MovieDetails 

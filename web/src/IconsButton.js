@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
-import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
+import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
 import green from 'material-ui/colors/green';
 import orange from 'material-ui/colors/orange';
 
@@ -28,7 +28,6 @@ const RemoveIconButton = (props) => {
 
 const SeenButton = (props) => {
 	if (!props.isSeen) {
-
 		return (
 			<MuiThemeProvider theme={theme}>
 				<div className='seen-movie-button'>
@@ -39,7 +38,7 @@ const SeenButton = (props) => {
 					</IconButton>
 				</div>
 			</MuiThemeProvider>
-		)
+		);
 	}
 
 	return (
@@ -55,7 +54,37 @@ const SeenButton = (props) => {
 	)
 };
 
+const FilterSeenButton = (props) => {
+	return (
+		<MuiThemeProvider theme={theme}>
+			<div className='seen-movie-button'>
+				<IconButton
+					onClick={() => props.onClick()}
+				>
+					<Icon style={{ fontSize: 18 }} color="primary">done_all</Icon>
+				</IconButton>
+			</div>
+		</MuiThemeProvider>
+	)
+};
+
+const FilterNotSeenButton = (props) => {
+	return (
+		<MuiThemeProvider theme={theme}>
+			<div className='seen-movie-button'>
+				<IconButton
+					onClick={() => props.onClick()}
+				>
+					<Icon style={{ fontSize: 18 }} color="disabled">done_all</Icon>
+				</IconButton>
+			</div>
+		</MuiThemeProvider>
+	);
+}
+
 export {
 	RemoveIconButton,
 	SeenButton,
+	FilterSeenButton,
+	FilterNotSeenButton,
 }

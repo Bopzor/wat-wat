@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FilterSeenButton, FilterNotSeenButton } from './IconsButton.js';
 
 class AddMovieInput extends Component {
 	constructor(props) {
@@ -15,6 +16,7 @@ class AddMovieInput extends Component {
 		}
 
 		return (
+			<div className='input-and-filters'>
 				<form onSubmit={onSubmit}>
 					<input
 						id='add-movie-title'  
@@ -26,6 +28,11 @@ class AddMovieInput extends Component {
 						onChange={e => this.setState({ title: e.target.value })}
 					/>
 				</form>
+				<div className='filters'>
+					<FilterNotSeenButton onClick={() => this.props.onFilterNotSeenClick()}/>
+					<FilterSeenButton onClick={() => this.props.onFilterSeenClick()}/>
+				</div>
+			</div>
 		)
 	}
 } 

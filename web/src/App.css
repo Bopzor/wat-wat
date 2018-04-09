@@ -37,12 +37,24 @@ h3.page-title {
 	border-right: 1px dashed #CCC;
 }
 
+.input-and-filters {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border-bottom: 1px solid #CCC;
+	align-items: center;
+}
+
+.filters {
+	display: flex;
+	flex-direction: row;
+}
+
 .add-movie-input {
 	width: 93%;
 	margin-right: 5%;
 	padding: 1% 1%;
 	border: none;
-	border-bottom: 1px solid #CCC;
 	outline: none;
 }
 
