@@ -57,7 +57,15 @@ class App extends Component {
     handleSetSeenClick(movie) {
         const changedSeen = !movie.seen;
 
-        setMovieSeen(movie, changedSeen);
+        setMovieSeen(movie, changedSeen)
+            .then(movie => {
+                const movieIdx = this.state.movies.findIndex(m => m.id === movie.id);
+                const movies = this.state.movies.slice();
+
+                movies.splice(movieIdx, 1, movie);
+
+                this.setState({ movies });                 
+            })
     }
 
     handleRemoveMovie(movie) {
@@ -88,7 +96,10 @@ class App extends Component {
                           removeMovie={movie => this.handleRemoveMovie(movie)}
                         />
                     </div>
-                        <MovieDetails movie={displayMovie}/>
+                        <MovieDetails 
+                            movie={displayMovie}
+                            setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
+                        />
                 </div>
             </div>
         );

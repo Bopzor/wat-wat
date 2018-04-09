@@ -5,7 +5,10 @@ class MovieDetails extends Component {
 	createMovieDetails(movie) {
 		return (
 			<div className='movie-details'>
-				<MovieDetailsBlockInfos movie={movie} />
+				<MovieDetailsBlockInfos
+					movie={movie}
+					setSeenOnClick={() => this.props.setSeen(movie)}
+				/>
 				<div className='movie-details-plot'>
 					{movie.plot}
 				</div>
