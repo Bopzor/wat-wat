@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { RemoveIconButton } from './IconsButton.js';
+import { ListSeenButton } from './SimpleIcons.js';
 
 class MoviesList extends Component {
 
@@ -7,6 +8,7 @@ class MoviesList extends Component {
 	createMovieTitle(movie) {
 		return (
 			<div key={movie.id} className='item-list'>
+				<ListSeenButton isSeen={movie.seen}/>
 				<span 
 					className='title-item' 
 					onClick={() => this.props.onTitleClick(movie)}>{movie.title}

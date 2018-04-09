@@ -66,9 +66,12 @@ h3.page-title {
 	padding: 1% 0;
 }
 
+.list-seen-movie-icon {
+	padding: 0 1%;
+}
+
 .title-item {
 	margin-right: 5%;
-	padding-left: 2%;
 	flex: 2;
 	font-size: 16pt;
 }
@@ -76,11 +79,9 @@ h3.page-title {
 .title-item:hover {
 	font-size: 18pt;
 	cursor: pointer;
-	padding: 1.7% 0 1.7% 1.7%;
 }
 
 .remove-movie-button {
-	align-self: center;
 	padding-right: 2%;
 }
 

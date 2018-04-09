@@ -19,7 +19,7 @@ const RemoveIconButton = (props) => {
 				<IconButton
 					onClick={() => props.onClick()}
 				>
-					<Icon color="secondary">remove_circle</Icon>
+					<Icon style={{ fontSize: 24 }} color="secondary">remove_circle</Icon>
 				</IconButton>
 			</div>
 		</MuiThemeProvider>
@@ -55,6 +55,20 @@ const SeenButton = (props) => {
 };
 
 const FilterSeenButton = (props) => {
+	if (props.isSeen) {
+		return (
+				<MuiThemeProvider theme={theme}>
+					<div className='seen-movie-button'>
+						<IconButton
+							onClick={() => props.onClick()}
+						>
+							<Icon style={{ fontSize: 30 }} color="primary">done_all</Icon>
+						</IconButton>
+					</div>
+				</MuiThemeProvider>
+		)
+	}
+
 	return (
 		<MuiThemeProvider theme={theme}>
 			<div className='seen-movie-button'>
@@ -69,6 +83,20 @@ const FilterSeenButton = (props) => {
 };
 
 const FilterNotSeenButton = (props) => {
+	if (props.isSeen) {
+		return (
+				<MuiThemeProvider theme={theme}>
+					<div className='seen-movie-button'>
+						<IconButton
+							onClick={() => props.onClick()}
+						>
+							<Icon style={{ fontSize: 30 }} color="disabled">done_all</Icon>
+						</IconButton>
+					</div>
+				</MuiThemeProvider>
+		)
+	}
+
 	return (
 		<MuiThemeProvider theme={theme}>
 			<div className='seen-movie-button'>

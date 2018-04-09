@@ -29,8 +29,14 @@ class AddMovieInput extends Component {
 					/>
 				</form>
 				<div className='filters'>
-					<FilterNotSeenButton onClick={() => this.props.onFilterNotSeenClick()}/>
-					<FilterSeenButton onClick={() => this.props.onFilterSeenClick()}/>
+					<FilterNotSeenButton
+						isSeen={this.props.isSeen.notSeen}
+						onClick={() => this.props.onFilterNotSeenClick()}
+					/>
+					<FilterSeenButton
+						isSeen={this.props.isSeen.seen}
+						onClick={() => this.props.onFilterSeenClick()}
+					/>
 				</div>
 			</div>
 		)

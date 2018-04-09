@@ -50,6 +50,7 @@ class App extends Component {
         const isSeen = this.state.filter.seen;
         
         this.setState({
+            displayMovieId: null,
             filter: {
                 seen: !isSeen,
                 notSeen: false,
@@ -60,7 +61,8 @@ class App extends Component {
     handleFilterNotSeenClick() {
         const isSeen = this.state.filter.notSeen;
         
-        this.setState({ 
+        this.setState({
+            displayMovieId: null, 
             filter: {
                 seen: false,
                 notSeen: !isSeen,
@@ -125,7 +127,8 @@ class App extends Component {
                         <AddMovieInput 
                             onSubmitMovieTitle={title => this.handleSubmitTitle(title)}
                             onFilterNotSeenClick={() => this.handleFilterNotSeenClick()}
-                            onFilterSeenClick={() => this.handleFilterSeenClick()} 
+                            onFilterSeenClick={() => this.handleFilterSeenClick()}
+                            isSeen={this.state.filter} 
                         />
                         <MoviesList 
                             movies={moviesDisplay} 
