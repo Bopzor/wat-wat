@@ -11,7 +11,7 @@ const theme = createMuiTheme({
   },
 });
 
-const ListSeenButton = (props) => {
+const ListSeen = (props) => {
 	if (!props.isSeen) {
 		return (
 			<MuiThemeProvider theme={theme}>
@@ -31,4 +31,17 @@ const ListSeenButton = (props) => {
 	)
 };
 
-export { ListSeenButton }
+const SortIcon = (props) => {
+	return (
+		<MuiThemeProvider theme={theme}>
+			<div className='sort-movie-button'>
+				<Icon style={{ fontSize: 24 }} color="secondary">swap_vert</Icon>
+			</div>
+		</MuiThemeProvider>
+	)
+};
+
+export { 
+	ListSeen,
+	SortIcon,
+ }

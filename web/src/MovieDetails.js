@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MovieDetailsBlockInfos from './MovieDetailsBlockInfos.js'
+import CommentsZone from './CommentsZone.js';
 
 class MovieDetails extends Component {
 	createMovieDetails(movie) {
@@ -10,8 +11,13 @@ class MovieDetails extends Component {
 					setSeenOnClick={() => this.props.setSeen(movie)}
 				/>
 				<div className='movie-details-plot'>
-					{movie.plot}
+					<span>{movie.plot}</span>
 				</div>
+                <CommentsZone 
+                	movie={movie}
+                	onSubmitMovieComment={(author, comment) => this.props.onSubmitMovieComment(movie, author, comment)}
+                	removeMovieComment={(comment) => this.props.removeComment(movie, comment)}
+            	/>
 			</div>				
 		)
 	};

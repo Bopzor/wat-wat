@@ -10,7 +10,7 @@
  * setPlaces(places: Places) -> Promise<Movie[]>
  * setMovieSeen(movie: Movie, seen: boolean) -> Promise<Movie> 
  * addComment(movie: Movie, author: sting, comment: string) -> Promise<Movie>
- * removeComment(comment: Comment) -> Promise
+ * removeComment(movie: Movie, comment: Comment) -> Promise
  * updateComment(movie: Movie, comment: Comment, newComment: string) -> Promise<Movie>
  * 
  * Requests to OMDB API:
@@ -73,11 +73,26 @@ function addMovie(movie) {
 function removeMovie(movie) {
 	const url = BASE_URL + BASE_API_URL + '/' + movie.id
 	const opts = {
-	      method: 'DELETE',
-	    };
+	    method: 'DELETE',
+    };
 
 	    return myFetch(url, opts);
 }
+
+ function setPlaces(places) {
+ 	const url = BASE_URL + BASE_API_URL + '/sort'
+ 	const opts = {
+ 		method: 'POST',
+ 		headers: new Headers({
+ 			'Content-Type': 'application/json',
+ 		}),
+ 		body: JSON.stringify({
+ 			order: places,
+ 		}),
+ 	}
+
+ 	return myFetch(url, opts);
+ }
 
 function setMovieSeen(movie, seen) {
 	const url = BASE_URL + BASE_API_URL + '/' + movie.id
@@ -92,6 +107,31 @@ function setMovieSeen(movie, seen) {
 	    };
 
     return myFetch(url, opts);	
+}
+
+function addComment(movie, author, comment) {
+	const url = BASE_URL + BASE_API_URL + '/' + movie.id + '/comments';
+	const opts = {
+        method: 'POST',
+        headers: new Headers({
+            'Content-Type': 'application/json',
+        }),
+        body: JSON.stringify({
+            comment: comment,
+            author: author,
+        }),
+	};
+
+	return myFetch(url, opts);
+}
+
+function removeComment(movie, comment) {
+	const url = BASE_URL + BASE_API_URL + '/' + movie.id + '/comments/' + comment.id;
+	const opts = {
+	      method: 'DELETE',
+	    };
+
+	    return myFetch(url, opts);
 }
 
 /**
@@ -109,7 +149,7 @@ function getMovieDetails(title) {
 			return {
 				title: result.Title,
 	            plot: result.Plot,
-	            released: result.Realesed,
+	            released: result.Released,
 	            runtime: result.Runtime,
 	            director: result.Director,
 	            writer: result.Writer,
@@ -136,6 +176,10 @@ export {
 	getMovies,
 	addMovie,
 	removeMovie,
+	setPlaces,
+	addComment,
+	removeComment,
 	setMovieSeen,
 	getMovieDetails,
+	searchMovieTitle,
 };

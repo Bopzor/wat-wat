@@ -15,7 +15,7 @@ const theme = createMuiTheme({
 const RemoveIconButton = (props) => {
 	return (
 		<MuiThemeProvider theme={theme}>
-			<div className='remove-movie-button'>
+			<div className='remove-button'>
 				<IconButton
 					onClick={() => props.onClick()}
 				>
@@ -58,7 +58,7 @@ const FilterSeenButton = (props) => {
 	if (props.isSeen) {
 		return (
 				<MuiThemeProvider theme={theme}>
-					<div className='seen-movie-button'>
+					<div className='seen-filter-button active'>
 						<IconButton
 							onClick={() => props.onClick()}
 						>
@@ -71,7 +71,7 @@ const FilterSeenButton = (props) => {
 
 	return (
 		<MuiThemeProvider theme={theme}>
-			<div className='seen-movie-button'>
+			<div className='seen-filter-button'>
 				<IconButton
 					onClick={() => props.onClick()}
 				>
@@ -86,7 +86,7 @@ const FilterNotSeenButton = (props) => {
 	if (props.isSeen) {
 		return (
 				<MuiThemeProvider theme={theme}>
-					<div className='seen-movie-button'>
+					<div className='not-seen-filter-button active'>
 						<IconButton
 							onClick={() => props.onClick()}
 						>
@@ -99,7 +99,7 @@ const FilterNotSeenButton = (props) => {
 
 	return (
 		<MuiThemeProvider theme={theme}>
-			<div className='seen-movie-button'>
+			<div className='not-seen-filter-button'>
 				<IconButton
 					onClick={() => props.onClick()}
 				>
@@ -108,11 +108,41 @@ const FilterNotSeenButton = (props) => {
 			</div>
 		</MuiThemeProvider>
 	);
-}
+};
+
+const AddIconButton = (props) => {
+	return (
+		<MuiThemeProvider theme={theme}>
+			<div className='add-comment-button'>
+				<IconButton
+					onClick={() => props.onSubmit()}
+				>
+					<Icon style={{ fontSize: 48 }} color="secondary">add_circle</Icon>
+				</IconButton>
+			</div>
+		</MuiThemeProvider>
+	)
+};
+
+const EditIconButton = (props) => {
+	return (
+		<MuiThemeProvider theme={theme}>
+			<div className='edit-comment-button'>
+				<IconButton
+					onClick={() => props.onClick()}
+				>
+					<Icon style={{ fontSize: 24 }} color="secondary">edit</Icon>
+				</IconButton>
+			</div>
+		</MuiThemeProvider>
+	)
+};
 
 export {
 	RemoveIconButton,
 	SeenButton,
 	FilterSeenButton,
 	FilterNotSeenButton,
+	AddIconButton,
+	EditIconButton,
 }

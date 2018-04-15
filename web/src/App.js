@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
-import MoviesList from './MoviesList.js';
+import SortableComponent from './SortableComponent.js';
 import MovieDetails from './MovieDetails.js';
 import AddMovieInput from './AddMovieInput.js';
-import { getMovies, addMovie, removeMovie, setMovieSeen, getMovieDetails } from './actionsToApis.js';
+import { 
+    getMovies,
+    addMovie,
+    removeMovie,
+    setPlaces,
+    addComment,
+    removeComment,
+    setMovieSeen,
+    getMovieDetails,
+} from './actionsToApis.js';
 import './reset.css';
 import './App.css';
 
@@ -94,13 +103,22 @@ class App extends Component {
             .catch(error => console.error('Error: ', error))
     }
 
+    handleSendSortPlaces(places) {
+        return setPlaces(places)
+            .then(movies => {
+                this.setState({ movies });
+            })
+            .catch(error => console.error('Error: ', error));
+    }
+
+
     handleSetSeenClick(movie) {
         const changedSeen = !movie.seen;
 
         setMovieSeen(movie, changedSeen)
             .then(movie => {
-                const movieIdx = this.state.movies.findIndex(m => m.id === movie.id);
                 const movies = this.state.movies.slice();
+                const movieIdx = movies.findIndex(m => m.id === movie.id);
 
                 movies.splice(movieIdx, 1, movie);
 
@@ -108,15 +126,40 @@ class App extends Component {
             })
     }
 
+    handleSubmitComment(movie, author, comment) {
+        return addComment(movie, author, comment)
+            .then(movie => {
+                const movies = this.state.movies.slice();
+                const movieIdx = movies.findIndex(m => m.id === movie.id);
+                movies.splice(movieIdx, 1, movie);
+
+                this.setState({ movies });                 
+            })
+    }
+
+    handleRemoveComment(movie, comment) {
+    return removeComment(movie, comment)
+        .then(() => {
+            const movies = this.state.movies.slice();
+            const movieIdx = movies.findIndex(m => m.id === movie.id);
+            
+            movies.splice(movieIdx, 1, movie);
+
+            this.setState({ movies });
+        })
+        .catch(error => console.error('Error: ', error))
+    }
+
+
     render() {
         const displayMovie = this.state.movies.find(m => m.id === this.state.displayMovieId);
         let moviesDisplay = this.state.movies;
 
-        if (!this.state.filter.seen && this.state.filter.notSeen) {
+        if (!this.state.filter.seen && this.state.filter.notSeen)
             moviesDisplay = this.state.movies.filter(m => !m.seen);
-        } else if (this.state.filter.seen && !this.state.filter.notSeen) {
+
+        else if (this.state.filter.seen && !this.state.filter.notSeen)
             moviesDisplay = this.state.movies.filter(m => m.seen);
-        }
 
         return (
             <div className='page'>
@@ -130,15 +173,18 @@ class App extends Component {
                             onFilterSeenClick={() => this.handleFilterSeenClick()}
                             isSeen={this.state.filter} 
                         />
-                        <MoviesList 
+                        <SortableComponent
                             movies={moviesDisplay} 
                             onTitleClick={movie => this.handleTitleClick(movie)} 
                             removeMovie={movie => this.handleRemoveMovie(movie)}
+                            sendSortPlaces={places => this.handleSendSortPlaces(places)}
                         />
                     </div>
                         <MovieDetails 
                             movie={displayMovie}
                             setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
+                            onSubmitMovieComment={(displayMovie, author, comment)=> this.handleSubmitComment(displayMovie, author, comment)}
+                            removeComment={(displayMovie, comment)=> this.handleRemoveComment(displayMovie, comment)}
                         />
                 </div>
             </div>

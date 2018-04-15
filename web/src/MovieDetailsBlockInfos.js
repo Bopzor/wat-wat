@@ -16,7 +16,7 @@ const MovieDetailsBlockInfos = (props) => {
 				</div>
 				<div className='movie-details-infos'>
 					<div className='movie-details-released'>
-						<div className='movie-details-name-info'>Realesed: </div>
+						<div className='movie-details-name-info'>Released: </div>
 						{props.movie.released}
 					</div>
 					<div className='movie-details-runtime'>
