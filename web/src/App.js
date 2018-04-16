@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SortableComponent from './SortableComponent.js';
 import MovieDetails from './MovieDetails.js';
 import AddMovieInput from './AddMovieInput.js';
-import { 
+import {
     getMovies,
     addMovie,
     removeMovie,
@@ -39,7 +39,7 @@ class App extends Component {
 
     handleSubmitTitle(title) {
         return getMovieDetails(title)
-            .then(movie => {    
+            .then(movie => {
                 if (movie === null) {
                     return alert(title + ' not found.')
                 }
@@ -57,21 +57,21 @@ class App extends Component {
 
     handleFilterSeenClick() {
         const isSeen = this.state.filter.seen;
-        
+
         this.setState({
             displayMovieId: null,
             filter: {
                 seen: !isSeen,
                 notSeen: false,
             }
-        });    
+        });
     }
 
     handleFilterNotSeenClick() {
         const isSeen = this.state.filter.notSeen;
-        
+
         this.setState({
-            displayMovieId: null, 
+            displayMovieId: null,
             filter: {
                 seen: false,
                 notSeen: !isSeen,
@@ -80,7 +80,7 @@ class App extends Component {
     }
 
     handleTitleClick(movie) {
-        if (movie.id === this.state.displayMovieId) { 
+        if (movie.id === this.state.displayMovieId) {
             this.setState({
                 displayMovieId: null,
             });
@@ -122,7 +122,7 @@ class App extends Component {
 
                 movies.splice(movieIdx, 1, movie);
 
-                this.setState({ movies });                 
+                this.setState({ movies });
             })
     }
 
@@ -133,21 +133,21 @@ class App extends Component {
                 const movieIdx = movies.findIndex(m => m.id === movie.id);
                 movies.splice(movieIdx, 1, movie);
 
-                this.setState({ movies });                 
+                this.setState({ movies });
             })
     }
 
     handleRemoveComment(movie, comment) {
-    return removeComment(movie, comment)
-        .then(() => {
-            const movies = this.state.movies.slice();
-            const movieIdx = movies.findIndex(m => m.id === movie.id);
-            
-            movies.splice(movieIdx, 1, movie);
+        return removeComment(movie, comment)
+            .then(() => {
+                const movies = this.state.movies.slice();
+                const movieIdx = movies.findIndex(m => m.id === movie.id);
 
-            this.setState({ movies });
-        })
-        .catch(error => console.error('Error: ', error))
+                movies.splice(movieIdx, 1, movie);
+
+                this.setState({ movies });
+            })
+            .catch(error => console.error('Error: ', error))
     }
 
 
@@ -163,30 +163,39 @@ class App extends Component {
 
         return (
             <div className='page'>
+                
                 <h1 className='page-title'>Whatcha Watchin?</h1>
                 <h3 className='page-title'>(Wat-Wat?)</h3>
+                
                 <div className='content-page'>
+                    
                     <div className='left-side'>
-                        <AddMovieInput 
+                        
+                        <AddMovieInput
                             onSubmitMovieTitle={title => this.handleSubmitTitle(title)}
                             onFilterNotSeenClick={() => this.handleFilterNotSeenClick()}
                             onFilterSeenClick={() => this.handleFilterSeenClick()}
                             isSeen={this.state.filter}
                         />
+
                         <SortableComponent
-                            movies={moviesDisplay} 
-                            onTitleClick={movie => this.handleTitleClick(movie)} 
+                            movies={moviesDisplay}
+                            onTitleClick={movie => this.handleTitleClick(movie)}
                             removeMovie={movie => this.handleRemoveMovie(movie)}
                             sendSortPlaces={places => this.handleSendSortPlaces(places)}
                         />
+
                     </div>
-                        <MovieDetails 
-                            movie={displayMovie}
-                            setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
-                            onSubmitMovieComment={(displayMovie, author, comment)=> this.handleSubmitComment(displayMovie, author, comment)}
-                            removeComment={(displayMovie, comment)=> this.handleRemoveComment(displayMovie, comment)}
-                        />
+                    
+                    <MovieDetails
+                        movie={displayMovie}
+                        setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
+                        onSubmitMovieComment={(displayMovie, author, comment)=> this.handleSubmitComment(displayMovie, author, comment)}
+                        removeComment={(displayMovie, comment)=> this.handleRemoveComment(displayMovie, comment)}
+                    />
+                
                 </div>
+            
             </div>
         );
     }

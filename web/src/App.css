@@ -100,7 +100,7 @@ h3.page-title {
 .movie-details {
 	flex: 1;
 	display: flex;
-	flex-direction: column;	
+	flex-direction: column;
 }
 
 .movie-details-block-infos {
@@ -123,7 +123,7 @@ img {
 
 .movie-details-with-title-infos {
 	display: flex;
-	flex-direction: column;	
+	flex-direction: column;
 	flex: 2;
 }
 
@@ -148,14 +148,14 @@ img {
 .movie-details-plot {
 	text-align: center;
 	padding: 2% 0;
-	margin-bottom: 3%; 
+	margin-bottom: 3%;
 }
 
 .full-comment-input {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin: 0 4%; 
+	margin: 0 4%;
 }
 
 .comment-input {
@@ -168,7 +168,7 @@ img {
 	border: none;
 }
 
-textarea, input {  
+textarea, input {
   font-family: Cabin;
   font-size: 12pt;
 }
@@ -190,17 +190,17 @@ textarea, input {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	padding: 1% 0% 1% 4%;  
+	padding: 1% 0% 1% 4%;
 	font-size: 10pt;
 }
 
-.comment:nth-child(odd) { 
-	background-color: #E6E6E6; 
+.comment:nth-child(odd) {
+	background-color: #E6E6E6;
 }
 
 .comment-text {
 	display: flex;
-	flex-direction: column; 
+	flex-direction: column;
 }
 
 .comment-author {

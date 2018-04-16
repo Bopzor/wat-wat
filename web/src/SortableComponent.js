@@ -13,15 +13,19 @@ const DragHandle = SortableHandle(() => <SortIcon />); // This can be any compon
 const SortableItem = SortableElement(props => {
 	return (
 		<li className='item-list'>
+
 			<ListSeen isSeen={props.movie.seen} />
-			<span 
-				className='title-item' 
+			<span
+				className='title-item'
 				onClick={() => props.onTitleClick(props.movie)}
 			>
 				{props.movie.title}
 			</span>
+
 			<DragHandle />
+
 			<RemoveIconButton onClick={() => props.removeMovie(props.movie)}/>
+
 		</li>
   	);
 });
@@ -31,6 +35,7 @@ const SortableList = SortableContainer(props => {
 
 	return (
 		<div className='list'>
+
 			<ul className='movies-list'>
 				{movies.map((movie, index) => (
 			    	<SortableItem
@@ -42,6 +47,7 @@ const SortableList = SortableContainer(props => {
 		    		/>
 				))}
 			</ul>
+			
 		</div>
 	);
 });
@@ -73,7 +79,7 @@ class SortableComponent extends Component {
 
 		this.props.sendSortPlaces(places);
 	};
-	
+
 	render() {
 		const movies = this.state.movies;
 

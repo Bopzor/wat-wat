@@ -15,18 +15,22 @@ const ListSeen = (props) => {
 	if (!props.isSeen) {
 		return (
 			<MuiThemeProvider theme={theme}>
+
 				<div className='list-seen-movie-icon'>
 					<Icon style={{ fontSize: 18 }} color="disabled">done_all</Icon>
 				</div>
+
 			</MuiThemeProvider>
 		);
 	}
 
 	return (
 		<MuiThemeProvider theme={theme}>
+
 			<div className='list-seen-movie-icon'>
 					<Icon style={{ fontSize: 18 }} color="primary">done_all</Icon>
 			</div>
+
 		</MuiThemeProvider>
 	)
 };
@@ -34,14 +38,16 @@ const ListSeen = (props) => {
 const SortIcon = (props) => {
 	return (
 		<MuiThemeProvider theme={theme}>
+
 			<div className='sort-movie-button'>
 				<Icon style={{ fontSize: 24 }} color="secondary">swap_vert</Icon>
 			</div>
+			
 		</MuiThemeProvider>
 	)
 };
 
-export { 
+export {
 	ListSeen,
 	SortIcon,
  }

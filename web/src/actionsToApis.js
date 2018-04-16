@@ -2,17 +2,17 @@
  * Requests to Wat-Wat API:
  * Places: {
  * 	[id: int]: int,
- * } 
+ * }
  *
  * getMovies() -> Promise<Movie[]>
  * addMovie(movie: Movie) -> Promise<Movie>
  * removeMovie(movie: Movie) -> Promise
  * setPlaces(places: Places) -> Promise<Movie[]>
- * setMovieSeen(movie: Movie, seen: boolean) -> Promise<Movie> 
- * addComment(movie: Movie, author: sting, comment: string) -> Promise<Movie>
+ * setMovieSeen(movie: Movie, seen: boolean) -> Promise<Movie>
+ * addComment(movie: Movie, author: string, comment: string) -> Promise<Movie>
  * removeComment(movie: Movie, comment: Comment) -> Promise
  * updateComment(movie: Movie, comment: Comment, newComment: string) -> Promise<Movie>
- * 
+ *
  * Requests to OMDB API:
  *
  * getMovieDetails(title: sting) -> Promise<Movie>
@@ -25,7 +25,7 @@ const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8';
 
 function myFetch(url, opts) {
 	opts = opts || {};
-	
+
 	console.log(url, opts);
 
 	return fetch(url, opts)
@@ -52,8 +52,8 @@ function myFetch(url, opts) {
  */
 
 function getMovies() {
-	const url = BASE_URL + BASE_API_URL;	
-	
+	const url = BASE_URL + BASE_API_URL;
+
 	return myFetch(url);
 }
 
@@ -106,7 +106,7 @@ function setMovieSeen(movie, seen) {
 	        }),
 	    };
 
-    return myFetch(url, opts);	
+    return myFetch(url, opts);
 }
 
 function addComment(movie, author, comment) {
@@ -131,7 +131,7 @@ function removeComment(movie, comment) {
 	      method: 'DELETE',
 	    };
 
-	    return myFetch(url, opts);
+	return myFetch(url, opts);
 }
 
 /**
@@ -145,7 +145,7 @@ function getMovieDetails(title) {
 		.then(result => {
 			if(result.Response !== 'True')
 				return null;
-			
+
 			return {
 				title: result.Title,
 	            plot: result.Plot,
@@ -166,7 +166,7 @@ function searchMovieTitle(query) {
 		.then(result => {
 			if(result.Response !== 'True')
 				return null;
-			
+
 			return result.Search.map(movie => movie.Title);
 		})
 		.catch(error => console.error('Error:', error));
