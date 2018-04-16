@@ -24,7 +24,7 @@ class App extends Component {
             filter: {
                 seen: false,
                 notSeen: false,
-            },    
+            },
         }
     }
 
@@ -171,7 +171,7 @@ class App extends Component {
                             onSubmitMovieTitle={title => this.handleSubmitTitle(title)}
                             onFilterNotSeenClick={() => this.handleFilterNotSeenClick()}
                             onFilterSeenClick={() => this.handleFilterSeenClick()}
-                            isSeen={this.state.filter} 
+                            isSeen={this.state.filter}
                         />
                         <SortableComponent
                             movies={moviesDisplay} 
