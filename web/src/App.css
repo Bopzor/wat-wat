@@ -67,12 +67,6 @@ h3.page-title {
 	cursor: pointer;
 }
 
-.movie-details {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-}
-
 .movie-details-block-infos {
 	display: flex;
 	flex-direction: row;
@@ -114,10 +108,3 @@ img {
 	font-weight: bold;
 	margin: 0.4% 0;
 }
-
-.movie-details-plot {
-	text-align: center;
-	padding: 2% 0;
-	margin-bottom: 3%;
-}
-
