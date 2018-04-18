@@ -1,0 +1,26 @@
+textarea, input {
+  font-family: Cabin;
+  font-size: 12pt;
+}
+
+.full-comment-input {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 0 4%;
+}
+
+.comment-input {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+#author-name {
+	border: none;
+}
+
+.comment-text {
+	display: flex;
+	flex-direction: column;
+}

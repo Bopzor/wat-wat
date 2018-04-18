@@ -130,28 +130,6 @@ img {
 	margin-bottom: 3%;
 }
 
-.full-comment-input {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	margin: 0 4%;
-}
-
-.comment-input {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-}
-
-#author-name {
-	border: none;
-}
-
-textarea, input {
-  font-family: Cabin;
-  font-size: 12pt;
-}
-
 .add-comment-button {
 	padding-left: 2%;
 }
@@ -175,11 +153,6 @@ textarea, input {
 
 .comment:nth-child(odd) {
 	background-color: #E6E6E6;
-}
-
-.comment-text {
-	display: flex;
-	flex-direction: column;
 }
 
 .comment-author {
