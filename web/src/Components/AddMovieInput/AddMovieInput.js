@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
-import { searchMovieTitle } from './actionsToApis.js'
-import { FilterSeenButton, FilterNotSeenButton } from './IconsButton.js';
+import { searchMovieTitle } from '../../actionsToApis.js'
+import { FilterSeenButton, FilterNotSeenButton } from '../IconsButton/IconsButton.js';
 import './AddMovieInput.css'
 
 const getSuggestionValue = suggestion => suggestion;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import MovieDetailsBlockInfos from './MovieDetailsBlockInfos.js'
-import CommentsZone from './CommentsZone.js';
+import MovieDetailsBlockInfos from '../MovieDetailsBlockInfos/MovieDetailsBlockInfos.js'
+import CommentsZone from '../CommentsZone/CommentsZone.js';
 import './MovieDetails.css'
 
 class MovieDetails extends Component {

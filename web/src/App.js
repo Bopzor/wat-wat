@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import MoviesList from './MoviesList.js';
-import MovieDetails from './MovieDetails.js';
-import AddMovieInput from './AddMovieInput.js';
+import MoviesList from './Components/MoviesList/MoviesList.js';
+import MovieDetails from './Components/MovieDetails/MovieDetails.js';
+import AddMovieInput from './Components/AddMovieInput/AddMovieInput.js';
 import {
   getMovies,
   addMovie,

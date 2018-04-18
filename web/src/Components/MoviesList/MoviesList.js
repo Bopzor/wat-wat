@@ -5,8 +5,9 @@ import {
   SortableHandle,
   arrayMove,
 } from 'react-sortable-hoc';
-import { RemoveIconButton } from './IconsButton.js';
-import { ListSeen, SortIcon,  } from './SimpleIcons.js';
+import { RemoveIconButton } from '../IconsButton/IconsButton.js';
+import { ListSeen, SortIcon,  } from '../SimpleIcons/SimpleIcons.js';
+import './MoviesList.css'
 
 const DragHandle = SortableHandle(() => <SortIcon />);
 

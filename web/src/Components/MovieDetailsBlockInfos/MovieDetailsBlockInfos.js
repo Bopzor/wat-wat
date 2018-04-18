@@ -1,5 +1,5 @@
 import React from 'react';
-import { SeenButton } from './IconsButton.js';
+import { SeenButton } from '../IconsButton/IconsButton.js';
 import './MovieDetailsBlockInfos.css'
 
 const MovieDetailsBlockInfos = (props) => {

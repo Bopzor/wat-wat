@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import CommentInput from './CommentInput.js'
-import { RemoveIconButton, EditIconButton } from './IconsButton.js';
+import CommentInput from '../CommentInput/CommentInput.js'
+import { RemoveIconButton, EditIconButton } from '../IconsButton/IconsButton.js';
 import './CommentsZone.css'
 
 class CommentsZone extends Component {

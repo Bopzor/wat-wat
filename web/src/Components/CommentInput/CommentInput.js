@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AddIconButton } from './IconsButton.js';
+import { AddIconButton } from '../IconsButton/IconsButton.js';
 import './CommentInput.css'
 
 class CommentInput extends Component {
