@@ -1,0 +1,12 @@
+.remove-button {
+	padding: 0 2%;
+}
+
+.remove-button > button {
+	max-width: 24px;
+	max-height: 24px;
+}
+
+.add-comment-button {
+	padding-left: 2%;
+}

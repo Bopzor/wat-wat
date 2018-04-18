@@ -67,15 +67,6 @@ h3.page-title {
 	cursor: pointer;
 }
 
-.remove-button {
-	padding: 0 2%;
-}
-
-.remove-button > button {
-	max-width: 24px;
-	max-height: 24px;
-}
-
 .movie-details {
 	flex: 1;
 	display: flex;
@@ -130,6 +121,3 @@ img {
 	margin-bottom: 3%;
 }
 
-.add-comment-button {
-	padding-left: 2%;
-}
