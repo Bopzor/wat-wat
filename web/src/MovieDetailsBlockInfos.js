@@ -7,8 +7,8 @@ const MovieDetailsBlockInfos = (props) => {
 
 			<div className='movie-details-poster'>
 				<img
-				src={props.movie.poster}
-				alt={props.movie.title}
+					src={props.movie.poster}
+					alt={props.movie.title}
 				/>
 			</div>
 

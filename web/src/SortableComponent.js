@@ -8,7 +8,7 @@ import {
 import { RemoveIconButton } from './IconsButton.js';
 import { ListSeen, SortIcon,  } from './SimpleIcons.js';
 
-const DragHandle = SortableHandle(() => <SortIcon />); // This can be any component you want
+const DragHandle = SortableHandle(() => <SortIcon />);
 
 const SortableItem = SortableElement(props => {
 	return (
@@ -27,7 +27,7 @@ const SortableItem = SortableElement(props => {
 			<RemoveIconButton onClick={() => props.removeMovie(props.movie)}/>
 
 		</li>
-  	);
+	);
 });
 
 const SortableList = SortableContainer(props => {
@@ -38,13 +38,13 @@ const SortableList = SortableContainer(props => {
 
 			<ul className='movies-list'>
 				{movies.map((movie, index) => (
-			    	<SortableItem
-			    		key={`movie-${index}`}
-			    		index={index}
-			    		movie={movie}
-		    			onTitleClick={movie => props.onTitleClick(movie)}
-		    			removeMovie={movie => props.removeMovie(movie)}
-		    		/>
+		    	<SortableItem
+		    		key={`movie-${index}`}
+		    		index={index}
+		    		movie={movie}
+	    			onTitleClick={movie => props.onTitleClick(movie)}
+	    			removeMovie={movie => props.removeMovie(movie)}
+	    		/>
 				))}
 			</ul>
 
@@ -71,7 +71,7 @@ class SortableComponent extends Component {
 		const places = {};
 
 		this.setState({
-	  		movies: newMoviesOrder,
+  		movies: newMoviesOrder,
 		});
 
 		for (let i = 0; i < newMoviesOrder.length; i++)

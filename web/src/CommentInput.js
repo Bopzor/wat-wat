@@ -42,8 +42,8 @@ class CommentInput extends Component {
 				/>
 
 			</div>
-	    )
-    }
+    )
+  }
 }
 
 export default CommentInput;

@@ -59,24 +59,24 @@ function getMovies() {
 
 function addMovie(movie) {
 	const url = BASE_URL + BASE_API_URL;
-    const opts = {
-        method: 'POST',
-        headers: new Headers({
-    	   'Content-Type': 'application/json',
-	    }),
-        body: JSON.stringify(movie),
-    };
+  const opts = {
+    method: 'POST',
+    headers: new Headers({
+	   'Content-Type': 'application/json',
+  }),
+    body: JSON.stringify(movie),
+  };
 
-    return myFetch(url, opts);
+  return myFetch(url, opts);
 }
 
 function removeMovie(movie) {
 	const url = BASE_URL + BASE_API_URL + '/' + movie.id
 	const opts = {
 	    method: 'DELETE',
-    };
+  };
 
-	    return myFetch(url, opts);
+  return myFetch(url, opts);
 }
 
  function setPlaces(places) {
@@ -97,29 +97,29 @@ function removeMovie(movie) {
 function setMovieSeen(movie, seen) {
 	const url = BASE_URL + BASE_API_URL + '/' + movie.id
 	const opts = {
-	        method: 'PUT',
-	        headers: new Headers({
-	    	   'Content-Type': 'application/json',
-		    }),
-	        body: JSON.stringify({
-	        	seen: seen,
-	        }),
-	    };
+    method: 'PUT',
+    headers: new Headers({
+	   'Content-Type': 'application/json',
+	  }),
+    body: JSON.stringify({
+    	seen: seen,
+    }),
+  };
 
-    return myFetch(url, opts);
+  return myFetch(url, opts);
 }
 
 function addComment(movie, author, comment) {
 	const url = BASE_URL + BASE_API_URL + '/' + movie.id + '/comments';
 	const opts = {
-        method: 'POST',
-        headers: new Headers({
-            'Content-Type': 'application/json',
-        }),
-        body: JSON.stringify({
-            comment: comment,
-            author: author,
-        }),
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
+    body: JSON.stringify({
+      comment: comment,
+      author: author,
+    }),
 	};
 
 	return myFetch(url, opts);
@@ -128,8 +128,8 @@ function addComment(movie, author, comment) {
 function removeComment(movie, comment) {
 	const url = BASE_URL + BASE_API_URL + '/' + movie.id + '/comments/' + comment.id;
 	const opts = {
-	      method: 'DELETE',
-	    };
+    method: 'DELETE',
+  };
 
 	return myFetch(url, opts);
 }
@@ -148,13 +148,13 @@ function getMovieDetails(title) {
 
 			return {
 				title: result.Title,
-	            plot: result.Plot,
-	            released: result.Released,
-	            runtime: result.Runtime,
-	            director: result.Director,
-	            writer: result.Writer,
-	            actors: result.Actors,
-	            poster: result.Poster,
+        plot: result.Plot,
+        released: result.Released,
+        runtime: result.Runtime,
+        director: result.Director,
+        writer: result.Writer,
+        actors: result.Actors,
+        poster: result.Poster,
 			};
 		});
 }

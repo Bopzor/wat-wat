@@ -28,7 +28,7 @@ const ListSeen = (props) => {
 		<MuiThemeProvider theme={theme}>
 
 			<div className='list-seen-movie-icon'>
-					<Icon style={{ fontSize: 18 }} color="primary">done_all</Icon>
+				<Icon style={{ fontSize: 18 }} color="primary">done_all</Icon>
 			</div>
 
 		</MuiThemeProvider>

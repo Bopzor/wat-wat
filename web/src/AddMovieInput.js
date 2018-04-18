@@ -8,11 +8,11 @@ const getSuggestionValue = suggestion => suggestion;
 
 const renderSuggestion = suggestion => {
   return (
-      <div>
-      	{suggestion}
-      </div>
+    <div>
+    	{suggestion}
+    </div>
   );
-}
+};
 
 class AddMovieInput extends Component {
 	constructor(props) {
@@ -35,9 +35,9 @@ class AddMovieInput extends Component {
 	};
 
 	onSuggestionsClearRequested = () => {
-	    this.setState({
-	      suggestions: []
-	    });
+    this.setState({
+      suggestions: []
+    });
 	};
 
 	onChange = e => {

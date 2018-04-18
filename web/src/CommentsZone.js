@@ -7,17 +7,17 @@ class CommentsZone extends Component {
 		return (
 			<div key={comment.id} className='comment'>
 
-		        <div className='comment-text'>
+        <div className='comment-text'>
 
-		            <div className="comment-author">{comment.author} :</div>
-		            <div className="comment-message">{comment.comment}</div>
+          <div className="comment-author">{comment.author} :</div>
+          <div className="comment-message">{comment.comment}</div>
 
-	            </div>
+        </div>
 
-	            <div className='comment-buttons'>
+        <div className='comment-buttons'>
 
-	            	<EditIconButton />
-	            	<RemoveIconButton onClick={() => this.props.removeMovieComment(comment)} />
+        	<EditIconButton />
+        	<RemoveIconButton onClick={() => this.props.removeMovieComment(comment)} />
 
 				</div>
 

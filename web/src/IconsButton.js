@@ -72,21 +72,21 @@ const SeenButton = (props) => {
 const FilterSeenButton = (props) => {
 	if (props.isSeen) {
 		return (
-				<MuiThemeProvider theme={theme}>
+			<MuiThemeProvider theme={theme}>
 
-					<div className='seen-filter-button active'>
+				<div className='seen-filter-button active'>
 
-						<IconButton
-							onClick={() => props.onClick()}
-						>
+					<IconButton
+						onClick={() => props.onClick()}
+					>
 
-							<Icon style={{ fontSize: 30 }} color="primary">done_all</Icon>
+						<Icon style={{ fontSize: 30 }} color="primary">done_all</Icon>
 
-						</IconButton>
+					</IconButton>
 
-					</div>
+				</div>
 
-				</MuiThemeProvider>
+			</MuiThemeProvider>
 		)
 	}
 
@@ -112,21 +112,21 @@ const FilterSeenButton = (props) => {
 const FilterNotSeenButton = (props) => {
 	if (props.isSeen) {
 		return (
-				<MuiThemeProvider theme={theme}>
+			<MuiThemeProvider theme={theme}>
 
-					<div className='not-seen-filter-button active'>
+				<div className='not-seen-filter-button active'>
 
-						<IconButton
-							onClick={() => props.onClick()}
-						>
+					<IconButton
+						onClick={() => props.onClick()}
+					>
 
-							<Icon style={{ fontSize: 30 }} color="disabled">done_all</Icon>
+						<Icon style={{ fontSize: 30 }} color="disabled">done_all</Icon>
 
-						</IconButton>
+					</IconButton>
 
-					</div>
+				</div>
 
-				</MuiThemeProvider>
+			</MuiThemeProvider>
 		)
 	}
 

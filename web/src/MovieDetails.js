@@ -16,11 +16,11 @@ class MovieDetails extends Component {
 					<span>{movie.plot}</span>
 				</div>
 
-                <CommentsZone
-                	movie={movie}
-                	onSubmitMovieComment={(author, comment) => this.props.onSubmitMovieComment(movie, author, comment)}
-                	removeMovieComment={(comment) => this.props.removeComment(movie, comment)}
-            	/>
+        <CommentsZone
+        	movie={movie}
+        	onSubmitMovieComment={(author, comment) => this.props.onSubmitMovieComment(movie, author, comment)}
+        	removeMovieComment={(comment) => this.props.removeComment(movie, comment)}
+	    	/>
 
 			</div>
 		)
