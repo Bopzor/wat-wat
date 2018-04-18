@@ -45,6 +45,7 @@ h3.page-title {
 	justify-content: space-between;
 	border-bottom: 1px solid #CCC;
 	align-items: center;
+	height: 50px;
 }
 
 .filters {

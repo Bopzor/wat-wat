@@ -2,33 +2,15 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { searchMovieTitle } from './actionsToApis.js'
 import { FilterSeenButton, FilterNotSeenButton } from './IconsButton.js';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
-import { MenuItem } from 'material-ui/Menu';
-import { withStyles } from 'material-ui/styles';
+import './autosuggest.css'
 
 const getSuggestionValue = suggestion => suggestion;
 
-function renderSuggestion(suggestion, { query, isHighlighted }) {
-  const matches = match(suggestion, query);
-  const parts = parse(suggestion, matches);
-
+const renderSuggestion = suggestion => {
   return (
-    <MenuItem selected={isHighlighted} component="div">
       <div>
-        {parts.map((part, index) => {
-          return part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 300 }}>
-              {part.text}
-            </span>
-          ) : (
-            <strong key={String(index)} style={{ fontWeight: 500 }}>
-              {part.text}
-            </strong>
-          );
-        })}
+      	{suggestion}
       </div>
-    </MenuItem>
   );
 }
 
@@ -68,7 +50,7 @@ class AddMovieInput extends Component {
 	  return value.trim().length > 2;
 	};
 
-	onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex,	method }) => this.setState({ title: suggestion});
+	onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => this.setState({ title: suggestion});
 
 	render() {
 		const { title, suggestions } = this.state;
@@ -82,13 +64,13 @@ class AddMovieInput extends Component {
 		const inputProps = {
 			placeholder: 'New Movie Title',
 			value: title,
-			onChange: this.onChange
+			onChange: this.onChange,
 		};
 
 		return (
 			<div className='input-and-filters'>
 
-				<form onSubmit={onSubmit}>
+				<form className='form-add-movie-title' onSubmit={onSubmit}>
 					<Autosuggest
 						id='add-movie-title'
 						className='add-movie-input'
@@ -112,8 +94,8 @@ class AddMovieInput extends Component {
 					<FilterSeenButton
 						isSeen={this.props.isSeen.seen}
 						onClick={() => this.props.onFilterSeenClick()}
-
 					/>
+
 				</div>
 
 			</div>
