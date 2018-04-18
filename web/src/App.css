@@ -38,31 +38,3 @@ h3.page-title {
 	flex: 1;
 	border-right: 1px dashed #CCC;
 }
-
-.list {
-	overflow: auto;
-}
-
-.item-list{
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	border-bottom: 1px solid #CCC;
-	padding: 1% 0;
-}
-
-.list-seen-movie-icon {
-	padding: 0 1%;
-}
-
-.title-item {
-	margin-right: 5%;
-	flex: 2;
-	font-size: 16pt;
-}
-
-.title-item:hover {
-	margin-right: 5%;
-	font-size: 18pt;
-	cursor: pointer;
-}
