@@ -8,14 +8,14 @@ class CommentsZone extends Component {
 			<div key={comment.id} className='comment'>
 
 		        <div className='comment-text'>
-		            
+
 		            <div className="comment-author">{comment.author} :</div>
 		            <div className="comment-message">{comment.comment}</div>
 
 	            </div>
-	            
+
 	            <div className='comment-buttons'>
-	            
+
 	            	<EditIconButton />
 	            	<RemoveIconButton onClick={() => this.props.removeMovieComment(comment)} />
 
@@ -33,7 +33,7 @@ class CommentsZone extends Component {
 				<CommentInput
 					onSubmitMovieComment={(author, comment) => this.props.onSubmitMovieComment(author, comment)}
 				/>
-				
+
 				<div className='comments-zone'>
 					{this.props.movie.comments.map(comment => this.createMovieComment(comment))}
 				</div>

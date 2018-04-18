@@ -15,7 +15,7 @@ const theme = createMuiTheme({
 const RemoveIconButton = (props) => {
 	return (
 		<MuiThemeProvider theme={theme}>
-			
+
 			<div className='remove-button'>
 				<IconButton
 					onClick={() => props.onClick()}
@@ -34,12 +34,12 @@ const SeenButton = (props) => {
 	if (!props.isSeen) {
 		return (
 			<MuiThemeProvider theme={theme}>
-				
+
 				<div className='seen-movie-button'>
 					<IconButton
 						onClick={() => props.onClick()}
 					>
-						
+
 						<Icon style={{ fontSize: 48 }} color="disabled">done_all</Icon>
 
 					</IconButton>
@@ -52,9 +52,9 @@ const SeenButton = (props) => {
 
 	return (
 		<MuiThemeProvider theme={theme}>
-			
+
 			<div className='seen-movie-button'>
-				
+
 				<IconButton
 					onClick={() => props.onClick()}
 				>
@@ -184,7 +184,7 @@ const EditIconButton = (props) => {
 				</IconButton>
 
 			</div>
-			
+
 		</MuiThemeProvider>
 	)
 };

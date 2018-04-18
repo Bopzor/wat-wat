@@ -47,7 +47,7 @@ const SortableList = SortableContainer(props => {
 		    		/>
 				))}
 			</ul>
-			
+
 		</div>
 	);
 });

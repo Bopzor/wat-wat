@@ -53,7 +53,7 @@ const MovieDetailsBlockInfos = (props) => {
 				onClick={movie => props.setSeenOnClick(movie)}
 				isSeen={props.movie.seen}
 			/>
-			
+
 		</div>
 	)
 }

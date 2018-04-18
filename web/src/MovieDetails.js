@@ -21,7 +21,7 @@ class MovieDetails extends Component {
                 	onSubmitMovieComment={(author, comment) => this.props.onSubmitMovieComment(movie, author, comment)}
                 	removeMovieComment={(comment) => this.props.removeComment(movie, comment)}
             	/>
-            	
+
 			</div>
 		)
 	};

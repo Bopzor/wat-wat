@@ -15,7 +15,7 @@ class CommentInput extends Component {
 
 		return (
 			<div className="full-comment-input">
-				
+
 				<form
 					className="comment-input"
 				>
@@ -40,7 +40,7 @@ class CommentInput extends Component {
 					onSubmit={(author, comment) =>
 						this.props.onSubmitMovieComment(this.state.author, this.state.comment)}
 				/>
-				
+
 			</div>
 	    )
     }

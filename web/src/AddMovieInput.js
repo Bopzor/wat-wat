@@ -2,12 +2,35 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { searchMovieTitle } from './actionsToApis.js'
 import { FilterSeenButton, FilterNotSeenButton } from './IconsButton.js';
+import match from 'autosuggest-highlight/match';
+import parse from 'autosuggest-highlight/parse';
+import { MenuItem } from 'material-ui/Menu';
+import { withStyles } from 'material-ui/styles';
 
 const getSuggestionValue = suggestion => suggestion;
 
-const renderSuggestion = suggestion => (
-		<div>{suggestion}</div>
-);
+function renderSuggestion(suggestion, { query, isHighlighted }) {
+  const matches = match(suggestion, query);
+  const parts = parse(suggestion, matches);
+
+  return (
+    <MenuItem selected={isHighlighted} component="div">
+      <div>
+        {parts.map((part, index) => {
+          return part.highlight ? (
+            <span key={String(index)} style={{ fontWeight: 300 }}>
+              {part.text}
+            </span>
+          ) : (
+            <strong key={String(index)} style={{ fontWeight: 500 }}>
+              {part.text}
+            </strong>
+          );
+        })}
+      </div>
+    </MenuItem>
+  );
+}
 
 class AddMovieInput extends Component {
 	constructor(props) {
@@ -41,6 +64,12 @@ class AddMovieInput extends Component {
 		});
 	};
 
+	shouldRenderSuggestions = value => {
+	  return value.trim().length > 2;
+	};
+
+	onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex,	method }) => this.setState({ title: suggestion});
+
 	render() {
 		const { title, suggestions } = this.state;
 
@@ -58,27 +87,24 @@ class AddMovieInput extends Component {
 
 		return (
 			<div className='input-and-filters'>
-				
+
 				<form onSubmit={onSubmit}>
-				
-					<input
+					<Autosuggest
 						id='add-movie-title'
 						className='add-movie-input'
-						type='text'
-						name='NewMovie'
-					/>
-					<Autosuggest
 						suggestions={suggestions}
 						onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
 						onSuggestionsClearRequested={this.onSuggestionsClearRequested}
 						getSuggestionValue={getSuggestionValue}
 						renderSuggestion={renderSuggestion}
+						shouldRenderSuggestions={this.shouldRenderSuggestions}
 						inputProps={inputProps}
+						onSuggestionSelected={this.onSuggestionSelected}
 					/>
 				</form>
 
 				<div className='filters'>
-				
+
 					<FilterNotSeenButton
 						isSeen={this.props.isSeen.notSeen}
 						onClick={() => this.props.onFilterNotSeenClick()}
@@ -86,10 +112,10 @@ class AddMovieInput extends Component {
 					<FilterSeenButton
 						isSeen={this.props.isSeen.seen}
 						onClick={() => this.props.onFilterSeenClick()}
-				
+
 					/>
 				</div>
-			
+
 			</div>
 		)
 	}

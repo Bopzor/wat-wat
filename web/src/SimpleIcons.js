@@ -42,7 +42,7 @@ const SortIcon = (props) => {
 			<div className='sort-movie-button'>
 				<Icon style={{ fontSize: 24 }} color="secondary">swap_vert</Icon>
 			</div>
-			
+
 		</MuiThemeProvider>
 	)
 };
