@@ -69,35 +69,36 @@ class AddMovieInput extends Component {
 		};
 
 		return (
-			<div className='input-and-filters'>
+			<div>
+				<div className='input-and-filters'>
 
-				<form className='form-add-movie-title' onSubmit={onSubmit}>
-					<Autosuggest
-						id='add-movie-title'
-						className='add-movie-input'
-						suggestions={suggestions}
-						onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-						onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-						getSuggestionValue={getSuggestionValue}
-						renderSuggestion={renderSuggestion}
-						shouldRenderSuggestions={this.shouldRenderSuggestions}
-						inputProps={inputProps}
-						onSuggestionSelected={this.onSuggestionSelected}
-					/>
-				</form>
+					<div className='filters'>
 
-				<div className='filters'>
+						<FilterNotSeenButton
+							isSeen={this.props.isSeen.notSeen}
+							onClick={() => this.props.onFilterNotSeenClick()}
+						/>
+						<FilterSeenButton
+							isSeen={this.props.isSeen.seen}
+							onClick={() => this.props.onFilterSeenClick()}
+						/>
 
-					<FilterNotSeenButton
-						isSeen={this.props.isSeen.notSeen}
-						onClick={() => this.props.onFilterNotSeenClick()}
-					/>
-					<FilterSeenButton
-						isSeen={this.props.isSeen.seen}
-						onClick={() => this.props.onFilterSeenClick()}
-					/>
-
+					</div>
 				</div>
+
+					<form className='form-add-movie-title' onSubmit={onSubmit}>
+						<Autosuggest
+							id='add-movie-title'
+							suggestions={suggestions}
+							onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+							onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+							getSuggestionValue={getSuggestionValue}
+							renderSuggestion={renderSuggestion}
+							shouldRenderSuggestions={this.shouldRenderSuggestions}
+							inputProps={inputProps}
+							onSuggestionSelected={this.onSuggestionSelected}
+						/>
+					</form>
 
 			</div>
 		)
