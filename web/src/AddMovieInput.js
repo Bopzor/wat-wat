@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { searchMovieTitle } from './actionsToApis.js'
 import { FilterSeenButton, FilterNotSeenButton } from './IconsButton.js';
-import './autosuggest.css'
+import './AddMovieInput.css'
 
 const getSuggestionValue = suggestion => suggestion;
 
@@ -50,7 +50,8 @@ class AddMovieInput extends Component {
 	  return value.trim().length > 2;
 	};
 
-	onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => this.setState({ title: suggestion});
+	onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => 
+		this.setState({ title: suggestion});
 
 	render() {
 		const { title, suggestions } = this.state;
