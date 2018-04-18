@@ -20,7 +20,3 @@ textarea, input {
 	border: none;
 }
 
-.comment-text {
-	display: flex;
-	flex-direction: column;
-}

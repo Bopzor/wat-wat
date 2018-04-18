@@ -133,37 +133,3 @@ img {
 .add-comment-button {
 	padding-left: 2%;
 }
-
-.full-comments-zone {
-	border-top: 1px dashed #CCC;
-}
-
-.comments-zone {
-	height: 310px;
-	overflow: auto;
-}
-
-.comment {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	padding: 1% 0% 1% 4%;
-	font-size: 10pt;
-}
-
-.comment:nth-child(odd) {
-	background-color: #E6E6E6;
-}
-
-.comment-author {
-	font-weight: bold;
-	padding-bottom: 0.2%;
-	font-size: 11pt;
-}
-
-.comment-buttons {
-	padding-right: 1%;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-}
