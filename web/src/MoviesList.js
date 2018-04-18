@@ -52,7 +52,7 @@ const SortableList = SortableContainer(props => {
 	);
 });
 
-class SortableComponent extends Component {
+class MoviesList extends Component {
 	constructor(props) {
 		super(props)
 
@@ -96,4 +96,4 @@ class SortableComponent extends Component {
 	}
 }
 
-export default SortableComponent;
+export default MoviesList;

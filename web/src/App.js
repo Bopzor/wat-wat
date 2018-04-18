@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SortableComponent from './SortableComponent.js';
+import MoviesList from './MoviesList.js';
 import MovieDetails from './MovieDetails.js';
 import AddMovieInput from './AddMovieInput.js';
 import {
@@ -179,7 +179,7 @@ class App extends Component {
               isSeen={this.state.filter}
             />
 
-            <SortableComponent
+            <MoviesList
               movies={moviesDisplay}
               onTitleClick={movie => this.handleTitleClick(movie)}
               removeMovie={movie => this.handleRemoveMovie(movie)}
