@@ -9,100 +9,100 @@ const getSuggestionValue = suggestion => suggestion;
 const renderSuggestion = suggestion => {
   return (
     <div>
-    	{suggestion}
+      {suggestion}
     </div>
   );
 };
 
 class AddMovieInput extends Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			title: '',
-			suggestions: [],
-		};
-	}
+    this.state = {
+      title: '',
+      suggestions: [],
+    };
+  }
 
-	onSuggestionsFetchRequested = ({ title }) => {
-		searchMovieTitle(this.state.title)
-			.then(result => {
-				if (!result.length)
-					this.setState({ suggestions: [] })
+  onChange = e => {
+    this.setState({
+      title: e.target.value,
+    });
+  };
 
-				this.setState({ suggestions: result });
-			})
-	};
+  shouldRenderSuggestions = value => {
+    return value.trim().length > 2;
+  };
 
-	onSuggestionsClearRequested = () => {
+  onSuggestionsFetchRequested = ({ title }) => {
+    searchMovieTitle(this.state.title)
+      .then(result => {
+        if (!result.length)
+          this.setState({ suggestions: [] })
+
+        this.setState({ suggestions: result });
+      })
+  };
+
+  onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
     });
-	};
+  };
 
-	onChange = e => {
-		this.setState({
-			title: e.target.value,
-		});
-	};
+  onSuggestionSelected = (event, { suggestion }) =>
+    this.setState({ title: suggestion});
 
-	shouldRenderSuggestions = value => {
-	  return value.trim().length > 2;
-	};
+  render() {
+    const { title, suggestions } = this.state;
 
-	onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => 
-		this.setState({ title: suggestion});
+    const onSubmit = e => {
+      e.preventDefault();
+      this.props.onSubmitMovieTitle(title)
+        .then(() => this.setState({ title: '' }));
+    }
 
-	render() {
-		const { title, suggestions } = this.state;
+    const inputProps = {
+      placeholder: 'New Movie Title',
+      value: title,
+      onChange: this.onChange,
+    };
 
-		const onSubmit = e => {
-			e.preventDefault();
-			this.props.onSubmitMovieTitle(title)
-				.then(() => this.setState({ title: '' }));
-		}
+    return (
+      <div>
 
-		const inputProps = {
-			placeholder: 'New Movie Title',
-			value: title,
-			onChange: this.onChange,
-		};
+        <div className='input-and-filters'>
+          <div className='filters'>
 
-		return (
-			<div>
-				<div className='input-and-filters'>
+            <FilterNotSeenButton
+              isSeen={this.props.isSeen.notSeen}
+              onClick={() => this.props.onFilterNotSeenClick()}
+            />
+            <FilterSeenButton
+              isSeen={this.props.isSeen.seen}
+              onClick={() => this.props.onFilterSeenClick()}
+            />
 
-					<div className='filters'>
+          </div>
+        </div>
 
-						<FilterNotSeenButton
-							isSeen={this.props.isSeen.notSeen}
-							onClick={() => this.props.onFilterNotSeenClick()}
-						/>
-						<FilterSeenButton
-							isSeen={this.props.isSeen.seen}
-							onClick={() => this.props.onFilterSeenClick()}
-						/>
+          <form className='form-add-movie-title' onSubmit={onSubmit}>
+            <Autosuggest
+              id='add-movie-title'
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              getSuggestionValue={getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              shouldRenderSuggestions={this.shouldRenderSuggestions}
+              inputProps={inputProps}
+              onSuggestionSelected={this.onSuggestionSelected}
+            />
+          </form>
 
-					</div>
-				</div>
-
-					<form className='form-add-movie-title' onSubmit={onSubmit}>
-						<Autosuggest
-							id='add-movie-title'
-							suggestions={suggestions}
-							onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-							onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-							getSuggestionValue={getSuggestionValue}
-							renderSuggestion={renderSuggestion}
-							shouldRenderSuggestions={this.shouldRenderSuggestions}
-							inputProps={inputProps}
-							onSuggestionSelected={this.onSuggestionSelected}
-						/>
-					</form>
-
-			</div>
-		)
-	}
+      </div>
+    )
+  }
 }
 
 export default AddMovieInput;

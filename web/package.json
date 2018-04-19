@@ -3,20 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "autosuggest-highlight": "^3.1.1",
+    "eslint": "^4.19.1",
     "material-ui": "^1.0.0-beta.40",
-    "punycode": "^2.1.0",
     "react": "^16.3.1",
     "react-autosuggest": "^9.3.4",
     "react-dom": "^16.3.1",
     "react-scripts": "1.1.4",
-    "react-sortable-hoc": "^0.6.8",
-    "react-themeable": "^1.1.0"
+    "react-sortable-hoc": "^0.6.8"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-react": "^7.7.0"
   }
 }

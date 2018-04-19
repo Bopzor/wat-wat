@@ -14,187 +14,187 @@ const theme = createMuiTheme({
 });
 
 const RemoveIconButton = (props) => {
-	return (
-		<MuiThemeProvider theme={theme}>
+  return (
+    <MuiThemeProvider theme={theme}>
 
-			<div className='remove-button'>
-				<IconButton
-					onClick={() => props.onClick()}
-				>
+      <div className='remove-button'>
+        <IconButton
+          onClick={() => props.onClick()}
+        >
 
-					<Icon style={{ fontSize: 24 }} color="secondary">remove_circle</Icon>
+          <Icon style={{ fontSize: 24 }} color="secondary">remove_circle</Icon>
 
-				</IconButton>
-			</div>
+        </IconButton>
+      </div>
 
-		</MuiThemeProvider>
-	)
+    </MuiThemeProvider>
+  )
 };
 
 const SeenButton = (props) => {
-	if (!props.isSeen) {
-		return (
-			<MuiThemeProvider theme={theme}>
+  if (!props.isSeen) {
+    return (
+      <MuiThemeProvider theme={theme}>
 
-				<div className='seen-movie-button'>
-					<IconButton
-						onClick={() => props.onClick()}
-					>
+        <div className='seen-movie-button'>
+          <IconButton
+            onClick={() => props.onClick()}
+          >
 
-						<Icon style={{ fontSize: 48 }} color="disabled">done_all</Icon>
+            <Icon style={{ fontSize: 48 }} color="disabled">done_all</Icon>
 
-					</IconButton>
+          </IconButton>
 
-				</div>
+        </div>
 
-			</MuiThemeProvider>
-		);
-	}
+      </MuiThemeProvider>
+    );
+  }
 
-	return (
-		<MuiThemeProvider theme={theme}>
+  return (
+    <MuiThemeProvider theme={theme}>
 
-			<div className='seen-movie-button'>
+      <div className='seen-movie-button'>
 
-				<IconButton
-					onClick={() => props.onClick()}
-				>
+        <IconButton
+          onClick={() => props.onClick()}
+        >
 
-					<Icon style={{ fontSize: 48 }} color="primary">done_all</Icon>
+          <Icon style={{ fontSize: 48 }} color="primary">done_all</Icon>
 
-				</IconButton>
+        </IconButton>
 
-			</div>
+      </div>
 
-		</MuiThemeProvider>
-	)
+    </MuiThemeProvider>
+  )
 };
 
 const FilterSeenButton = (props) => {
-	if (props.isSeen) {
-		return (
-			<MuiThemeProvider theme={theme}>
+  if (props.isSeen) {
+    return (
+      <MuiThemeProvider theme={theme}>
 
-				<div className='seen-filter-button active'>
+        <div className='seen-filter-button active'>
 
-					<IconButton
-						onClick={() => props.onClick()}
-					>
+          <IconButton
+            onClick={() => props.onClick()}
+          >
 
-						<Icon style={{ fontSize: 30 }} color="primary">done_all</Icon>
+            <Icon style={{ fontSize: 30 }} color="primary">done_all</Icon>
 
-					</IconButton>
+          </IconButton>
 
-				</div>
+        </div>
 
-			</MuiThemeProvider>
-		)
-	}
+      </MuiThemeProvider>
+    )
+  }
 
-	return (
-		<MuiThemeProvider theme={theme}>
+  return (
+    <MuiThemeProvider theme={theme}>
 
-			<div className='seen-filter-button'>
+      <div className='seen-filter-button'>
 
-				<IconButton
-					onClick={() => props.onClick()}
-				>
+        <IconButton
+          onClick={() => props.onClick()}
+        >
 
-					<Icon style={{ fontSize: 18 }} color="primary">done_all</Icon>
+          <Icon style={{ fontSize: 18 }} color="primary">done_all</Icon>
 
-				</IconButton>
+        </IconButton>
 
-			</div>
+      </div>
 
-		</MuiThemeProvider>
-	)
+    </MuiThemeProvider>
+  )
 };
 
 const FilterNotSeenButton = (props) => {
-	if (props.isSeen) {
-		return (
-			<MuiThemeProvider theme={theme}>
+  if (props.isSeen) {
+    return (
+      <MuiThemeProvider theme={theme}>
 
-				<div className='not-seen-filter-button active'>
+        <div className='not-seen-filter-button active'>
 
-					<IconButton
-						onClick={() => props.onClick()}
-					>
+          <IconButton
+            onClick={() => props.onClick()}
+          >
 
-						<Icon style={{ fontSize: 30 }} color="disabled">done_all</Icon>
+            <Icon style={{ fontSize: 30 }} color="disabled">done_all</Icon>
 
-					</IconButton>
+          </IconButton>
 
-				</div>
+        </div>
 
-			</MuiThemeProvider>
-		)
-	}
+      </MuiThemeProvider>
+    )
+  }
 
-	return (
-		<MuiThemeProvider theme={theme}>
+  return (
+    <MuiThemeProvider theme={theme}>
 
-			<div className='not-seen-filter-button'>
+      <div className='not-seen-filter-button'>
 
-				<IconButton
-					onClick={() => props.onClick()}
-				>
+        <IconButton
+          onClick={() => props.onClick()}
+        >
 
-					<Icon style={{ fontSize: 18 }} color="disabled">done_all</Icon>
+          <Icon style={{ fontSize: 18 }} color="disabled">done_all</Icon>
 
-				</IconButton>
+        </IconButton>
 
-			</div>
+      </div>
 
-		</MuiThemeProvider>
-	);
+    </MuiThemeProvider>
+  );
 };
 
 const AddIconButton = (props) => {
-	return (
-		<MuiThemeProvider theme={theme}>
+  return (
+    <MuiThemeProvider theme={theme}>
 
-			<div className='add-comment-button'>
+      <div className='add-comment-button'>
 
-				<IconButton
-					onClick={() => props.onSubmit()}
-				>
+        <IconButton
+          onClick={() => props.onSubmit()}
+        >
 
-					<Icon style={{ fontSize: 48 }} color="secondary">add_circle</Icon>
+          <Icon style={{ fontSize: 48 }} color="secondary">add_circle</Icon>
 
-				</IconButton>
+        </IconButton>
 
-			</div>
+      </div>
 
-		</MuiThemeProvider>
-	)
+    </MuiThemeProvider>
+  )
 };
 
 const EditIconButton = (props) => {
-	return (
-		<MuiThemeProvider theme={theme}>
+  return (
+    <MuiThemeProvider theme={theme}>
 
-			<div className='edit-comment-button'>
+      <div className='edit-comment-button'>
 
-				<IconButton
-					onClick={() => props.onClick()}
-				>
+        <IconButton
+          onClick={() => props.onClick()}
+        >
 
-					<Icon style={{ fontSize: 24 }} color="secondary">edit</Icon>
+          <Icon style={{ fontSize: 24 }} color="secondary">edit</Icon>
 
-				</IconButton>
+        </IconButton>
 
-			</div>
+      </div>
 
-		</MuiThemeProvider>
-	)
+    </MuiThemeProvider>
+  )
 };
 
 export {
-	RemoveIconButton,
-	SeenButton,
-	FilterSeenButton,
-	FilterNotSeenButton,
-	AddIconButton,
-	EditIconButton,
+  RemoveIconButton,
+  SeenButton,
+  FilterSeenButton,
+  FilterNotSeenButton,
+  AddIconButton,
+  EditIconButton,
 }

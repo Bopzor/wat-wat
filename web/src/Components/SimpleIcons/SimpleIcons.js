@@ -13,42 +13,42 @@ const theme = createMuiTheme({
 });
 
 const ListSeen = (props) => {
-	if (!props.isSeen) {
-		return (
-			<MuiThemeProvider theme={theme}>
+  if (!props.isSeen) {
+    return (
+      <MuiThemeProvider theme={theme}>
 
-				<div className='list-seen-movie-icon'>
-					<Icon style={{ fontSize: 18 }} color="disabled">done_all</Icon>
-				</div>
+        <div className='list-seen-movie-icon'>
+          <Icon style={{ fontSize: 18 }} color="disabled">done_all</Icon>
+        </div>
 
-			</MuiThemeProvider>
-		);
-	}
+      </MuiThemeProvider>
+    );
+  }
 
-	return (
-		<MuiThemeProvider theme={theme}>
+  return (
+    <MuiThemeProvider theme={theme}>
 
-			<div className='list-seen-movie-icon'>
-				<Icon style={{ fontSize: 18 }} color="primary">done_all</Icon>
-			</div>
+      <div className='list-seen-movie-icon'>
+        <Icon style={{ fontSize: 18 }} color="primary">done_all</Icon>
+      </div>
 
-		</MuiThemeProvider>
-	)
+    </MuiThemeProvider>
+  )
 };
 
 const SortIcon = (props) => {
-	return (
-		<MuiThemeProvider theme={theme}>
+  return (
+    <MuiThemeProvider theme={theme}>
 
-			<div className='sort-movie-button'>
-				<Icon style={{ fontSize: 24 }} color="secondary">swap_vert</Icon>
-			</div>
+      <div className='sort-movie-button'>
+        <Icon style={{ fontSize: 24 }} color="secondary">swap_vert</Icon>
+      </div>
 
-		</MuiThemeProvider>
-	)
+    </MuiThemeProvider>
+  )
 };
 
 export {
-	ListSeen,
-	SortIcon,
+  ListSeen,
+  SortIcon,
  }

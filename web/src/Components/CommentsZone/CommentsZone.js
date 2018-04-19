@@ -4,9 +4,9 @@ import { RemoveIconButton, EditIconButton } from '../IconsButton/IconsButton.js'
 import './CommentsZone.css'
 
 class CommentsZone extends Component {
-	createMovieComment(comment) {
-		return (
-			<div key={comment.id} className='comment'>
+  createMovieComment(comment) {
+    return (
+      <div key={comment.id} className='comment'>
 
         <div className='comment-text'>
 
@@ -17,31 +17,31 @@ class CommentsZone extends Component {
 
         <div className='comment-buttons'>
 
-        	<EditIconButton />
-        	<RemoveIconButton onClick={() => this.props.removeMovieComment(comment)} />
+          <EditIconButton />
+          <RemoveIconButton onClick={() => this.props.removeMovieComment(comment)} />
 
-				</div>
+        </div>
 
-			</div>
-		);
+      </div>
+    );
 };
 
-	render() {
+  render() {
 
-		return (
-			<div className='full-comments-zone'>
+    return (
+      <div className='full-comments-zone'>
 
-				<CommentInput
-					onSubmitMovieComment={(author, comment) => this.props.onSubmitMovieComment(author, comment)}
-				/>
+        <CommentInput
+          onSubmitMovieComment={(author, comment) => this.props.onSubmitMovieComment(author, comment)}
+        />
 
-				<div className='comments-zone'>
-					{this.props.movie.comments.map(comment => this.createMovieComment(comment))}
-				</div>
+        <div className='comments-zone'>
+          {this.props.movie.comments.map(comment => this.createMovieComment(comment))}
+        </div>
 
-			</div>
-		)
-	}
+      </div>
+    )
+  }
 }
 
 export default CommentsZone;

@@ -1,7 +1,7 @@
 /**
  * Requests to Wat-Wat API:
  * Places: {
- * 	[id: int]: int,
+ *   [id: int]: int,
  * }
  *
  * getMovies() -> Promise<Movie[]>
@@ -24,27 +24,27 @@ const BASE_API_URL = '/api/movies';
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8';
 
 function myFetch(url, opts) {
-	opts = opts || {};
+  opts = opts || {};
 
-	console.log(url, opts);
+  console.log(url, opts);
 
-	return fetch(url, opts)
-		.then(res => {
-			let promise = null;
-			const contentType = res.headers.get('Content-Type');
+  return fetch(url, opts)
+    .then(res => {
+      let promise = null;
+      const contentType = res.headers.get('Content-Type');
 
-			if (/^application\/json/.exec(contentType)) {
-				promise = res.json();
-			} else if (/^text/.exec(contentType)) {
-				promise = res.text();
-			}
+      if (/^application\/json/.exec(contentType)) {
+        promise = res.json();
+      } else if (/^text/.exec(contentType)) {
+        promise = res.text();
+      }
 
-			return promise;
-		})
-		.catch(error => {
-			console.error('Error:', error)
-			throw error;
-		});
+      return promise;
+    })
+    .catch(error => {
+      console.error('Error:', error)
+      throw error;
+    });
 }
 
 /**
@@ -52,17 +52,17 @@ function myFetch(url, opts) {
  */
 
 function getMovies() {
-	const url = BASE_URL + BASE_API_URL;
+  const url = BASE_URL + BASE_API_URL;
 
-	return myFetch(url);
+  return myFetch(url);
 }
 
 function addMovie(movie) {
-	const url = BASE_URL + BASE_API_URL;
+  const url = BASE_URL + BASE_API_URL;
   const opts = {
     method: 'POST',
     headers: new Headers({
-	   'Content-Type': 'application/json',
+     'Content-Type': 'application/json',
   }),
     body: JSON.stringify(movie),
   };
@@ -71,38 +71,38 @@ function addMovie(movie) {
 }
 
 function removeMovie(movie) {
-	const url = BASE_URL + BASE_API_URL + '/' + movie.id
-	const opts = {
-	    method: 'DELETE',
+  const url = BASE_URL + BASE_API_URL + '/' + movie.id
+  const opts = {
+      method: 'DELETE',
   };
 
   return myFetch(url, opts);
 }
 
  function setPlaces(places) {
- 	const url = BASE_URL + BASE_API_URL + '/sort'
- 	const opts = {
- 		method: 'POST',
- 		headers: new Headers({
- 			'Content-Type': 'application/json',
- 		}),
- 		body: JSON.stringify({
- 			order: places,
- 		}),
- 	}
+   const url = BASE_URL + BASE_API_URL + '/sort'
+   const opts = {
+     method: 'POST',
+     headers: new Headers({
+       'Content-Type': 'application/json',
+     }),
+     body: JSON.stringify({
+       order: places,
+     }),
+   }
 
- 	return myFetch(url, opts);
+   return myFetch(url, opts);
  }
 
 function setMovieSeen(movie, seen) {
-	const url = BASE_URL + BASE_API_URL + '/' + movie.id
-	const opts = {
+  const url = BASE_URL + BASE_API_URL + '/' + movie.id
+  const opts = {
     method: 'PUT',
     headers: new Headers({
-	   'Content-Type': 'application/json',
-	  }),
+     'Content-Type': 'application/json',
+    }),
     body: JSON.stringify({
-    	seen: seen,
+      seen: seen,
     }),
   };
 
@@ -110,8 +110,8 @@ function setMovieSeen(movie, seen) {
 }
 
 function addComment(movie, author, comment) {
-	const url = BASE_URL + BASE_API_URL + '/' + movie.id + '/comments';
-	const opts = {
+  const url = BASE_URL + BASE_API_URL + '/' + movie.id + '/comments';
+  const opts = {
     method: 'POST',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -120,18 +120,18 @@ function addComment(movie, author, comment) {
       comment: comment,
       author: author,
     }),
-	};
+  };
 
-	return myFetch(url, opts);
+  return myFetch(url, opts);
 }
 
 function removeComment(movie, comment) {
-	const url = BASE_URL + BASE_API_URL + '/' + movie.id + '/comments/' + comment.id;
-	const opts = {
+  const url = BASE_URL + BASE_API_URL + '/' + movie.id + '/comments/' + comment.id;
+  const opts = {
     method: 'DELETE',
   };
 
-	return myFetch(url, opts);
+  return myFetch(url, opts);
 }
 
 /**
@@ -139,15 +139,15 @@ function removeComment(movie, comment) {
  */
 
 function getMovieDetails(title) {
-	const url = OMDB_API_URL + '&t=' + title;
+  const url = OMDB_API_URL + '&t=' + title;
 
-	return myFetch(url)
-		.then(result => {
-			if(result.Response !== 'True')
-				return null;
+  return myFetch(url)
+    .then(result => {
+      if(result.Response !== 'True')
+        return null;
 
-			return {
-				title: result.Title,
+      return {
+        title: result.Title,
         plot: result.Plot,
         released: result.Released,
         runtime: result.Runtime,
@@ -155,31 +155,31 @@ function getMovieDetails(title) {
         writer: result.Writer,
         actors: result.Actors,
         poster: result.Poster,
-			};
-		});
+      };
+    });
 }
 
 function searchMovieTitle(query) {
-	const url = OMDB_API_URL + '&s=' + query;
+  const url = OMDB_API_URL + '&s=' + query;
 
-	return myFetch(url)
-		.then(result => {
-			if(result.Response !== 'True')
-				return null;
+  return myFetch(url)
+    .then(result => {
+      if(result.Response !== 'True')
+        return null;
 
-			return result.Search.map(movie => movie.Title);
-		})
-		.catch(error => console.error('Error:', error));
+      return result.Search.map(movie => movie.Title);
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 export {
-	getMovies,
-	addMovie,
-	removeMovie,
-	setPlaces,
-	addComment,
-	removeComment,
-	setMovieSeen,
-	getMovieDetails,
-	searchMovieTitle,
+  getMovies,
+  addMovie,
+  removeMovie,
+  setPlaces,
+  addComment,
+  removeComment,
+  setMovieSeen,
+  getMovieDetails,
+  searchMovieTitle,
 };
