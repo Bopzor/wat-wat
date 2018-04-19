@@ -38,7 +38,7 @@ class CommentInput extends Component {
         </form>
 
         <AddIconButton
-          onSubmit={(author, comment) =>
+          onSubmit={() =>
             this.props.onSubmitMovieComment(this.state.author, this.state.comment)}
         />
 
