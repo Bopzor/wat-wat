@@ -34,14 +34,18 @@ class AddMovieInput extends Component {
     return value.trim().length > 3;
   };
 
-  onSuggestionsFetchRequested = ({ value }) => {
-    searchMovieTitle(value)
-      .then(result => {
-        if (!result.length)
-          this.setState({ suggestions: [] })
+  onSuggestionsFetchRequested = ({ value, reason }) => {
+    if (reason === 'input-focused') {
+      return;
+    }
 
-        this.setState({ suggestions: result });
-      })
+      searchMovieTitle(value)
+        .then(result => {
+          if (!result.length)
+            this.setState({ suggestions: [] })
+
+          this.setState({ suggestions: result });
+        })
   };
 
   onSuggestionsClearRequested = () => {
