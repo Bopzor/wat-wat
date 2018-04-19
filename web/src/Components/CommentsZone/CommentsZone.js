@@ -24,7 +24,7 @@ class CommentsZone extends Component {
 
       </div>
     );
-};
+}
 
   render() {
 
