@@ -22,6 +22,7 @@ class AddMovieInput extends Component {
       title: '',
       suggestions: [],
     };
+    this.timeout = null;
   }
 
   onChange = e => {
@@ -39,13 +40,20 @@ class AddMovieInput extends Component {
       return;
     }
 
-      searchMovieTitle(value)
-        .then(result => {
-          if (!result.length)
-            this.setState({ suggestions: [] })
+    if (reason === 'input-changed') {
 
-          this.setState({ suggestions: result });
-        })
+      clearTimeout(this.timeout)
+
+      this.timeout = setTimeout(() => {
+        searchMovieTitle(value)
+          .then(result => {
+            if (!result.length) 
+              this.setState({ suggestions: [] })
+
+            this.setState({ suggestions: result });
+          });
+      }, 1000);
+    }
   };
 
   onSuggestionsClearRequested = () => {
