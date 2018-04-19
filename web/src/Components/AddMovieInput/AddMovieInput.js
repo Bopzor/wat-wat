@@ -34,7 +34,7 @@ class AddMovieInput extends Component {
     return value.trim().length > 2;
   };
 
-  onSuggestionsFetchRequested = ({ title }) => {
+  onSuggestionsFetchRequested = () => {
     searchMovieTitle(this.state.title)
       .then(result => {
         if (!result.length)
