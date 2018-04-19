@@ -60,7 +60,7 @@ class MoviesList extends Component {
     this.state = { movies: this.props.movies };
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps) {
     const movies = { movies: nextProps.movies };
 
     return movies;
