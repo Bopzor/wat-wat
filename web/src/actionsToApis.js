@@ -165,7 +165,7 @@ function searchMovieTitle(query) {
   return myFetch(url)
     .then(result => {
       if(result.Response !== 'True')
-        return null;
+        return [];
 
       return result.Search.map(movie => movie.Title);
     })

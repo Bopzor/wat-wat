@@ -31,11 +31,11 @@ class AddMovieInput extends Component {
   };
 
   shouldRenderSuggestions = value => {
-    return value.trim().length > 2;
+    return value.trim().length > 3;
   };
 
-  onSuggestionsFetchRequested = () => {
-    searchMovieTitle(this.state.title)
+  onSuggestionsFetchRequested = ({ value }) => {
+    searchMovieTitle(value)
       .then(result => {
         if (!result.length)
           this.setState({ suggestions: [] })
@@ -50,8 +50,9 @@ class AddMovieInput extends Component {
     });
   };
 
-  onSuggestionSelected = (event, { suggestion }) =>
-    this.setState({ title: suggestion});
+  onSuggestionSelected = (event, { suggestion }) => {
+      this.setState({ title: suggestion})
+  };
 
   render() {
     const { title, suggestions } = this.state;
@@ -90,12 +91,12 @@ class AddMovieInput extends Component {
             <Autosuggest
               id='add-movie-title'
               suggestions={suggestions}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
               getSuggestionValue={getSuggestionValue}
               renderSuggestion={renderSuggestion}
               shouldRenderSuggestions={this.shouldRenderSuggestions}
               inputProps={inputProps}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
               onSuggestionSelected={this.onSuggestionSelected}
             />
           </form>
