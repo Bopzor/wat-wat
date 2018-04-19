@@ -36,7 +36,7 @@ const ListSeen = (props) => {
   )
 };
 
-const SortIcon = (props) => {
+const SortIcon = () => {
   return (
     <MuiThemeProvider theme={theme}>
 
