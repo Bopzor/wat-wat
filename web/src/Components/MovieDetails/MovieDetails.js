@@ -25,7 +25,7 @@ class MovieDetails extends Component {
 
       </div>
     )
-  };
+  }
 
   render() {
     if (!this.props.movie) {
