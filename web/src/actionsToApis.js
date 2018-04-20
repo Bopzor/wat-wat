@@ -21,7 +21,9 @@
 
 const BASE_URL = 'http://localhost:4269';
 const BASE_API_URL = '/api/movies';
+const API_URL = BASE_URL + BASE_API_URL;
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8';
+
 
 function myFetch(url, opts) {
   opts = opts || {};
@@ -52,13 +54,13 @@ function myFetch(url, opts) {
  */
 
 function getMovies() {
-  const url = BASE_URL + BASE_API_URL;
+  const url = API_URL;
 
   return myFetch(url);
 }
 
 function addMovie(movie) {
-  const url = BASE_URL + BASE_API_URL;
+  const url = API_URL;
   const opts = {
     method: 'POST',
     headers: new Headers({
@@ -71,7 +73,7 @@ function addMovie(movie) {
 }
 
 function removeMovie(movie) {
-  const url = BASE_URL + BASE_API_URL + '/' + movie.id
+  const url = API_URL + '/' + movie.id
   const opts = {
       method: 'DELETE',
   };
@@ -80,7 +82,7 @@ function removeMovie(movie) {
 }
 
  function setPlaces(places) {
-   const url = BASE_URL + BASE_API_URL + '/sort'
+   const url = API_URL + '/sort'
    const opts = {
      method: 'POST',
      headers: new Headers({
@@ -95,7 +97,7 @@ function removeMovie(movie) {
  }
 
 function setMovieSeen(movie, seen) {
-  const url = BASE_URL + BASE_API_URL + '/' + movie.id
+  const url = API_URL + '/' + movie.id
   const opts = {
     method: 'PUT',
     headers: new Headers({
@@ -110,7 +112,7 @@ function setMovieSeen(movie, seen) {
 }
 
 function addComment(movie, author, comment) {
-  const url = BASE_URL + BASE_API_URL + '/' + movie.id + '/comments';
+  const url = API_URL + '/' + movie.id + '/comments';
   const opts = {
     method: 'POST',
     headers: new Headers({
@@ -126,7 +128,7 @@ function addComment(movie, author, comment) {
 }
 
 function removeComment(movie, comment) {
-  const url = BASE_URL + BASE_API_URL + '/' + movie.id + '/comments/' + comment.id;
+  const url = API_URL + '/' + movie.id + '/comments/' + comment.id;
   const opts = {
     method: 'DELETE',
   };
