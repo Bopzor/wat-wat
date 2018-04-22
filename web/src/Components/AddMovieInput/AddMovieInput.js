@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { searchMovieTitle } from '../../actionsToApis.js'
 import { FilterSeenButton, FilterNotSeenButton } from '../IconsButton/IconsButton.js';
+// import { MovieSuggestionItem } from '../../Components/MovieSuggestionItem/MovieSuggestionItem.js'
 import './AddMovieInput.css'
 
-const getSuggestionValue = suggestion => suggestion;
+const getSuggestionValue = suggestion => suggestion.title;
 
 const renderSuggestion = suggestion => {
   return (
     <div>
-      {suggestion}
+      {suggestion.Title}
     </div>
   );
 };
@@ -46,13 +47,13 @@ class AddMovieInput extends Component {
 
       this.timeout = setTimeout(() => {
         searchMovieTitle(value)
-          .then(result => {
-            if (!result.length) 
+          .then(movies => {
+            if (!movies.length) 
               this.setState({ suggestions: [] })
 
-            this.setState({ suggestions: result });
+            this.setState({ suggestions: movies });
           });
-      }, 1000);
+      }, 500);
     }
   };
 
@@ -63,7 +64,7 @@ class AddMovieInput extends Component {
   };
 
   onSuggestionSelected = (event, { suggestion }) => {
-      this.setState({ title: suggestion})
+      this.setState({ title: suggestion.Title})
   };
 
   render() {
@@ -110,6 +111,7 @@ class AddMovieInput extends Component {
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
               onSuggestionsClearRequested={this.onSuggestionsClearRequested}
               onSuggestionSelected={this.onSuggestionSelected}
+              onSuggestionHighlighted={this.onSuggestionHighlighted}
             />
           </form>
 

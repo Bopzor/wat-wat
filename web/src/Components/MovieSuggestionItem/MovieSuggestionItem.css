@@ -1,0 +1,19 @@
+
+.suggestion {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.suggestion-title {
+  z-index: 3;
+}
+
+.poster-year {
+  text-align: center;
+}
+
+.suggestion-poster > img {
+  max-width: 100px;
+  height: auto;
+}

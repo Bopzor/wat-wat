@@ -16,12 +16,13 @@
  * Requests to OMDB API:
  *
  * getMovieDetails(title: sting) -> Promise<Movie>
- * searchMovieTitle(query: string) -> Promise<string[]>
+ * searchMovieTitle(query: string) -> Promise<searchedMovie[]>
  */
 
 const BASE_URL = 'http://localhost:4269';
 const BASE_API_URL = '/api/movies';
 const API_URL = BASE_URL + BASE_API_URL;
+
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8';
 
 
@@ -169,7 +170,15 @@ function searchMovieTitle(query) {
       if(result.Response !== 'True')
         return [];
 
-      return result.Search.map(movie => movie.Title);
+      return result.Search;
+/*      return result.Search.map(searchedMovie => {
+        {
+          title: result.Search.Title,
+          year: result.Search.Year,
+          poster: result.Search.Poster,
+        }
+      })
+*/      
     })
     .catch(error => console.error('Error:', error));
 }

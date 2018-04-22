@@ -39,17 +39,21 @@
   font-size: 12pt;
   top: 42px;
   width: 100%;
-  max-height: 169px;
+/*  max-height: 169px; */
   overflow-y: auto;
   z-index: 2;
 }
 
+.react-autosuggest__suggestions-list {
+  padding-left: 4%;
+}
+
 .react-autosuggest__suggestion {
   cursor: pointer;
-  padding: 4% 8%;
+  padding: 2% 0;
 }
 
 .react-autosuggest__suggestion--highlighted {
-  color: orange;
+  color: orangered;
   font-size: 14pt;
 }
