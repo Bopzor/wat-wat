@@ -131,7 +131,7 @@ class App extends Component {
       .then(movie => {
         const movies = this.state.movies.slice();
         const movieIdx = movies.findIndex(m => m.id === movie.id);
-        
+
         movies.splice(movieIdx, 1, movie);
 
         this.setState({ movies });
@@ -143,10 +143,16 @@ class App extends Component {
       .then(() => {
         const movies = this.state.movies.slice();
         const movieIdx = movies.findIndex(m => m.id === movie.id);
+        const comments = movie.comments.slice();
+        const commentIdx = comments.findIndex(c => c.id === comment.id);
 
-        movies.splice(movieIdx, 1, movie);
+        comments.splice(commentIdx, 1);
 
-        this.setState({ movies });
+        const movieUpdated = {...movie, comments};
+
+        movies.splice(movieIdx,1 , movieUpdated);
+
+        this.setState({ movies })
       })
       .catch(error => console.error('Error: ', error));
   }
