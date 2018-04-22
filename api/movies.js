@@ -110,17 +110,39 @@ const comment = (req, res, next) => {
     author: req.body.author || 'Anonymous',
   };
 
-  console.log(comment);
-
   req.movie.createComment(body)
     .then(() => Movie.findById(req.params.id, { include: [{ all: true }] }))
     .then(movie => res.json(movie))
     .catch(next);
 };
 
-const noimplem = (req, res) => res.status(501).end('This feature is not yet implemented');
+const getComment = (req, res, next, commentId) => {
+  req.movie.getComments({ where: { id: commentId } })
+    .then(comments => {
+      if (!comments.length)
+        res.status(404).json('Comment not found');
+      else {
+        req.comment = comments[0];
+        next();
+      }
+    })
+    .catch(next);
+};
+
+const updateComment = (req, res, next) => {
+  req.comment.update(req.body)
+    .then(comment => res.json(comment))
+    .catch(next);
+}
+
+const removeComment = (req, res, next) => {
+  req.comment.destroy()
+    .then(() => res.status(204).end())
+    .catch(next);
+}
 
 router.param('id', getMovie);
+router.param('commentId', getComment);
 
 router.get('/', list);
 router.get('/:id', get);
@@ -130,7 +152,7 @@ router.delete('/:id', remove);
 router.post('/sort', sort);
 
 router.post('/:id/comments', comment);
-router.put('/:id/comment/:commentId', noimplem);
-router.delete('/:id/comment/:commentId', noimplem);
+router.put('/:id/comments/:commentId', updateComment);
+router.delete('/:id/comments/:commentId', removeComment);
 
 module.exports = router;
