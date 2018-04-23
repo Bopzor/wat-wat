@@ -20,7 +20,7 @@ class CommentsZone extends Component {
 
   onClick(id) {
       this.setState({ editCommentId: id })
-    };
+    }
 
   createMovieComment(comment) {
 
@@ -31,20 +31,29 @@ class CommentsZone extends Component {
 
             <div className='comment-text'>
 
-              <div className="comment-author">{comment.author} :</div>
-              <input
-                rows="2"
-                defaultValue={comment.comment}
-                onChange={e => this.setState({ newComment: e.target.value })}
-              />
-            </div>
-            <div className='comment-buttons'>
+              <div className='comment-author'>{comment.author} :</div>
+              <div className='edit-comment-input'>
+                <textarea
+                  className='edit-comment-textarea'
+                  defaultValue={comment.comment}
+                  onChange={e => this.setState({ newComment: e.target.value })}
+                />
+                <div className='edit-comment-buttons'>
 
-              <SubmitEditIconButton onClick={() => this.props.submitUpdateComment(this.state.newComment)}/>
-              <CancelEditIconButton />
+                  <SubmitEditIconButton
+                    onSubmit={() => {
+                      this.props.onSubmitUpdateComment(comment, this.state.newComment)
+                        .then(() => this.setState({ 
+                          editCommentId: null,
+                          newComment: '',
+                        }))
+                    }}
+                  />
+                  <CancelEditIconButton onClick={() => this.setState({ editCommentId: null })}/>
 
-            </div>
-
+                </div>
+              </div>
+           </div>
           </div>
       )
     }
@@ -54,8 +63,8 @@ class CommentsZone extends Component {
 
         <div className='comment-text'>
 
-          <div className="comment-author">{comment.author} :</div>
-          <div className="comment-message">{comment.comment}</div>
+          <div className='comment-author'>{comment.author} :</div>
+          <div className='comment-message'>{comment.comment}</div>
 
         </div>
 

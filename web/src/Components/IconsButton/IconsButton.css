@@ -10,3 +10,7 @@
 .add-comment-button {
 	padding-left: 2%;
 }
+
+.cancel-edit-comment-button > button {
+  max-width: 24px;
+}

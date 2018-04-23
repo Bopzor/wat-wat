@@ -137,7 +137,7 @@ function removeComment(movie, comment) {
   return myFetch(url, opts);
 }
 
-function updateComment(movie, comment, newAuthor, newComment ) {
+function updateComment(movie, comment, newComment) {
   const url = API_URL + '/' + movie.id + '/comments/' + comment.id;
   const opts = {
     method: 'PUT',
@@ -146,7 +146,7 @@ function updateComment(movie, comment, newAuthor, newComment ) {
     }),
     body: JSON.stringify({
       comment: newComment,
-      author: newAuthor,
+      author: comment.author,
     }),
   }
 

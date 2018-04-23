@@ -217,7 +217,7 @@ const SubmitEditIconButton = (props) => {
       <div className='submit-edit-comment-button'>
 
         <IconButton
-          onClick={() => props.onClick()}
+          onClick={() => props.onSubmit()}
         >
 
           <Icon style={{ fontSize: 24 }} color="secondary">done</Icon>

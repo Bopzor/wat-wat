@@ -9,6 +9,7 @@ import {
   setPlaces,
   addComment,
   removeComment,
+  updateComment,
   setMovieSeen,
   getMovieDetails,
 } from './actionsToApis.js';
@@ -157,6 +158,18 @@ class App extends Component {
       .catch(error => console.error('Error: ', error));
   }
 
+  handleSubmitEditedComment(movie, comment, newComment) {
+    return updateComment(movie, comment, newComment)
+      .then(movie => {
+        const movies = this.state.movies.slice();
+        const movieIdx = movies.findIndex(m => m.id === movie.id);
+
+        movies.splice(movieIdx, 1, movie);
+
+        this.setState({ movies });
+      });
+  }
+
 
   render() {
     const displayMovie = this.state.movies.find(m => m.id === this.state.displayMovieId);
@@ -199,6 +212,7 @@ class App extends Component {
             setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
             onSubmitMovieComment={(displayMovie, author, comment)=> this.handleSubmitComment(displayMovie, author, comment)}
             removeComment={(displayMovie, comment)=> this.handleRemoveComment(displayMovie, comment)}
+            updateEditedComment={(displayMovie, comment, newComment) => this.handleSubmitEditedComment(displayMovie, comment, newComment)}
           />
 
         </div>

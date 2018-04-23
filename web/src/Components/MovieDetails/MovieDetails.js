@@ -20,7 +20,8 @@ class MovieDetails extends Component {
         <CommentsZone
           movie={movie}
           onSubmitMovieComment={(author, comment) => this.props.onSubmitMovieComment(movie, author, comment)}
-          removeMovieComment={(comment) => this.props.removeComment(movie, comment)}
+          removeMovieComment={comment => this.props.removeComment(movie, comment)}
+          onSubmitUpdateComment={(comment, newComment) => this.props.updateEditedComment(movie, comment, newComment)}
         />
 
       </div>
