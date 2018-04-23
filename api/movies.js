@@ -131,7 +131,8 @@ const getComment = (req, res, next, commentId) => {
 
 const updateComment = (req, res, next) => {
   req.comment.update(req.body)
-    .then(comment => res.json(comment))
+    .then(comment => comment.getMovie({ include: [{ all: true }] }))
+    .then(movie => res.json(movie))
     .catch(next);
 }
 
