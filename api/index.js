@@ -30,6 +30,7 @@ const Comment = sequelize.define('comment', {
 });
 
 Movie.hasMany(Comment);
+Comment.belongsTo(Movie);
 
 api.use(cors());
 api.use(bodyParser.json());
