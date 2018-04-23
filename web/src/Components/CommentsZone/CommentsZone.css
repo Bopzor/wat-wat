@@ -45,7 +45,8 @@
 
 .edit-comment-textarea {
 	display: flex;
-	flex: 1
+	flex: 1;
+	background-color: transparent;
 }
 
 .edit-comment-buttons {
