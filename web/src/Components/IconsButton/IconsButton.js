@@ -190,6 +190,46 @@ const EditIconButton = (props) => {
   )
 };
 
+const CancelEditIconButton = (props) => {
+  return (
+    <MuiThemeProvider theme={theme}>
+
+      <div className='cancel-edit-comment-button'>
+
+        <IconButton
+          onClick={() => props.onClick()}
+        >
+
+          <Icon style={{ fontSize: 24 }} color="secondary">cancel</Icon>
+
+        </IconButton>
+
+      </div>
+
+    </MuiThemeProvider>
+  )
+};
+
+const SubmitEditIconButton = (props) => {
+  return (
+    <MuiThemeProvider theme={theme}>
+
+      <div className='submit-edit-comment-button'>
+
+        <IconButton
+          onClick={() => props.onClick()}
+        >
+
+          <Icon style={{ fontSize: 24 }} color="secondary">done</Icon>
+
+        </IconButton>
+
+      </div>
+
+    </MuiThemeProvider>
+  )
+};
+
 export {
   RemoveIconButton,
   SeenButton,
@@ -197,4 +237,6 @@ export {
   FilterNotSeenButton,
   AddIconButton,
   EditIconButton,
+  CancelEditIconButton,
+  SubmitEditIconButton
 }
