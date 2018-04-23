@@ -231,6 +231,7 @@ function deleteMovie(id) {
         method: 'DELETE',
     };
 
+<<<<<<< HEAD
     return myFetch(BASE_URL + BASE_API_URL + '/' + id, opts)
         .then(() => DOM.removeFromDOM("#movie-item-" + id))
         .then(() => {
@@ -239,6 +240,15 @@ function deleteMovie(id) {
                 DOM.removeFromDOM(".right-side");
         })
         .catch(error => console.error('Error:', error));
+=======
+    return fetch(BASE_URL + '/api/movie/' + id, opts)
+        .catch(error => console.error('Error:', error))
+        .then(() => $('#movie-item-' + id).remove())
+        .then(() => {
+            state.movies.splice(state.movies.findIndex(m => m.id === id), 1)
+            $("#movie-details").remove();
+        });
+>>>>>>> mep
 }
 
 function sendSort(place) {

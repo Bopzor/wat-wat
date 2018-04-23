@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
 const movies = require('./movies');
+const pkg = require('../package');
 
 const PORT = process.env['PORT'] || 4269;
 
