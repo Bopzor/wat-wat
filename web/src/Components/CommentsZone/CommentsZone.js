@@ -18,8 +18,11 @@ class CommentsZone extends Component {
     }
   }
 
-  onClick(id) {
-      this.setState({ editCommentId: id })
+  onClick(comment) {
+      this.setState({ 
+        editCommentId: comment.id, 
+        newComment: comment.comment,
+      });
     }
 
   createMovieComment(comment) {
@@ -35,7 +38,7 @@ class CommentsZone extends Component {
               <div className='edit-comment-input'>
                 <textarea
                   className='edit-comment-textarea'
-                  defaultValue={comment.comment}
+                  value={this.state.newComment}
                   onChange={e => this.setState({ newComment: e.target.value })}
                 />
                 <div className='edit-comment-buttons'>
@@ -73,7 +76,7 @@ class CommentsZone extends Component {
 
         <div className='comment-buttons'>
 
-          <EditIconButton onClick={() => this.onClick(comment.id)}/>
+          <EditIconButton onClick={() => this.onClick(comment)}/>
           <RemoveIconButton onClick={() => this.props.removeMovieComment(comment)} />
 
         </div>
