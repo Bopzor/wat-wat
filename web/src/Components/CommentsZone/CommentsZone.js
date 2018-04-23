@@ -42,11 +42,14 @@ class CommentsZone extends Component {
 
                   <SubmitEditIconButton
                     onSubmit={() => {
-                      this.props.onSubmitUpdateComment(comment, this.state.newComment)
-                        .then(() => this.setState({ 
-                          editCommentId: null,
-                          newComment: '',
-                        }))
+                      if (this.state.newComment) {
+                        this.props.onSubmitUpdateComment(comment, this.state.newComment)
+                          .then(() => this.setState({ 
+                            editCommentId: null,
+                            newComment: '',
+                          }))
+                      }
+                      this.setState({ editCommentId: null })
                     }}
                   />
                   <CancelEditIconButton onClick={() => this.setState({ editCommentId: null })}/>
