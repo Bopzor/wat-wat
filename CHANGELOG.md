@@ -6,13 +6,10 @@ To keep a trace of changes.
 + Comment movie (add, delete, update)
 + The possibility to note if the movie is already seen
 + Sort movie by seen or not or both
-  
-
-## [1.2.1] - 2018-03-26  
-### Fixed  
 + The two sides of the page stay at the same size when movie detail is showed  
 + Better management of the poster size  
 + Movie detail is removed when the movie is delete  
++ Returns the full movie instead of the comment only
   
 
 ## [1.2.0] - 2018-03-23  
