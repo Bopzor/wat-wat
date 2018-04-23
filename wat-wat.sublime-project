@@ -1,0 +1,17 @@
+{
+	"folders": [{
+		"path": "."
+	}],
+  "SublimeLinter": {
+    "linters": {
+      "eslint": {}
+    },
+    "paths": {
+      "linux": [
+        "~/.nvm/versions/node/v8.9.4/bin"
+      ],
+      "osx": [],
+      "windows": []
+    }
+  }
+}
