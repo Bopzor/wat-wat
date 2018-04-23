@@ -39,7 +39,12 @@ class CommentInput extends Component {
 
         <AddIconButton
           onSubmit={() =>
-            this.props.onSubmitMovieComment(this.state.author, this.state.comment)}
+            this.props.onSubmitMovieComment(this.state.author, this.state.comment)
+              .then(() => this.setState({
+                author: '',
+                comment: '',
+              }))
+          }
         />
 
       </div>

@@ -137,6 +137,22 @@ function removeComment(movie, comment) {
   return myFetch(url, opts);
 }
 
+function updateComment(movie, comment, newAuthor, newComment ) {
+  const url = API_URL + '/' + movie.id + '/comments/' + comment.id;
+  const opts = {
+    method: 'PUT',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
+    body: JSON.stringify({
+      comment: newComment,
+      author: newAuthor,
+    }),
+  }
+
+  return myFetch(url, opts);
+}
+
 /**
  * Requests to OMDB API:
  */
@@ -178,7 +194,7 @@ function searchMovieTitle(query) {
           poster: result.Search.Poster,
         }
       })
-*/      
+*/
     })
     .catch(error => console.error('Error:', error));
 }
@@ -190,6 +206,7 @@ export {
   setPlaces,
   addComment,
   removeComment,
+  updateComment,
   setMovieSeen,
   getMovieDetails,
   searchMovieTitle,

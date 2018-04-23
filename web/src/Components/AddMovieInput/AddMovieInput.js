@@ -48,7 +48,7 @@ class AddMovieInput extends Component {
       this.timeout = setTimeout(() => {
         searchMovieTitle(value)
           .then(movies => {
-            if (!movies.length) 
+            if (!movies.length)
               this.setState({ suggestions: [] })
 
             this.setState({ suggestions: movies });
