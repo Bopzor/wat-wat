@@ -1,0 +1,87 @@
+.input-and-filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+}
+
+.react-autosuggest__container {
+  position: relative;
+}
+
+.react-autosuggest__input {
+  display: flex;
+  width: 95.9%;
+  height: 30px;
+  padding-left: 4%;
+  font-size: 12pt;
+  border: none;
+  border-bottom: 1px solid #CCC;
+}
+
+.react-autosuggest__suggestions-container {
+  display: none;
+  width: 100%;
+}
+
+.react-autosuggest__suggestions-container--open {
+  display: flex;
+  position: absolute;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 12pt;
+  top: 42px;
+  width: 100%;
+  max-height: 257px;
+  overflow-y: auto;
+  z-index: 2;
+}
+
+.react-autosuggest__suggestions-list {
+  padding-left: 4%;
+  padding-right: 2%;
+  width: 100%;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 2% 0;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  color: orangered;
+  font-size: 14pt;
+}
+
+.suggestion {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.suggestion-title {
+  z-index: 3;
+}
+
+.poster-year {
+  position: absolute;
+ right: 42px;
+}
+
+.suggestion-poster > img {
+  max-width: 100px;
+  height: auto;
+}
+
+.suggestion-year {
+  font-size: 10pt;
+  color: black;
+  text-align: center;
+}

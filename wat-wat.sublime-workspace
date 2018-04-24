@@ -1,0 +1,862 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"font-s",
+				"font-size"
+			],
+			[
+				"fle",
+				"flex"
+			],
+			[
+				"mo",
+				"MoviesList"
+			],
+			[
+				"MO",
+				"MovieDetailsBlockInfos"
+			],
+			[
+				"Co",
+				"CommentsZone"
+			],
+			[
+				"Ico",
+				"IconsButton"
+			],
+			[
+				"M",
+				"MoviesList"
+			],
+			[
+				"Movi",
+				"MovieDetails"
+			],
+			[
+				"Movie",
+				"MoviesList"
+			],
+			[
+				"A",
+				"AddMovieInput"
+			],
+			[
+				"bo",
+				"border-right"
+			],
+			[
+				"font-",
+				"font-size"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"suggestion",
+				"suggestionHighlighted"
+			],
+			[
+				"sugge",
+				"suggestionsContainer"
+			],
+			[
+				"in",
+				"inputOpen"
+			],
+			[
+				"input",
+				"input"
+			],
+			[
+				"on",
+				"onSuggestionsFetchRequested"
+			],
+			[
+				"On",
+				"onSuggestionsFetchRequested"
+			],
+			[
+				"se",
+				"searchMovieTitle"
+			],
+			[
+				"title",
+				"titleArray"
+			],
+			[
+				"titl",
+				"titleArray"
+			],
+			[
+				"s",
+				"stringify"
+			],
+			[
+				"BA",
+				"BASE_API_URL"
+			],
+			[
+				"new",
+				"newMoviesOrder"
+			],
+			[
+				"ne",
+				"newMoviesOrder"
+			],
+			[
+				"bak",
+				"background-color"
+			],
+			[
+				"pa",
+				"padding"
+			],
+			[
+				"Sort",
+				"SortableComponent"
+			],
+			[
+				"m",
+				"max-width"
+			],
+			[
+				"p",
+				"padding-top"
+			],
+			[
+				"b",
+				"border"
+			],
+			[
+				"c",
+				"className"
+			],
+			[
+				"h",
+				"height"
+			],
+			[
+				"a",
+				"auto"
+			],
+			[
+				"o",
+				"overflow"
+			],
+			[
+				"fl",
+				"flex-direction"
+			],
+			[
+				"f",
+				"flex"
+			],
+			[
+				"movi",
+				"movieIdx"
+			],
+			[
+				"remove",
+				"removeComment"
+			],
+			[
+				"fo",
+				"font-weight"
+			],
+			[
+				"ma",
+				"margin-bottom"
+			],
+			[
+				"th",
+				"then"
+			],
+			[
+				"r",
+				"removeComment"
+			],
+			[
+				"comment",
+				"onSubmitMovieComment"
+			],
+			[
+				"t",
+				"this"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"co",
+				"comment-input"
+			],
+			[
+				"C",
+				"CommentInput"
+			],
+			[
+				"i",
+				"import"
+			],
+			[
+				"F",
+				"FilterNotSeenButton"
+			],
+			[
+				"ha",
+				"handleSetSeenClick"
+			],
+			[
+				"g",
+				"green"
+			],
+			[
+				"text-a",
+				"text-align"
+			],
+			[
+				"con",
+				"contentType"
+			],
+			[
+				"por",
+				"props"
+			],
+			[
+				"B",
+				"BASE_API_URL"
+			],
+			[
+				"re",
+				"requestWatWatApi"
+			],
+			[
+				"req",
+				"requestWatWatApi"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"Re",
+				"RemoveIconButton"
+			],
+			[
+				"max",
+				"max-width"
+			],
+			[
+				"marg",
+				"margin"
+			],
+			[
+				"dis",
+				"displayMovie"
+			],
+			[
+				"get",
+				"getMoviesList"
+			],
+			[
+				"paddi",
+				"padding"
+			],
+			[
+				"border",
+				"border-bottom"
+			],
+			[
+				"margi",
+				"margin-top"
+			],
+			[
+				"pag",
+				"page-title"
+			],
+			[
+				"ali",
+				"align-self"
+			],
+			[
+				"class",
+				"className"
+			],
+			[
+				"pro",
+				"props"
+			],
+			[
+				"questio",
+				"questions"
+			],
+			[
+				"Ba",
+				"BASE_API_URL"
+			],
+			[
+				"tit",
+				"titlesSearch"
+			],
+			[
+				"ti",
+				"titlesSearch"
+			],
+			[
+				"cre",
+				"createDropDownSearchMenu"
+			],
+			[
+				"data",
+				"datalist"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"Se",
+				"searchResult"
+			],
+			[
+				"n",
+				"notSeen"
+			],
+			[
+				"fil",
+				"filter"
+			],
+			[
+				"fi",
+				"filter"
+			],
+			[
+				"filte",
+				"filtered"
+			],
+			[
+				"addMovie",
+				"addMovieTitleToList"
+			],
+			[
+				"curre",
+				"currentMovieIdx"
+			],
+			[
+				"disp",
+				"displayMovieId"
+			],
+			[
+				"righ",
+				"rightSideHtml"
+			],
+			[
+				"curr",
+				"currentMovieIdx"
+			],
+			[
+				"createMo",
+				"createMovieTitle"
+			],
+			[
+				"comments",
+				"comments-section"
+			],
+			[
+				"add",
+				"addMovieTitleToList"
+			],
+			[
+				"addMo",
+				"addMovieTitleToList"
+			],
+			[
+				"onke",
+				"onkeypress\tAttr"
+			],
+			[
+				"de",
+				"debounceTimeout"
+			],
+			[
+				"movie",
+				"movie"
+			],
+			[
+				"par",
+				"paramsStr"
+			],
+			[
+				"OM",
+				"OMDB_API_KEY"
+			],
+			[
+				"prin",
+				"print_state"
+			],
+			[
+				"remo",
+				"remove"
+			],
+			[
+				"for",
+				"forEach"
+			],
+			[
+				"print",
+				"print_fetch_result"
+			],
+			[
+				"rem",
+				"removeClass"
+			],
+			[
+				"al",
+				"align-items"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"md-",
+				"md-inactive"
+			],
+			[
+				"box-",
+				"box-shadow"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"backgru",
+				"background-image"
+			],
+			[
+				"align",
+				"align-self"
+			],
+			[
+				"commentI",
+				"commentIdx"
+			],
+			[
+				"sp",
+				"space-between"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"commen",
+				"comments-section"
+			],
+			[
+				"au",
+				"author"
+			],
+			[
+				"autho",
+				"author-name"
+			],
+			[
+				"post",
+				"postComment"
+			],
+			[
+				"tex",
+				"text-form"
+			],
+			[
+				"pla",
+				"placeholder"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "web/src/Components/AddMovieInput/AddMovieInput.js",
+			"settings":
+			{
+				"buffer_size": 2652,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "ip",
+		"selected_items":
+		[
+			[
+				"ip",
+				"Package Control: Install Package"
+			],
+			[
+				"rp",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"hi",
+				"Whitespace: Remove Trailing Whitespace"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"tra",
+				"Whitespace: Remove Trailing Whitespace"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"mar",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"keyb",
+				"Preferences: Key Bindings"
+			],
+			[
+				"boxy",
+				"Boxy Theme: Preferences"
+			]
+		],
+		"width": 497.0
+	},
+	"console":
+	{
+		"height": 228.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/vio/Projects/movies-list",
+		"/home/vio/Projects/movies-list/api",
+		"/home/vio/Projects/movies-list/web",
+		"/home/vio/Projects/movies-list/web/public",
+		"/home/vio/Projects/movies-list/web/src",
+		"/home/vio/Projects/movies-list/web/src/Components",
+		"/home/vio/Projects/movies-list/web/src/Components/AddMovieInput",
+		"/home/vio/Projects/movies-list/web/src/Components/IconsButton",
+		"/home/vio/Projects/movies-list/web/src/Components/MovieDetails",
+		"/home/vio/Projects/movies-list/web/src/Components/MovieDetailsBlockInfos",
+		"/home/vio/Projects/movies-list/web/src/Components/SimpleIcons"
+	],
+	"file_history":
+	[
+		"/home/vio/Projects/movies-list/web/src/Components/AddMovieInput/AddMovieInput.js",
+		"/home/vio/Projects/movies-list/web/src/Components/IconsButton/IconsButton.js",
+		"/home/vio/Projects/movies-list/web/.eslintrc.json",
+		"/home/vio/Projects/movies-list/web/src/Components/AddMovieInput/AddMovieInput.css",
+		"/home/vio/Projects/movies-list/notab.sh",
+		"/home/vio/Projects/movies-list/web/src/Components/MovieDetails/MovieDetails.js",
+		"/home/vio/Projects/movies-list/web/src/actionsToApis.js",
+		"/home/vio/Projects/movies-list/wat-wat.sublime-project",
+		"/home/vio/Projects/movies-list/package.json",
+		"/home/vio/Projects/movies-list/web/package.json",
+		"/home/vio/Projects/movies-list/web/src/App.js",
+		"/home/vio/Projects/movies-list/web/src/Components/CommentInput/CommentInput.js",
+		"/home/vio/Projects/movies-list/web/src/Components/CommentsZone/CommentsZone.js",
+		"/home/vio/Projects/movies-list/web/src/Components/MovieDetailsBlockInfos/MovieDetailsBlockInfos.js",
+		"/home/vio/Projects/movies-list/web/src/Components/MoviesList/MoviesList.js",
+		"/home/vio/Projects/movies-list/web/src/Components/SimpleIcons/SimpleIcons.js",
+		"/home/vio/Projects/movies-list/web/src/Components/MovieDetailBlockInfos/MovieDetailsBlockInfos.js",
+		"/home/vio/Projects/movies-list/web/src/App.css",
+		"/home/vio/Projects/movies-list/web/src/MoviesList.js",
+		"/home/vio/Projects/movies-list/web/src/MoviesList.css",
+		"/home/vio/Projects/movies-list/web/src/SimpleIcons.js",
+		"/home/vio/Projects/movies-list/web/src/SimpleIcons.css",
+		"/home/vio/Projects/movies-list/web/src/MovieDetailsBlockInfos.js",
+		"/home/vio/Projects/movies-list/web/src/MovieDetailsBlockInfos.css",
+		"/home/vio/Projects/movies-list/web/src/MovieDetails.js",
+		"/home/vio/Projects/movies-list/web/src/MovieDetails.css",
+		"/home/vio/Projects/movies-list/web/src/IconsButton.js",
+		"/home/vio/Projects/movies-list/web/src/IconsButton.css",
+		"/home/vio/Projects/movies-list/web/src/CommentInput.css",
+		"/home/vio/Projects/movies-list/web/src/CommentsZone.js",
+		"/home/vio/Projects/movies-list/web/src/CommentsZone.css",
+		"/home/vio/Projects/movies-list/web/src/CommentInput.js",
+		"/home/vio/Projects/movies-list/web/src/AddMovieInput.js",
+		"/home/vio/Projects/movies-list/web/src/AddMovieInput.css",
+		"/home/vio/Projects/movies-list/web/src/SortableComponent.js",
+		"/home/vio/Projects/movies-list/web/src/index.css",
+		"/home/vio/Projects/movies-list/web/src/index.js",
+		"/home/vio/Projects/movies-list/web/src/reset.css",
+		"/home/vio/Projects/movies-list/web/src/autosuggest.css",
+		"/home/vio/Projects/movies-list/web/src/theme.css",
+		"/home/vio/.config/sublime-text-3/Packages/HighlightWhitespaces/README.md",
+		"/home/vio/.config/sublime-text-3/Packages/HighlightWhitespaces/highlight_whitespaces.sublime-settings",
+		"/home/vio/Projects/movies-list/web/src/AutoSuggest.js",
+		"/home/vio/Projects/movies-list/web/src/Autosuggest.js",
+		"/home/vio/Projects/movies-list/api/index.js",
+		"/home/vio/Projects/movies-list/web/src/Requestes.js",
+		"/home/vio/Projects/movies-list/web/src/MyFetch.js",
+		"/home/vio/Projects/movies-list/web/src/MethodsToAPI.js",
+		"/tmp/test.js",
+		"/home/vio/Projects/movies-list/web/public/index.html",
+		"/home/vio/Projects/cah/web-data-manager/index.js",
+		"/home/vio/Projects/cah/web-data-manager/index.html",
+		"/home/vio/Projects/cah/web-data-manager/style.css",
+		"/home/vio/Projects/movies-list/style.css",
+		"/home/vio/Projects/movies-list/index.js",
+		"/home/vio/Projects/movies-list/index.html",
+		"/home/vio/Projects/cah/cah/settings.py",
+		"/home/vio/Projects/movies-list/output.js",
+		"/home/vio/Projects/movies-list/api/movies.js",
+		"/home/vio/Projects/movies-list/CHANGELOG.md",
+		"/home/vio/Projects/movies-list/deploy-listing.md",
+		"/home/vio/Projects/movies-list/bundle.sh",
+		"/home/vio/Projects/movies-list/select-port.sh",
+		"/home/vio/Projects/movies-list/script.sh",
+		"/home/vio/Documents/test/test",
+		"/home/vio/Projects/movies-list/first-design.jpg",
+		"/home/vio/Projects/movies-list/db.sqlite"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"CommentInput",
+			"}}>\n",
+			"MoviesList",
+			"items",
+			"grey",
+			"value"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "web/src/Components/AddMovieInput/AddMovieInput.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2652,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1077,
+								1077
+							]
+						],
+						"settings":
+						{
+							"SL.27.region_keys":
+							[
+								"SL.eslint.Highlights.|region.redish markup.deleted.sublime_linter markup.error.sublime_linter|32",
+								"sublime_linter.protected_regions",
+								"SL.eslint.Gutter.region.redish markup.deleted.sublime_linter markup.error.sublime_linter.dot"
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 39.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.SublimeLinter Messages":
+	{
+		"height": 103.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 115.0
+	},
+	"pinned_build_system": "",
+	"project": "wat-wat.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				".eslintrc",
+				"web/.eslintrc.json"
+			],
+			[
+				"package.json",
+				"web/package.json"
+			],
+			[
+				"pack",
+				"package.json"
+			],
+			[
+				"outp",
+				"movies-list/output.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 239.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
