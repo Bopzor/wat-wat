@@ -85,7 +85,7 @@ class AddMovieInput extends Component {
   };
 
   onSuggestionSelected = (event, { suggestion }) => {
-      this.setState({ title: suggestion.Title})
+      this.setState({ title: suggestion.title})
   };
 
   render() {
