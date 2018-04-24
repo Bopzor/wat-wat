@@ -10,6 +10,8 @@ To keep a trace of changes.
 + Better management of the poster size  
 + Movie detail is removed when the movie is delete  
 + Returns the full movie instead of the comment only
++ Use React
++ Autosuggest movies title on search (with react-autosuggest)
   
 
 ## [1.2.0] - 2018-03-23  
