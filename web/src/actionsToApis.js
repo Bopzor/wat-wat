@@ -24,7 +24,7 @@
  * searchMovieTitle(query: string) -> Promise<searchedMovie[]>
  */
 
-const BASE_URL = 'http://localhost:4269';
+const BASE_URL = process.env.REACT_APP_API_URL;
 const BASE_API_URL = '/api/movies';
 const API_URL = BASE_URL + BASE_API_URL;
 

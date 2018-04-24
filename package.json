@@ -6,7 +6,10 @@
   "scripts": {
     "start": "nodemon main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "sh bundle.sh"
+    "build": "cd web && yarn build",
+    "postinstall": "cd web && yarn",
+    "docker:build": "docker build -t wat-wat .",
+    "docker:run": "docker run -dt --name wat-wat-container -e REACT_APP_API_URL= wat-wat"
   },
   "repository": {
     "type": "git",

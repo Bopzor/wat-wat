@@ -5,6 +5,8 @@ WORKDIR /opt/app
 
 COPY . /opt/app
 
+ENV REACT_APP_API_URL=
+
 RUN yarn
 RUN yarn build
 
