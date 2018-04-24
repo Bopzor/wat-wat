@@ -123,7 +123,13 @@ class App extends Component {
 
         movies.splice(movieIdx, 1, movie);
 
-        this.setState({ movies });
+        this.setState({ 
+          movies,
+          filter: {
+            seen: false,
+            notSeen: false,
+          },
+         });
       });
   }
 
