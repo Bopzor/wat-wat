@@ -14,6 +14,11 @@
  * updateComment(movie: Movie, comment: Comment, newComment: string) -> Promise<Movie>
  *
  * Requests to OMDB API:
+ * searchMovie: {
+ *  title: string,
+ *  year: string,
+ *  poster: string,  
+ * }
  *
  * getMovieDetails(title: sting) -> Promise<Movie>
  * searchMovieTitle(query: string) -> Promise<searchedMovie[]>
@@ -186,15 +191,11 @@ function searchMovieTitle(query) {
       if(result.Response !== 'True')
         return [];
 
-      return result.Search;
-/*      return result.Search.map(searchedMovie => {
-        {
-          title: result.Search.Title,
-          year: result.Search.Year,
-          poster: result.Search.Poster,
-        }
-      })
-*/
+      return result.Search.map(searchedMovie => ({
+        title: searchedMovie.Title,
+        year: searchedMovie.Year,
+        poster: searchedMovie.Poster,
+      }))
     })
     .catch(error => console.error('Error:', error));
 }
