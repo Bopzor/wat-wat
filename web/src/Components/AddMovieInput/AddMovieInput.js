@@ -2,15 +2,36 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { searchMovieTitle } from '../../actionsToApis.js'
 import { FilterSeenButton, FilterNotSeenButton } from '../IconsButton/IconsButton.js';
-// import { MovieSuggestionItem } from '../../Components/MovieSuggestionItem/MovieSuggestionItem.js'
+// import { MovieSuggestionItem, MovieHighLightedSuggestionItem } from '../../Components/MovieSuggestionItem/MovieSuggestionItem.js'
 import './AddMovieInput.css'
 
 const getSuggestionValue = suggestion => suggestion.title;
 
-const renderSuggestion = suggestion => {
+const renderSuggestion = (suggestion, { isHighlighted }) => {
+  if (!isHighlighted) {
+    return (
+      <div>
+        {suggestion.title}
+      </div>
+    );
+  }
+
   return (
-    <div>
-      {suggestion.Title}
+    <div className='suggestion'>
+      <div className='suggestion-title'>
+        {suggestion.title}
+      </div>
+      <div className='poster-year'>
+        <div className='suggestion-poster'>
+         <img
+            src={suggestion.poster}
+            alt={suggestion.title}
+          />
+        </div>
+        <div className='suggestion-year'>
+          {suggestion.year}
+        </div>
+      </div>
     </div>
   );
 };

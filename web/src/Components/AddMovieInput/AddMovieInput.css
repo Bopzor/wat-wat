@@ -39,13 +39,15 @@
   font-size: 12pt;
   top: 42px;
   width: 100%;
-/*  max-height: 169px; */
+  max-height: 257px;
   overflow-y: auto;
   z-index: 2;
 }
 
 .react-autosuggest__suggestions-list {
   padding-left: 4%;
+  padding-right: 2%;
+  width: 100%;
 }
 
 .react-autosuggest__suggestion {
@@ -56,4 +58,30 @@
 .react-autosuggest__suggestion--highlighted {
   color: orangered;
   font-size: 14pt;
+}
+
+.suggestion {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.suggestion-title {
+  z-index: 3;
+}
+
+.poster-year {
+  position: absolute;
+ right: 42px;
+}
+
+.suggestion-poster > img {
+  max-width: 100px;
+  height: auto;
+}
+
+.suggestion-year {
+  font-size: 10pt;
+  color: black;
+  text-align: center;
 }
