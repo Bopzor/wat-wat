@@ -1,7 +1,7 @@
 .movie-details-block-infos {
 	display: flex;
 	flex-direction: row;
-	margin-left: 4%;
+	margin-left: 40px;
 	justify-content: space-between;
 	width: 92%;
 }
@@ -13,7 +13,7 @@ img {
 
 .movie-details-poster {
 	height: fit-content;
-	margin-right: 4%;
+	margin-right: 40px;
 }
 
 .movie-details-with-title-infos {
@@ -37,5 +37,5 @@ img {
 .movie-details-name-info {
 	font-size: 12pt;
 	font-weight: bold;
-	margin: 0.4% 0;
+	margin: 4px 0;
 }
