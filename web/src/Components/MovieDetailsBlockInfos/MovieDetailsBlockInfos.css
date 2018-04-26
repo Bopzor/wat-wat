@@ -1,25 +1,25 @@
 .movie-details-block-infos {
-	display: flex;
-	flex-direction: row;
 	margin-left: 40px;
 	justify-content: space-between;
-	width: 92%;
 }
 
 img {
+	float: left;
 	max-width: 250px;
 	height: auto;
 }
 
-.movie-details-poster {
-	height: fit-content;
-	margin-right: 40px;
+.movie-detail-with-seen-button {
+	display: flex;
+	flex-direction: row;
 }
 
 .movie-details-with-title-infos {
 	display: flex;
 	flex-direction: column;
 	flex: 2;
+	padding-left: 40px;
+	padding-right: 20px;
 }
 
 .movie-details-title {
