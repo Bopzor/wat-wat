@@ -1,5 +1,5 @@
 .remove-button {
-	padding: 0 2%;
+	padding: 0 20px 0 10px;
 }
 
 .remove-button > button {
@@ -8,7 +8,7 @@
 }
 
 .add-comment-button {
-	padding-left: 2%;
+	padding-left: 17px;
 }
 
 .cancel-edit-comment-button > button {
