@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
+import green from 'material-ui/colors/green';
+import orange from 'material-ui/colors/orange';
+import { LinearProgress } from 'material-ui/Progress';
 import MoviesList from './Components/MoviesList/MoviesList.js';
 import MovieDetails from './Components/MovieDetails/MovieDetails.js';
 import AddMovieInput from './Components/AddMovieInput/AddMovieInput.js';
@@ -16,6 +20,14 @@ import {
 import './reset.css';
 import './App.css';
 
+
+const theme = createMuiTheme({
+  palette: {
+    primary: green,
+    secondary: orange,
+  },
+});
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +37,7 @@ class App extends Component {
       filter: {
         seen: false,
         notSeen: false,
+      loadingTitle: false,
       },
     }
   }
@@ -39,6 +52,7 @@ class App extends Component {
   }
 
   handleSubmitTitle(title) {
+    this.setState({ loadingTitle: true, })
     return getMovieDetails(title)
       .then(movie => {
         if (movie === null) {
@@ -51,6 +65,8 @@ class App extends Component {
 
             movies.push(movie);
             this.setState({ movies });
+
+            this.setState({ loadingTitle: false, })
           });
       })
       .catch(error => console.error('Error:', error));
@@ -187,6 +203,13 @@ class App extends Component {
     else if (this.state.filter.seen && !this.state.filter.notSeen)
       moviesDisplay = this.state.movies.filter(m => m.seen);
 
+    let loadingTitle = <div />;
+
+    if (this.state.loadingTitle)
+      loadingTitle = <MuiThemeProvider theme={theme}><LinearProgress color='secondary' /></MuiThemeProvider>
+    else
+      loadingTitle = <div />;
+
     return (
       <div className='page'>
 
@@ -203,6 +226,7 @@ class App extends Component {
               onFilterSeenClick={() => this.handleFilterSeenClick()}
               isSeen={this.state.filter}
             />
+            {loadingTitle}
 
             <MoviesList
               movies={moviesDisplay}
