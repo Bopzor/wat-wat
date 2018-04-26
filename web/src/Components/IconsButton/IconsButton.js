@@ -9,7 +9,9 @@ import './IconsButton.css'
 const theme = createMuiTheme({
   palette: {
     primary: green,
-    secondary: orange,
+    secondary: {
+      main: '#FB8C00'
+    },
   },
 });
 
