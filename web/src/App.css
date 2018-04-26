@@ -13,13 +13,13 @@ html, body, #root, .page {
 h1.page-title {
   font-family: Bangers;
   font-size: 42pt;
-  margin-top: 2%;
+  margin-top: 20px;
 }
 
 h3.page-title {
   font-family: Bangers;
   font-size: 24pt;
-  margin-bottom: 2%;
+  margin-bottom: 20px;
 }
 
 .page-title {
