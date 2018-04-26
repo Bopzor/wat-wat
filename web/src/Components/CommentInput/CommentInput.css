@@ -6,7 +6,6 @@ textarea, input {
 .full-comment-input {
 	display: flex;
 	flex-direction: row;
-	align-items: center;
 	margin: 0 40px;
 }
 

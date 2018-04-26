@@ -9,6 +9,7 @@
 
 .add-comment-button {
 	padding-left: 17px;
+  align-self: flex-end;
 }
 
 .cancel-edit-comment-button > button {
