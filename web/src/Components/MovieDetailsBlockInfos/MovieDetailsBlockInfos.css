@@ -17,7 +17,6 @@ img {
 .movie-details-with-title-infos {
 	display: flex;
 	flex-direction: column;
-	flex: 2;
 	padding-left: 40px;
 	padding-right: 20px;
 }
@@ -25,13 +24,12 @@ img {
 .movie-details-title {
 	font-weight: bold;
 	font-size: 20pt;
+	margin-bottom: 20px;
 }
 
 .movie-details-infos {
-	flex: 1;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 }
 
 .movie-details-name-info {
@@ -43,6 +41,11 @@ img {
 @media screen and (max-width: 1100px) {
 	img {
 		max-width: 80px;
+	}
+
+	.movie-details-title {
+		font-size: 14px;
+		margin-bottom: 5px;
 	}
 
 	.movie-details-name-info {
