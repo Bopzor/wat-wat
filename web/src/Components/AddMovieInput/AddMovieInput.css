@@ -17,6 +17,7 @@
   padding-left: 40px;
   font-size: 12pt;
   border: none;
+  outline: none;
 }
 
 .react-autosuggest__container {
