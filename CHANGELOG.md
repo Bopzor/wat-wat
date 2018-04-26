@@ -12,6 +12,7 @@ To keep a trace of changes.
 + Returns the full movie instead of the comment only
 + Use React
 + Autosuggest movies title on search (with react-autosuggest)
++ Add loading progress bar when submitting movie title
   
 
 ## [1.2.0] - 2018-03-23  
