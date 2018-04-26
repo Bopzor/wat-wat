@@ -19,7 +19,7 @@
   display: flex;
   width: 95.9%;
   height: 30px;
-  padding-left: 4%;
+  padding-left: 40px;
   font-size: 12pt;
   border: none;
   border-bottom: 1px solid #CCC;
@@ -45,14 +45,14 @@
 }
 
 .react-autosuggest__suggestions-list {
-  padding-left: 4%;
-  padding-right: 2%;
+  padding-left: 40px;
+  padding-right: 20px;
   width: 100%;
 }
 
 .react-autosuggest__suggestion {
   cursor: pointer;
-  padding: 2% 0;
+  padding: 20px 0;
 }
 
 .react-autosuggest__suggestion--highlighted {
