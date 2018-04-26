@@ -11,18 +11,16 @@
   flex-direction: row;
 }
 
-.react-autosuggest__container {
-  position: relative;
-}
-
 .react-autosuggest__input {
   display: flex;
-  width: 95.9%;
   height: 30px;
   padding-left: 40px;
   font-size: 12pt;
   border: none;
-  border-bottom: 1px solid #CCC;
+}
+
+.react-autosuggest__container {
+  position: relative;
 }
 
 .react-autosuggest__suggestions-container {
