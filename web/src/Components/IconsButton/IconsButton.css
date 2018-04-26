@@ -1,10 +1,10 @@
 .remove-button {
-	padding: 0 20px 0 10px;
+	padding: 0 10px;
 }
 
 .remove-button > button {
-	max-width: 24px;
-	max-height: 24px;
+	width: 24px;
+	height: 24px;
 }
 
 .add-comment-button {
@@ -12,5 +12,10 @@
 }
 
 .cancel-edit-comment-button > button {
-  max-width: 24px;
+  width: 24px;
+  margin-right: 10px;
+}
+
+.edit-comment-button {
+  width: 40px;
 }
