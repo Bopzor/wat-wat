@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
 import green from 'material-ui/colors/green';
-import orange from 'material-ui/colors/orange';
 import { LinearProgress } from 'material-ui/Progress';
 import MoviesList from './Components/MoviesList/MoviesList.js';
 import MovieDetails from './Components/MovieDetails/MovieDetails.js';
@@ -24,7 +23,9 @@ import './App.css';
 const theme = createMuiTheme({
   palette: {
     primary: green,
-    secondary: orange,
+    secondary: {
+      main: '#EF6C00'
+    },
   },
 });
 

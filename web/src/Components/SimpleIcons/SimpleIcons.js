@@ -2,14 +2,13 @@ import React from 'react';
 import Icon from 'material-ui/Icon';
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
 import green from 'material-ui/colors/green';
-import orange from 'material-ui/colors/orange';
 import './SimpleIcons.css'
 
 const theme = createMuiTheme({
   palette: {
     primary: green,
     secondary: {
-      main: '#FB8C00'
+      main: '#EF6C00'
     },
   },
 });
