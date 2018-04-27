@@ -69,18 +69,27 @@
   z-index: 3;
 }
 
-.poster-year {
-  position: absolute;
- right: 42px;
+.suggestions-container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
 }
 
-.suggestion-poster > img {
-  max-width: 100px;
-  height: auto;
+.suggestions-list {
+  flex: 3;
 }
 
-.suggestion-year {
-  font-size: 10pt;
-  color: black;
-  text-align: center;
+.highlighted-poster {
+  flex: 1;
+}
+
+.highlighted-image-poster {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+}
+
+.highlighted-poster img {
+  
 }

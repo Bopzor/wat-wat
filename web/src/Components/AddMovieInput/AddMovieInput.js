@@ -6,34 +6,28 @@ import './AddMovieInput.css'
 
 const getSuggestionValue = suggestion => suggestion.title;
 
-const renderSuggestion = (suggestion, { isHighlighted }) => {
-  if (!isHighlighted) {
+const renderSuggestion = suggestion => {
     return (
       <div>
         {suggestion.title}
       </div>
     );
-  }
+};
 
+const renderSuggestionsContainer = (highlighted, { containerProps , children }) => {
   return (
-    <div className='suggestion'>
-      <div className='suggestion-title'>
-        {suggestion.title}
-      </div>
-      <div className='poster-year'>
-        <div className='suggestion-poster'>
-         <img
-            src={suggestion.poster}
-            alt={suggestion.title}
-          />
-        </div>
-        <div className='suggestion-year'>
-          {suggestion.year}
+    <div {...containerProps}>
+      <div className="suggestions-container">
+        <div className="suggestions-list">{children}</div>
+        <div className="highlighted-poster">
+          <div className="highlighted-image-poster">
+            {highlighted && <img src={highlighted} alt='movie poster'/>}
+          </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
 class AddMovieInput extends Component {
   constructor(props) {
@@ -42,6 +36,7 @@ class AddMovieInput extends Component {
     this.state = {
       title: '',
       suggestions: [],
+      highlighted: null,
     };
     this.timeout = null;
   }
@@ -87,8 +82,12 @@ class AddMovieInput extends Component {
       this.setState({ title: suggestion.title})
   };
 
+  onSuggestionHighlighted = ({ suggestion }) => {
+    this.setState({ highlighted: suggestion })
+  };
+
   render() {
-    const { title, suggestions } = this.state;
+    const { title, suggestions, highlighted } = this.state;
 
     const onSubmit = e => {
       e.preventDefault();
@@ -126,6 +125,7 @@ class AddMovieInput extends Component {
               suggestions={suggestions}
               getSuggestionValue={getSuggestionValue}
               renderSuggestion={renderSuggestion}
+              renderSuggestionsContainer={renderSuggestionsContainer.bind(null, highlighted && highlighted.poster)}
               shouldRenderSuggestions={this.shouldRenderSuggestions}
               inputProps={inputProps}
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
