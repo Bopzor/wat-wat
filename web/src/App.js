@@ -64,9 +64,15 @@ class App extends Component {
             const movies = this.state.movies.slice();
 
             movies.push(movie);
-            this.setState({ movies });
 
-            this.setState({ loadingTitle: false, })
+            this.setState({
+              movies,
+              loadingTitle: false,
+              filter: {
+                seen: false,
+                notSeen: false,
+              },
+            })
           });
       })
       .catch(error => console.error('Error:', error));
