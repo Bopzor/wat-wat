@@ -75,11 +75,11 @@
 }
 
 .suggestions-list {
-  flex: 6;
+  flex: 5;
 }
 
 .highlighted-poster {
-  flex: 5;
+  flex: 6;
 }
 
 .highlighted-image-poster {
