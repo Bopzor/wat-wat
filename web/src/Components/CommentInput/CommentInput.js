@@ -14,7 +14,8 @@ class CommentInput extends Component {
 
   render() {
 
-    const onSubmit= () => {
+    const onSubmit= e => {
+      e.preventDefault();
       this.props.onSubmitMovieComment(this.state.author, this.state.comment)
         .then(() => this.setState({
           author: '',
