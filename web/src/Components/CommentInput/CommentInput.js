@@ -14,11 +14,20 @@ class CommentInput extends Component {
 
   render() {
 
+    const onSubmit= () => {
+      this.props.onSubmitMovieComment(this.state.author, this.state.comment)
+        .then(() => this.setState({
+          author: '',
+          comment: '',
+        }));
+    };
+
     return (
       <div className="full-comment-input">
 
         <form
           className="comment-input"
+          onSubmit={onSubmit}
         >
           <input
             id="author-name"
@@ -35,17 +44,11 @@ class CommentInput extends Component {
             onChange={e => this.setState({ comment: e.target.value })}
           />
 
-        </form>
+          <AddIconButton
+            onSubmit={onSubmit}
+          />
 
-        <AddIconButton
-          onSubmit={() =>
-            this.props.onSubmitMovieComment(this.state.author, this.state.comment)
-              .then(() => this.setState({
-                author: '',
-                comment: '',
-              }))
-          }
-        />
+        </form>
 
       </div>
     )
