@@ -3,7 +3,7 @@
 	justify-content: space-between;
 }
 
-img {
+.img {
 	float: left;
 	max-width: 250px;
 	height: auto;
@@ -39,7 +39,7 @@ img {
 }
 
 @media screen and (max-width: 1100px) {
-	img {
+	.img {
 		max-width: 80px;
 	}
 

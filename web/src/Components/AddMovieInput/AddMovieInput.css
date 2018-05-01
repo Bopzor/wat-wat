@@ -46,7 +46,6 @@
 .react-autosuggest__suggestions-list {
   padding-left: 40px;
   padding-right: 20px;
-  width: 100%;
 }
 
 .react-autosuggest__suggestion {
@@ -71,25 +70,22 @@
 
 .suggestions-container {
   width: 100%;
-  position: relative;
   display: flex;
   flex-direction: row;
 }
 
 .suggestions-list {
-  flex: 3;
+  flex: 6;
 }
 
 .highlighted-poster {
-  flex: 1;
+  flex: 5;
 }
 
 .highlighted-image-poster {
-  display: flex;
   position: fixed;
-  justify-content: center;
 }
 
 .highlighted-poster img {
-  
+  max-height: 256px;
 }
