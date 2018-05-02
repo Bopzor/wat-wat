@@ -3,10 +3,10 @@ To keep a trace of changes.
   
 
 ## [Unrealesed]
-+ Comment movie (add, delete, update)
++ Comments movies (add, delete, update)
 + The possibility to note if the movie is already seen
-+ Sort movie by seen or not or both
-+ Autocompletion to add movie
++ Filter movies by seen or not or both
++ Autosuggestion to add movie
 
 
 ## [1.2.1] - 2018-03-26  
