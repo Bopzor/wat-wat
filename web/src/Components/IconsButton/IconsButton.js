@@ -158,7 +158,7 @@ const AddIconButton = (props) => {
       <div className='add-comment-button'>
 
         <IconButton
-          onClick={() => props.onSubmit()}
+          onClick={e => props.onSubmit(e)}
         >
 
           <Icon style={{ fontSize: 48 }} color="secondary">add_circle</Icon>

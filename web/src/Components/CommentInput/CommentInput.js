@@ -45,11 +45,11 @@ class CommentInput extends Component {
             onChange={e => this.setState({ comment: e.target.value })}
           />
 
+        </form>
+
           <AddIconButton
             onSubmit={onSubmit}
           />
-
-        </form>
 
       </div>
     )
