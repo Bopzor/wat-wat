@@ -57,6 +57,7 @@ class App extends Component {
     return getMovieDetails(title)
       .then(movie => {
         if (movie === null) {
+          this.setState({ loadingTitle: false, });
           return alert(title + ' not found.')
         }
 
