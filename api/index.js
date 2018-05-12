@@ -36,10 +36,6 @@ api.use(cors());
 api.use(bodyParser.json());
 api.use(bodyParser.urlencoded({ extended: true }));
 
-api.use((req, res, next) => {
-  setTimeout(next, 1000);
-});
-
 Promise.all([
     Movie.sync(),
     Comment.sync(),

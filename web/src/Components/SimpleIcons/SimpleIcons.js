@@ -41,7 +41,7 @@ const SortIcon = () => {
   return (
     <MuiThemeProvider theme={theme}>
 
-      <div className='sort-movie-button'>
+      <div className='sort-movie-icon'>
         <Icon style={{ fontSize: 24 }} color="secondary">swap_vert</Icon>
       </div>
 
