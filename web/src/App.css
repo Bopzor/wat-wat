@@ -11,7 +11,7 @@ html, body, #root, .page {
 }
 
 .page-title {
-  padding: 20px, 0;
+  padding: 20px 0;
   text-align: center;
 }
 
@@ -26,15 +26,15 @@ html, body, #root, .page {
 }
 
 .content-page {
-  height: 85%;
+  flex: 1;
   display: flex;
   flex-direction: row;
 }
 
 .left-side {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex: 1;
   border-right: 1px dashed #CCC;
 }
 
