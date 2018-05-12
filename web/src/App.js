@@ -171,21 +171,16 @@ class App extends Component {
 
 
   render() {
-    const displayMovie = this.state.movies.find(m => m.id === this.state.displayMovieId);
-    let moviesDisplay = this.state.movies;
+    const { movies, displayMovieId, filter, loadingTitle } = this.state;
 
-    if (!this.state.filter.seen && this.state.filter.notSeen)
-      moviesDisplay = this.state.movies.filter(m => !m.seen);
+    const displayMovie = movies.find(m => m.id === displayMovieId);
+    let moviesDisplay = movies;
 
-    else if (this.state.filter.seen && !this.state.filter.notSeen)
-      moviesDisplay = this.state.movies.filter(m => m.seen);
+    if (!filter.seen && filter.notSeen)
+      moviesDisplay = movies.filter(m => !m.seen);
 
-    let loadingTitle = <div />;
-
-    if (this.state.loadingTitle)
-      loadingTitle = <MuiThemeProvider theme={theme}><LinearProgress color='secondary' /></MuiThemeProvider>;
-    else
-      loadingTitle = <div />;
+    else if (filter.seen && !filter.notSeen)
+      moviesDisplay = movies.filter(m => m.seen);
 
     return (
       <div className='page'>
@@ -203,7 +198,7 @@ class App extends Component {
               onFilterSeenClick={() => this.handleFilterSeenClick()}
               isSeen={this.state.filter}
             />
-            {loadingTitle}
+            {loadingTitle && <MuiThemeProvider theme={theme}><LinearProgress color='secondary' /></MuiThemeProvider>}
 
             <MoviesList
               movies={moviesDisplay}
