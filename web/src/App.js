@@ -29,6 +29,10 @@ class App extends Component {
       .catch(error => console.error('Error: ', error));
   }
 
+  findMovieIndex(movie) {
+    return this.state.movies.findIndex(m => m.id === movie.id);
+  }
+
   handleSubmitTitle(title) {
     this.setState({ loadingTitle: true });
 
@@ -91,7 +95,7 @@ class App extends Component {
       .then(() => {
         const movies = this.state.movies.slice();
 
-        movies.splice(movies.findIndex(m => m.id === movie.id), 1);
+        movies.splice(this.findMovieIndex(movie), 1);
 
         this.setState({ movies });
       })
@@ -100,9 +104,9 @@ class App extends Component {
 
   handleSortingMovies(places) {
     return actions.setPlaces(places)
-      .then(movies => {
-        this.setState({ movies });
-      })
+      .then(movies =>
+        this.setState({ movies })
+      )
       .catch(error => console.error('Error: ', error));
   }
 
@@ -112,7 +116,7 @@ class App extends Component {
     return actions.setMovieSeen(movie, changedSeen)
       .then(movie => {
         const movies = this.state.movies.slice();
-        const movieIdx = movies.findIndex(m => m.id === movie.id);
+        const movieIdx = this.findMovieIndex(movie);
 
         movies.splice(movieIdx, 1, movie);
 
@@ -130,7 +134,7 @@ class App extends Component {
     return actions.addComment(movie, author, comment)
       .then(movie => {
         const movies = this.state.movies.slice();
-        const movieIdx = movies.findIndex(m => m.id === movie.id);
+        const movieIdx = this.findMovieIndex(movie);
 
         movies.splice(movieIdx, 1, movie);
 
@@ -142,7 +146,7 @@ class App extends Component {
     return actions.removeComment(movie, comment)
       .then(() => {
         const movies = this.state.movies.slice();
-        const movieIdx = movies.findIndex(m => m.id === movie.id);
+        const movieIdx = this.findMovieIndex(movie);
         const comments = movie.comments.slice();
         const commentIdx = comments.findIndex(c => c.id === comment.id);
 
@@ -161,7 +165,7 @@ class App extends Component {
     return actions.updateComment(movie, comment, newComment)
       .then(movie => {
         const movies = this.state.movies.slice();
-        const movieIdx = movies.findIndex(m => m.id === movie.id);
+        const movieIdx = this.findMovieIndex(movie);
 
         movies.splice(movieIdx, 1, movie);
 
