@@ -185,8 +185,10 @@ class App extends Component {
     return (
       <div className='page'>
 
-        <h1 className='page-title'>Whatcha Watchin?</h1>
-        <h3 className='page-title'>(Wat-Wat?)</h3>
+        <div className="page-title">
+          <h1>Whatcha Watchin?</h1>
+          <h3>(Wat-Wat?)</h3>
+        </div>
 
         <div className='content-page'>
 
