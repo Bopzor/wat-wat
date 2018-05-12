@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import MovieDetailsBlockInfos from '../MovieDetailsBlockInfos/MovieDetailsBlockInfos.js'
+import MovieDetailsBlockInfos from '../MovieDetailsBlockInfos/MovieDetailsBlockInfos.js';
 import CommentsZone from '../CommentsZone/CommentsZone.js';
-import './MovieDetails.css'
+import './MovieDetails.css';
 
 class MovieDetails extends Component {
   createMovieDetails(movie) {
@@ -25,7 +25,7 @@ class MovieDetails extends Component {
         />
 
       </div>
-    )
+    );
   }
 
   render() {

@@ -38,3 +38,7 @@ h3.page-title {
   flex: 1;
   border-right: 1px dashed #CCC;
 }
+
+.right-side {
+  flex: 1;
+}

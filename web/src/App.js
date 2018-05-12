@@ -211,13 +211,17 @@ class App extends Component {
 
           </div>
 
-          <MovieDetails
-            movie={displayMovie}
-            setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
-            onSubmitMovieComment={(displayMovie, author, comment)=> this.handleSubmitComment(displayMovie, author, comment)}
-            removeComment={(displayMovie, comment)=> this.handleRemoveComment(displayMovie, comment)}
-            updateEditedComment={(displayMovie, comment, newComment) => this.handleSubmitEditedComment(displayMovie, comment, newComment)}
-          />
+          <div className="right-side">
+
+            <MovieDetails
+              movie={displayMovie}
+              setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
+              onSubmitMovieComment={(displayMovie, author, comment)=> this.handleSubmitComment(displayMovie, author, comment)}
+              removeComment={(displayMovie, comment)=> this.handleRemoveComment(displayMovie, comment)}
+              updateEditedComment={(displayMovie, comment, newComment) => this.handleSubmitEditedComment(displayMovie, comment, newComment)}
+            />
+
+          </div>
 
         </div>
 
