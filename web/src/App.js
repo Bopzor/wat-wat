@@ -109,7 +109,7 @@ class App extends Component {
   handleSetSeenClick(movie) {
     const changedSeen = !movie.seen;
 
-    actions.setMovieSeen(movie, changedSeen)
+    return actions.setMovieSeen(movie, changedSeen)
       .then(movie => {
         const movies = this.state.movies.slice();
         const movieIdx = movies.findIndex(m => m.id === movie.id);
@@ -168,7 +168,6 @@ class App extends Component {
         this.setState({ movies });
       });
   }
-
 
   render() {
     const { movies, displayMovieId, filter, loadingTitle } = this.state;
