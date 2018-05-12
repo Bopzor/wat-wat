@@ -198,7 +198,7 @@ class App extends Component {
               onFilterSeenClick={() => this.handleFilterSeenClick()}
               isSeen={this.state.filter}
             />
-            {loadingTitle && <MuiThemeProvider theme={theme}><LinearProgress color='secondary' /></MuiThemeProvider>}
+            {loadingTitle && <LinearProgress color='secondary' />}
 
             <MoviesList
               movies={moviesDisplay}
@@ -224,4 +224,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default () => <MuiThemeProvider theme={theme}><App /></MuiThemeProvider>;

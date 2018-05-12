@@ -1,14 +1,10 @@
 import React from 'react';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
-import { MuiThemeProvider } from 'material-ui/styles';
-import theme from '../../theme';
 import './IconsButton.css';
 
 const RemoveIconButton = (props) => {
   return (
-    <MuiThemeProvider theme={theme}>
-
       <div className='remove-button'>
         <IconButton
           onClick={() => props.onClick()}
@@ -18,16 +14,12 @@ const RemoveIconButton = (props) => {
 
         </IconButton>
       </div>
-
-    </MuiThemeProvider>
   );
 };
 
 const SeenButton = (props) => {
   if (!props.isSeen) {
     return (
-      <MuiThemeProvider theme={theme}>
-
         <div className='seen-movie-button'>
           <IconButton
             onClick={() => props.onClick()}
@@ -38,14 +30,10 @@ const SeenButton = (props) => {
           </IconButton>
 
         </div>
-
-      </MuiThemeProvider>
     );
   }
 
   return (
-    <MuiThemeProvider theme={theme}>
-
       <div className='seen-movie-button'>
 
         <IconButton
@@ -57,16 +45,12 @@ const SeenButton = (props) => {
         </IconButton>
 
       </div>
-
-    </MuiThemeProvider>
   );
 };
 
 const FilterSeenButton = (props) => {
   if (props.isSeen) {
     return (
-      <MuiThemeProvider theme={theme}>
-
         <div className='seen-filter-button active'>
 
           <IconButton
@@ -78,14 +62,10 @@ const FilterSeenButton = (props) => {
           </IconButton>
 
         </div>
-
-      </MuiThemeProvider>
     );
   }
 
   return (
-    <MuiThemeProvider theme={theme}>
-
       <div className='seen-filter-button'>
 
         <IconButton
@@ -97,16 +77,12 @@ const FilterSeenButton = (props) => {
         </IconButton>
 
       </div>
-
-    </MuiThemeProvider>
   );
 };
 
 const FilterNotSeenButton = (props) => {
   if (props.isSeen) {
     return (
-      <MuiThemeProvider theme={theme}>
-
         <div className='not-seen-filter-button active'>
 
           <IconButton
@@ -118,14 +94,10 @@ const FilterNotSeenButton = (props) => {
           </IconButton>
 
         </div>
-
-      </MuiThemeProvider>
     );
   }
 
   return (
-    <MuiThemeProvider theme={theme}>
-
       <div className='not-seen-filter-button'>
 
         <IconButton
@@ -137,15 +109,11 @@ const FilterNotSeenButton = (props) => {
         </IconButton>
 
       </div>
-
-    </MuiThemeProvider>
   );
 };
 
 const AddIconButton = (props) => {
   return (
-    <MuiThemeProvider theme={theme}>
-
       <div className='add-comment-button'>
 
         <IconButton
@@ -157,15 +125,11 @@ const AddIconButton = (props) => {
         </IconButton>
 
       </div>
-
-    </MuiThemeProvider>
   );
 };
 
 const EditIconButton = (props) => {
   return (
-    <MuiThemeProvider theme={theme}>
-
       <div className='edit-comment-button'>
 
         <IconButton
@@ -177,15 +141,11 @@ const EditIconButton = (props) => {
         </IconButton>
 
       </div>
-
-    </MuiThemeProvider>
   );
 };
 
 const CancelEditIconButton = (props) => {
   return (
-    <MuiThemeProvider theme={theme}>
-
       <div className='cancel-edit-comment-button'>
 
         <IconButton
@@ -197,15 +157,11 @@ const CancelEditIconButton = (props) => {
         </IconButton>
 
       </div>
-
-    </MuiThemeProvider>
   );
 };
 
 const SubmitEditIconButton = (props) => {
   return (
-    <MuiThemeProvider theme={theme}>
-
       <div className='submit-edit-comment-button'>
 
         <IconButton
@@ -217,8 +173,6 @@ const SubmitEditIconButton = (props) => {
         </IconButton>
 
       </div>
-
-    </MuiThemeProvider>
   );
 };
 
