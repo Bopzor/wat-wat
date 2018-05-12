@@ -70,13 +70,13 @@ class App extends Component {
   }
 
   handleFilterNotSeenClick() {
-    const isSeen = this.state.filter.notSeen;
+    const isNotSeen = this.state.filter.notSeen;
 
     this.setState({
       displayMovieId: null,
         filter: {
           seen: false,
-          notSeen: !isSeen,
+          notSeen: !isNotSeen,
       }
     });
   }
