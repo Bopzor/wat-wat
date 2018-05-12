@@ -98,14 +98,13 @@ class App extends Component {
       .catch(error => console.error('Error: ', error));
   }
 
-  handleSendSortPlaces(places) {
+  handleSortingMovies(places) {
     return actions.setPlaces(places)
       .then(movies => {
         this.setState({ movies });
       })
       .catch(error => console.error('Error: ', error));
   }
-
 
   handleSetSeenClick(movie) {
     const changedSeen = !movie.seen;
@@ -210,7 +209,7 @@ class App extends Component {
               movies={moviesDisplay}
               onTitleClick={movie => this.handleTitleClick(movie)}
               removeMovie={movie => this.handleRemoveMovie(movie)}
-              sendSortPlaces={places => this.handleSendSortPlaces(places)}
+              sendSortPlaces={places => this.handleSortingMovies(places)}
             />
 
           </div>
