@@ -3,5 +3,5 @@
 node_modules
 output.js
 *.log
-*.sublime-project
-*.sublime-workspace
+*.sublime-*
+
