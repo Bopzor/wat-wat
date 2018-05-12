@@ -10,17 +10,14 @@ import './reset.css';
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movies: [],
-      displayMovieId: null,
-      filter: {
-        seen: false,
-        notSeen: false,
-      loadingTitle: false,
-      },
-    };
+  state = {
+    movies: [],
+    displayMovieId: null,
+    filter: {
+      seen: false,
+      notSeen: false,
+    loadingTitle: false,
+    },
   }
 
   componentDidMount() {
@@ -33,11 +30,11 @@ class App extends Component {
   }
 
   handleSubmitTitle(title) {
-    this.setState({ loadingTitle: true, });
+    this.setState({ loadingTitle: true });
     return actions.getMovieDetails(title)
       .then(movie => {
         if (movie === null) {
-          this.setState({ loadingTitle: false, });
+          this.setState({ loadingTitle: false });
           return alert(title + ' not found.');
         }
 
@@ -105,7 +102,7 @@ class App extends Component {
 
         this.setState({ movies });
       })
-      .catch(error => console.error('Error: ', error))
+      .catch(error => console.error('Error: ', error));
   }
 
   handleSendSortPlaces(places) {
