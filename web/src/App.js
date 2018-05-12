@@ -5,17 +5,7 @@ import { LinearProgress } from 'material-ui/Progress';
 import MoviesList from './Components/MoviesList/MoviesList.js';
 import MovieDetails from './Components/MovieDetails/MovieDetails.js';
 import AddMovieInput from './Components/AddMovieInput/AddMovieInput.js';
-import {
-  getMovies,
-  addMovie,
-  removeMovie,
-  setPlaces,
-  addComment,
-  removeComment,
-  updateComment,
-  setMovieSeen,
-  getMovieDetails,
-} from './actionsToApis.js';
+import * as actions from './actionsToApis';
 import './reset.css';
 import './App.css';
 
@@ -40,11 +30,11 @@ class App extends Component {
         notSeen: false,
       loadingTitle: false,
       },
-    }
+    };
   }
 
   componentDidMount() {
-    return getMovies()
+    return actions.getMovies()
       .then(movies => {
         console.log('Success: ', movies);
         this.setState({ movies });
@@ -53,15 +43,15 @@ class App extends Component {
   }
 
   handleSubmitTitle(title) {
-    this.setState({ loadingTitle: true, })
-    return getMovieDetails(title)
+    this.setState({ loadingTitle: true, });
+    return actions.getMovieDetails(title)
       .then(movie => {
         if (movie === null) {
           this.setState({ loadingTitle: false, });
-          return alert(title + ' not found.')
+          return alert(title + ' not found.');
         }
 
-        return addMovie(movie)
+        return actions.addMovie(movie)
           .then(movie => {
             const movies = this.state.movies.slice();
 
@@ -74,7 +64,7 @@ class App extends Component {
                 seen: false,
                 notSeen: false,
               },
-            })
+            });
           });
       })
       .catch(error => console.error('Error:', error));
@@ -117,7 +107,7 @@ class App extends Component {
   }
 
   handleRemoveMovie(movie) {
-    return removeMovie(movie)
+    return actions.removeMovie(movie)
       .then(() => {
         const movies = this.state.movies.slice();
 
@@ -129,7 +119,7 @@ class App extends Component {
   }
 
   handleSendSortPlaces(places) {
-    return setPlaces(places)
+    return actions.setPlaces(places)
       .then(movies => {
         this.setState({ movies });
       })
@@ -140,14 +130,14 @@ class App extends Component {
   handleSetSeenClick(movie) {
     const changedSeen = !movie.seen;
 
-    setMovieSeen(movie, changedSeen)
+    actions.setMovieSeen(movie, changedSeen)
       .then(movie => {
         const movies = this.state.movies.slice();
         const movieIdx = movies.findIndex(m => m.id === movie.id);
 
         movies.splice(movieIdx, 1, movie);
 
-        this.setState({ 
+        this.setState({
           movies,
           filter: {
             seen: false,
@@ -158,7 +148,7 @@ class App extends Component {
   }
 
   handleSubmitComment(movie, author, comment) {
-    return addComment(movie, author, comment)
+    return actions.addComment(movie, author, comment)
       .then(movie => {
         const movies = this.state.movies.slice();
         const movieIdx = movies.findIndex(m => m.id === movie.id);
@@ -170,7 +160,7 @@ class App extends Component {
   }
 
   handleRemoveComment(movie, comment) {
-    return removeComment(movie, comment)
+    return actions.removeComment(movie, comment)
       .then(() => {
         const movies = this.state.movies.slice();
         const movieIdx = movies.findIndex(m => m.id === movie.id);
@@ -183,13 +173,13 @@ class App extends Component {
 
         movies.splice(movieIdx,1 , movieUpdated);
 
-        this.setState({ movies })
+        this.setState({ movies });
       })
       .catch(error => console.error('Error: ', error));
   }
 
   handleSubmitEditedComment(movie, comment, newComment) {
-    return updateComment(movie, comment, newComment)
+    return actions.updateComment(movie, comment, newComment)
       .then(movie => {
         const movies = this.state.movies.slice();
         const movieIdx = movies.findIndex(m => m.id === movie.id);
@@ -214,7 +204,7 @@ class App extends Component {
     let loadingTitle = <div />;
 
     if (this.state.loadingTitle)
-      loadingTitle = <MuiThemeProvider theme={theme}><LinearProgress color='secondary' /></MuiThemeProvider>
+      loadingTitle = <MuiThemeProvider theme={theme}><LinearProgress color='secondary' /></MuiThemeProvider>;
     else
       loadingTitle = <div />;
 
