@@ -82,15 +82,8 @@ class App extends Component {
   }
 
   handleTitleClick(movie) {
-    if (movie.id === this.state.displayMovieId) {
-      this.setState({
-        displayMovieId: null,
-      });
-    } else {
-      this.setState({
-        displayMovieId: movie.id,
-      });
-    }
+    movie.id === this.state.displayMovieId ?
+      this.setState({ displayMovieId: null }) : this.setState({ displayMovieId: movie.id });
   }
 
   handleRemoveMovie(movie) {
