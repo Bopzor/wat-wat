@@ -35,7 +35,6 @@ class App extends Component {
     return actions.getMovieDetails(title)
       .then(movie => {
         if (movie === null) {
-          this.setState({ loadingTitle: false });
           return alert(title + ' not found.');
         }
 
@@ -47,7 +46,6 @@ class App extends Component {
 
             this.setState({
               movies,
-              loadingTitle: false,
               filter: {
                 seen: false,
                 notSeen: false,
@@ -55,7 +53,8 @@ class App extends Component {
             });
           });
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Error:', error))
+      .then(() => this.setState({ loadingTitle: false }));
   }
 
   handleFilterSeenClick() {
