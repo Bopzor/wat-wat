@@ -1,18 +1,9 @@
 import React from 'react';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
-import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
-import green from 'material-ui/colors/green';
-import './IconsButton.css'
-
-const theme = createMuiTheme({
-  palette: {
-    primary: green,
-    secondary: {
-      main: '#EF6C00'
-    },
-  },
-});
+import { MuiThemeProvider } from 'material-ui/styles';
+import theme from '../../theme';
+import './IconsButton.css';
 
 const RemoveIconButton = (props) => {
   return (
@@ -29,7 +20,7 @@ const RemoveIconButton = (props) => {
       </div>
 
     </MuiThemeProvider>
-  )
+  );
 };
 
 const SeenButton = (props) => {
@@ -68,7 +59,7 @@ const SeenButton = (props) => {
       </div>
 
     </MuiThemeProvider>
-  )
+  );
 };
 
 const FilterSeenButton = (props) => {
@@ -89,7 +80,7 @@ const FilterSeenButton = (props) => {
         </div>
 
       </MuiThemeProvider>
-    )
+    );
   }
 
   return (
@@ -108,7 +99,7 @@ const FilterSeenButton = (props) => {
       </div>
 
     </MuiThemeProvider>
-  )
+  );
 };
 
 const FilterNotSeenButton = (props) => {
@@ -129,7 +120,7 @@ const FilterNotSeenButton = (props) => {
         </div>
 
       </MuiThemeProvider>
-    )
+    );
   }
 
   return (
@@ -168,7 +159,7 @@ const AddIconButton = (props) => {
       </div>
 
     </MuiThemeProvider>
-  )
+  );
 };
 
 const EditIconButton = (props) => {
@@ -188,7 +179,7 @@ const EditIconButton = (props) => {
       </div>
 
     </MuiThemeProvider>
-  )
+  );
 };
 
 const CancelEditIconButton = (props) => {
@@ -208,7 +199,7 @@ const CancelEditIconButton = (props) => {
       </div>
 
     </MuiThemeProvider>
-  )
+  );
 };
 
 const SubmitEditIconButton = (props) => {
@@ -228,7 +219,7 @@ const SubmitEditIconButton = (props) => {
       </div>
 
     </MuiThemeProvider>
-  )
+  );
 };
 
 export {
@@ -240,4 +231,4 @@ export {
   EditIconButton,
   CancelEditIconButton,
   SubmitEditIconButton
-}
+};

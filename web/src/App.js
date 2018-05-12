@@ -1,23 +1,13 @@
 import React, { Component } from 'react';
-import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
-import green from 'material-ui/colors/green';
+import { MuiThemeProvider } from 'material-ui/styles';
 import { LinearProgress } from 'material-ui/Progress';
+import theme from './theme.js';
 import MoviesList from './Components/MoviesList/MoviesList.js';
 import MovieDetails from './Components/MovieDetails/MovieDetails.js';
 import AddMovieInput from './Components/AddMovieInput/AddMovieInput.js';
 import * as actions from './actionsToApis';
 import './reset.css';
 import './App.css';
-
-
-const theme = createMuiTheme({
-  palette: {
-    primary: green,
-    secondary: {
-      main: '#EF6C00'
-    },
-  },
-});
 
 class App extends Component {
   constructor(props) {

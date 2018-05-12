@@ -1,17 +1,8 @@
 import React from 'react';
 import Icon from 'material-ui/Icon';
-import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
-import green from 'material-ui/colors/green';
-import './SimpleIcons.css'
-
-const theme = createMuiTheme({
-  palette: {
-    primary: green,
-    secondary: {
-      main: '#EF6C00'
-    },
-  },
-});
+import { MuiThemeProvider } from 'material-ui/styles';
+import theme from '../../theme';
+import './SimpleIcons.css';
 
 const ListSeen = (props) => {
   if (!props.isSeen) {
@@ -34,7 +25,7 @@ const ListSeen = (props) => {
       </div>
 
     </MuiThemeProvider>
-  )
+  );
 };
 
 const SortIcon = () => {
@@ -46,10 +37,10 @@ const SortIcon = () => {
       </div>
 
     </MuiThemeProvider>
-  )
+  );
 };
 
 export {
   ListSeen,
   SortIcon,
- }
+ };
