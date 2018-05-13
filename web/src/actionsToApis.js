@@ -45,7 +45,7 @@
 
 const BASE_URL = 'http://localhost:4269';
 const BASE_API_URL = '/api/movies';
-const API_URL = BASE_URL + BASE_API_URL;
+const API_URL = `${BASE_URL}${BASE_API_URL}`;
 
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8';
 
@@ -94,7 +94,7 @@ function addMovie(movie) {
 }
 
 function removeMovie(movie) {
-  const url = API_URL + '/' + movie.id;
+  const url = `${API_URL}/${movie.id}`;
   const opts = {
     method: 'DELETE',
   };
@@ -103,7 +103,7 @@ function removeMovie(movie) {
 }
 
 function setPlaces(places) {
-  const url = API_URL + '/sort';
+  const url = `${API_URL}/sort`;
   const opts = {
     method: 'POST',
     headers: new Headers({
@@ -118,7 +118,7 @@ function setPlaces(places) {
  }
 
 function setMovieSeen(movie, seen) {
-  const url = API_URL + '/' + movie.id;
+  const url = `${API_URL}/${movie.id}`;
   const opts = {
     method: 'PUT',
     headers: new Headers({
@@ -133,7 +133,7 @@ function setMovieSeen(movie, seen) {
 }
 
 function addComment(movie, author, comment) {
-  const url = API_URL + '/' + movie.id + '/comments';
+  const url = `${API_URL}/${movie.id}/comments`;
   const opts = {
     method: 'POST',
     headers: new Headers({
@@ -149,7 +149,7 @@ function addComment(movie, author, comment) {
 }
 
 function removeComment(movie, comment) {
-  const url = API_URL + '/' + movie.id + '/comments/' + comment.id;
+  const url = `${API_URL}/${movie.id}/comments/${comment.id}`;
   const opts = {
     method: 'DELETE',
   };
@@ -158,7 +158,7 @@ function removeComment(movie, comment) {
 }
 
 function updateComment(movie, comment, newComment) {
-  const url = API_URL + '/' + movie.id + '/comments/' + comment.id;
+  const url = `${API_URL}/${movie.id}/comments/${comment.id}`;
   const opts = {
     method: 'PUT',
     headers: new Headers({
@@ -178,7 +178,7 @@ function updateComment(movie, comment, newComment) {
  */
 
 function getMovieDetails(title) {
-  const url = OMDB_API_URL + '&t=' + title;
+  const url = `${OMDB_API_URL}&t=${title}`;
 
   return myFetch(url)
     .then(result => {
@@ -199,7 +199,7 @@ function getMovieDetails(title) {
 }
 
 function searchMovieTitle(query) {
-  const url = OMDB_API_URL + '&s=' + query;
+  const url = `${OMDB_API_URL}&s=${query}`;
 
   return myFetch(url)
     .then(result => {
