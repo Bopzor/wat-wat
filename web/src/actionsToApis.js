@@ -53,8 +53,6 @@ const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8';
 function myFetch(url, opts) {
   opts = opts || {};
 
-  console.log(url, opts);
-
   return fetch(url, opts)
     .then(res => {
       let promise = null;
@@ -89,7 +87,7 @@ function addMovie(movie) {
   const opts = {
     method: 'POST',
     headers: new Headers({
-     'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
   }),
     body: JSON.stringify(movie),
   };
@@ -100,23 +98,23 @@ function addMovie(movie) {
 function removeMovie(movie) {
   const url = API_URL + '/' + movie.id;
   const opts = {
-      method: 'DELETE',
+    method: 'DELETE',
   };
 
   return myFetch(url, opts);
 }
 
- function setPlaces(places) {
-   const url = API_URL + '/sort';
-   const opts = {
-     method: 'POST',
-     headers: new Headers({
-       'Content-Type': 'application/json',
-     }),
-     body: JSON.stringify({
-       order: places,
-     }),
-   };
+function setPlaces(places) {
+  const url = API_URL + '/sort';
+  const opts = {
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
+    body: JSON.stringify({
+    order: places,
+  }),
+};
 
    return myFetch(url, opts);
  }
@@ -126,7 +124,7 @@ function setMovieSeen(movie, seen) {
   const opts = {
     method: 'PUT',
     headers: new Headers({
-     'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
     }),
     body: JSON.stringify({
       seen: seen,
