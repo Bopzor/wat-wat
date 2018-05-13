@@ -55,16 +55,14 @@ function myFetch(url, opts) {
 
   return fetch(url, opts)
     .then(res => {
-      let promise = null;
       const contentType = res.headers.get('Content-Type');
 
       if (/^application\/json/.exec(contentType)) {
-        promise = res.json();
+        return res.json();
       } else if (/^text/.exec(contentType)) {
-        promise = res.text();
+        return res.text();
       }
 
-      return promise;
     })
     .catch(error => {
       console.error('Error:', error);
