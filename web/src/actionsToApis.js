@@ -74,13 +74,13 @@ function myFetch(url, opts) {
  * Requests to Wat-Wat API:
  */
 
-function getMovies() {
+export function getMovies() {
   const url = API_URL;
 
   return myFetch(url);
 }
 
-function addMovie(movie) {
+export function addMovie(movie) {
   const url = API_URL;
   const opts = {
     method: 'POST',
@@ -93,7 +93,7 @@ function addMovie(movie) {
   return myFetch(url, opts);
 }
 
-function removeMovie(movie) {
+export function removeMovie(movie) {
   const url = `${API_URL}/${movie.id}`;
   const opts = {
     method: 'DELETE',
@@ -102,7 +102,7 @@ function removeMovie(movie) {
   return myFetch(url, opts);
 }
 
-function setPlaces(places) {
+export function setPlaces(places) {
   const url = `${API_URL}/sort`;
   const opts = {
     method: 'POST',
@@ -117,7 +117,7 @@ function setPlaces(places) {
    return myFetch(url, opts);
  }
 
-function setMovieSeen(movie, seen) {
+export function setMovieSeen(movie, seen) {
   const url = `${API_URL}/${movie.id}`;
   const opts = {
     method: 'PUT',
@@ -125,14 +125,14 @@ function setMovieSeen(movie, seen) {
       'Content-Type': 'application/json',
     }),
     body: JSON.stringify({
-      seen: seen,
+      seen,
     }),
   };
 
   return myFetch(url, opts);
 }
 
-function addComment(movie, author, comment) {
+export function addComment(movie, author, comment) {
   const url = `${API_URL}/${movie.id}/comments`;
   const opts = {
     method: 'POST',
@@ -148,7 +148,7 @@ function addComment(movie, author, comment) {
   return myFetch(url, opts);
 }
 
-function removeComment(movie, comment) {
+export function removeComment(movie, comment) {
   const url = `${API_URL}/${movie.id}/comments/${comment.id}`;
   const opts = {
     method: 'DELETE',
@@ -157,7 +157,7 @@ function removeComment(movie, comment) {
   return myFetch(url, opts);
 }
 
-function updateComment(movie, comment, newComment) {
+export function updateComment(movie, comment, newComment) {
   const url = `${API_URL}/${movie.id}/comments/${comment.id}`;
   const opts = {
     method: 'PUT',
@@ -177,7 +177,7 @@ function updateComment(movie, comment, newComment) {
  * Requests to OMDB API:
  */
 
-function getMovieDetails(title) {
+export function getMovieDetails(title) {
   const url = `${OMDB_API_URL}&t=${title}`;
 
   return myFetch(url)
@@ -198,7 +198,7 @@ function getMovieDetails(title) {
     });
 }
 
-function searchMovieTitle(query) {
+export function searchMovieTitle(query) {
   const url = `${OMDB_API_URL}&s=${query}`;
 
   return myFetch(url)
@@ -214,16 +214,3 @@ function searchMovieTitle(query) {
     })
     .catch(error => console.error('Error:', error));
 }
-
-export {
-  getMovies,
-  addMovie,
-  removeMovie,
-  setPlaces,
-  addComment,
-  removeComment,
-  updateComment,
-  setMovieSeen,
-  getMovieDetails,
-  searchMovieTitle,
-};
