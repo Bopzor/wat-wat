@@ -1,7 +1,26 @@
 /**
  * Requests to Wat-Wat API:
  * Places: {
- *   [id: int]: int,
+ *    [id: int]: int,
+ * }
+ *
+ * Movie: {
+ *    title: string,
+ *    plot: string,
+ *    release: string,
+ *    runtime: string,
+ *    director: string,
+ *    writers: string,
+ *    actors: string,
+ *    poster: string,
+ * }
+ *
+ * Comment: {
+ *    [id: int]: int,
+ *    comment: string,
+ *    author: string,
+ *    createdAt: string,
+ *    uptadedAt: string,
  * }
  *
  * getMovies() -> Promise<Movie[]>
@@ -14,10 +33,10 @@
  * updateComment(movie: Movie, comment: Comment, newComment: string) -> Promise<Movie>
  *
  * Requests to OMDB API:
- * searchMovie: {
- *  title: string,
- *  year: string,
- *  poster: string,  
+ * searchedMovie: {
+ *    title: string,
+ *    year: string,
+ *    poster: string,
  * }
  *
  * getMovieDetails(title: sting) -> Promise<Movie>
@@ -50,7 +69,7 @@ function myFetch(url, opts) {
       return promise;
     })
     .catch(error => {
-      console.error('Error:', error)
+      console.error('Error:', error);
       throw error;
     });
 }
@@ -79,7 +98,7 @@ function addMovie(movie) {
 }
 
 function removeMovie(movie) {
-  const url = API_URL + '/' + movie.id
+  const url = API_URL + '/' + movie.id;
   const opts = {
       method: 'DELETE',
   };
@@ -88,7 +107,7 @@ function removeMovie(movie) {
 }
 
  function setPlaces(places) {
-   const url = API_URL + '/sort'
+   const url = API_URL + '/sort';
    const opts = {
      method: 'POST',
      headers: new Headers({
@@ -97,13 +116,13 @@ function removeMovie(movie) {
      body: JSON.stringify({
        order: places,
      }),
-   }
+   };
 
    return myFetch(url, opts);
  }
 
 function setMovieSeen(movie, seen) {
-  const url = API_URL + '/' + movie.id
+  const url = API_URL + '/' + movie.id;
   const opts = {
     method: 'PUT',
     headers: new Headers({
@@ -153,7 +172,7 @@ function updateComment(movie, comment, newComment) {
       comment: newComment,
       author: comment.author,
     }),
-  }
+  };
 
   return myFetch(url, opts);
 }
@@ -195,7 +214,7 @@ function searchMovieTitle(query) {
         title: searchedMovie.Title,
         year: searchedMovie.Year,
         poster: searchedMovie.Poster,
-      }))
+      }));
     })
     .catch(error => console.error('Error:', error));
 }
