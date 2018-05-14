@@ -4,6 +4,8 @@ import { searchMovieTitle } from '../../actionsToApis.js';
 import { SeenButton } from '../IconsButton/IconsButton.js';
 import './AddMovieInput.css';
 
+const timeOut = 500;
+
 const getSuggestionValue = suggestion => suggestion.title;
 
 const renderSuggestion = suggestion => {
@@ -68,7 +70,7 @@ class AddMovieInput extends Component {
 
             this.setState({ suggestions: movies });
           });
-      }, 500);
+      }, timeOut);
     }
   };
 
