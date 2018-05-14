@@ -1,18 +1,17 @@
 .movie-details-block-infos {
 	margin-left: 40px;
 	justify-content: space-between;
+	position: relative;
 }
 
 .img {
 	float: left;
 	max-width: 250px;
 	height: auto;
+	padding-right: 40px;
 }
 
 .movie-details-with-title-infos {
-	display: flex;
-	flex-direction: column;
-	padding-left: 40px;
 	padding-right: 20px;
 }
 
@@ -20,11 +19,6 @@
 	font-weight: bold;
 	font-size: 20pt;
 	margin-bottom: 20px;
-}
-
-.movie-details-infos {
-	display: flex;
-	flex-direction: column;
 }
 
 .movie-details-name-info {
