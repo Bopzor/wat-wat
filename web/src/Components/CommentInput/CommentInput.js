@@ -31,14 +31,12 @@ class CommentInput extends Component {
           onSubmit={onSubmit}
         >
           <input
-            id="author-name"
             type="text"
             placeholder="Name"
             value={this.state.author}
             onChange={e => this.setState({ author: e.target.value })}
           />
           <textarea
-            id="comment-text"
             rows="2"
             placeholder="Say it!"
             value={this.state.comment}

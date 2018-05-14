@@ -15,7 +15,7 @@ textarea, input {
 	flex-direction: column;
 }
 
-#author-name {
+.full-comment-input input {
 	border: none;
 }
 
