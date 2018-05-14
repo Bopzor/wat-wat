@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { AddIconButton } from '../IconsButton/IconsButton.js';
-import './CommentInput.css'
+import { GenericButton } from '../IconsButton/IconsButton.js';
+import './CommentInput.css';
 
 class CommentInput extends Component {
   constructor(props) {
@@ -47,12 +47,16 @@ class CommentInput extends Component {
 
         </form>
 
-          <AddIconButton
-            onSubmit={onSubmit}
+          <GenericButton
+            className="add-comment-button"
+            onAction={e => onSubmit(e)}
+            style={{ fontSize: 48 }}
+            color="secondary"
+            icon="add_circle"
           />
 
       </div>
-    )
+    );
   }
 }
 

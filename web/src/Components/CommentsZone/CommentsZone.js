@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import CommentInput from '../CommentInput/CommentInput.js'
-import {
-  RemoveIconButton,
-  EditIconButton,
-  CancelEditIconButton,
-  SubmitEditIconButton,
-} from '../IconsButton/IconsButton.js';
-import './CommentsZone.css'
+import CommentInput from '../CommentInput/CommentInput.js';
+import { GenericButton } from '../IconsButton/IconsButton.js';
+import './CommentsZone.css';
 
 class CommentsZone extends Component {
   constructor(props) {
@@ -15,12 +10,12 @@ class CommentsZone extends Component {
     this.state = {
       editCommentId: null,
       newComment: '',
-    }
+    };
   }
 
   onClick(comment) {
-      this.setState({ 
-        editCommentId: comment.id, 
+      this.setState({
+        editCommentId: comment.id,
         newComment: comment.comment,
       });
     }
@@ -43,25 +38,35 @@ class CommentsZone extends Component {
                 />
                 <div className='edit-comment-buttons'>
 
-                  <SubmitEditIconButton
-                    onSubmit={() => {
+                  <GenericButton
+                    className="submit-edit-comment-button"
+                    onAction={() => {
                       if (this.state.newComment) {
                         this.props.onSubmitUpdateComment(comment, this.state.newComment)
-                          .then(() => this.setState({ 
+                          .then(() => this.setState({
                             editCommentId: null,
                             newComment: '',
-                          }))
+                          }));
                       }
-                      this.setState({ editCommentId: null })
+                      this.setState({ editCommentId: null });
                     }}
+                    style={{ fontSize: 24 }}
+                    color="secondary"
+                    icon="done"
                   />
-                  <CancelEditIconButton onClick={() => this.setState({ editCommentId: null })}/>
+                  <GenericButton
+                    className="cancel-edit-comment-button"
+                    onAction={() => this.setState({ editCommentId: null })}
+                    style={{ fontSize: 24 }}
+                    color="secondary"
+                    icon="cancel"
+                  />
 
                 </div>
               </div>
            </div>
           </div>
-      )
+      );
     }
 
     return (
@@ -76,8 +81,20 @@ class CommentsZone extends Component {
 
         <div className='comment-buttons'>
 
-          <EditIconButton onClick={() => this.onClick(comment)}/>
-          <RemoveIconButton onClick={() => this.props.removeMovieComment(comment)} />
+          <GenericButton
+            className="edit-comment-button"
+            onAction={() => this.onClick(comment)}
+            style={{ fontSize: 24 }}
+            color="secondary"
+            icon="edit"
+          />
+          <GenericButton
+            className="remove-button"
+            onAction={() => this.props.removeMovieComment(comment)}
+            style={{ fontSize: 24 }}
+            color="secondary"
+            icon="remove_circle"
+          />
 
         </div>
 
@@ -99,7 +116,7 @@ class CommentsZone extends Component {
         </div>
 
       </div>
-    )
+    );
   }
 }
 

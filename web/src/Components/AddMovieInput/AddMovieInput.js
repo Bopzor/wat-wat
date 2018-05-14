@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
-import { searchMovieTitle } from '../../actionsToApis.js'
-import { FilterSeenButton, FilterNotSeenButton } from '../IconsButton/IconsButton.js';
-import './AddMovieInput.css'
+import { searchMovieTitle } from '../../actionsToApis.js';
+import { SeenButton } from '../IconsButton/IconsButton.js';
+import './AddMovieInput.css';
 
 const getSuggestionValue = suggestion => suggestion.title;
 
@@ -27,7 +27,7 @@ const renderSuggestionsContainer = (highlighted, { containerProps , children }) 
       </div>
     </div>
   );
-}
+};
 
 class AddMovieInput extends Component {
   constructor(props) {
@@ -58,13 +58,13 @@ class AddMovieInput extends Component {
 
     if (reason === 'input-changed') {
 
-      clearTimeout(this.timeout)
+      clearTimeout(this.timeout);
 
       this.timeout = setTimeout(() => {
         searchMovieTitle(value)
           .then(movies => {
             if (!movies.length)
-              this.setState({ suggestions: [] })
+              this.setState({ suggestions: [] });
 
             this.setState({ suggestions: movies });
           });
@@ -79,11 +79,11 @@ class AddMovieInput extends Component {
   };
 
   onSuggestionSelected = (event, { suggestion }) => {
-      this.setState({ title: suggestion.title})
+      this.setState({ title: suggestion.title});
   };
 
   onSuggestionHighlighted = ({ suggestion }) => {
-    this.setState({ highlighted: suggestion })
+    this.setState({ highlighted: suggestion });
   };
 
   render() {
@@ -93,7 +93,7 @@ class AddMovieInput extends Component {
       e.preventDefault();
       this.props.onSubmitMovieTitle(title)
         .then(() => this.setState({ title: '' }));
-    }
+    };
 
     const inputProps = {
       placeholder: 'New Movie Title',
@@ -107,13 +107,25 @@ class AddMovieInput extends Component {
         <div className='input-and-filters'>
           <div className='filters'>
 
-            <FilterNotSeenButton
-              isSeen={this.props.isSeen.notSeen}
-              onClick={() => this.props.onFilterNotSeenClick()}
-            />
-            <FilterSeenButton
+            <SeenButton
+              className="seen-filter-button"
+              onAction={() => this.props.onFilterSeenClick()}
               isSeen={this.props.isSeen.seen}
-              onClick={() => this.props.onFilterSeenClick()}
+              style={{ fontSize: 30 }}
+              styleBis={{ fontSize: 18 }}
+              color="disabled"
+              colorBis="disabled"
+              icon="done_all"
+            />
+            <SeenButton
+              className="not-seen-filter-button"
+              onAction={() => this.props.onFilterNotSeenClick()}
+              isSeen={this.props.isSeen.notSeen}
+              style={{ fontSize: 30 }}
+              styleBis={{ fontSize: 18 }}
+              color="primary"
+              colorBis="primary"
+              icon="done_all"
             />
 
           </div>
@@ -136,7 +148,7 @@ class AddMovieInput extends Component {
           </form>
 
       </div>
-    )
+    );
   }
 }
 

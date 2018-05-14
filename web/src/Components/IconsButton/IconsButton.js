@@ -3,14 +3,14 @@ import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import './IconsButton.css';
 
-const RemoveIconButton = (props) => {
+const GenericButton = (props) => {
   return (
-      <div className='remove-button'>
+      <div className={props.className}>
         <IconButton
-          onClick={() => props.onClick()}
+          onClick={() => props.onAction()}
         >
 
-          <Icon style={{ fontSize: 24 }} color="secondary">remove_circle</Icon>
+          <Icon style={props.style} color={props.color}>{props.icon}</Icon>
 
         </IconButton>
       </div>
@@ -18,46 +18,14 @@ const RemoveIconButton = (props) => {
 };
 
 const SeenButton = (props) => {
-  if (!props.isSeen) {
-    return (
-        <div className='seen-movie-button'>
-          <IconButton
-            onClick={() => props.onClick()}
-          >
-
-            <Icon style={{ fontSize: 48 }} color="disabled">done_all</Icon>
-
-          </IconButton>
-
-        </div>
-    );
-  }
-
-  return (
-      <div className='seen-movie-button'>
-
-        <IconButton
-          onClick={() => props.onClick()}
-        >
-
-          <Icon style={{ fontSize: 48 }} color="primary">done_all</Icon>
-
-        </IconButton>
-
-      </div>
-  );
-};
-
-const FilterSeenButton = (props) => {
   if (props.isSeen) {
     return (
-        <div className='seen-filter-button active'>
-
+        <div className={props.className}>
           <IconButton
-            onClick={() => props.onClick()}
+            onClick={() => props.onAction()}
           >
 
-            <Icon style={{ fontSize: 30 }} color="primary">done_all</Icon>
+            <Icon style={props.style} color={props.color}>{props.icon}</Icon>
 
           </IconButton>
 
@@ -66,109 +34,13 @@ const FilterSeenButton = (props) => {
   }
 
   return (
-      <div className='seen-filter-button'>
+      <div className={props.className}>
 
         <IconButton
-          onClick={() => props.onClick()}
+          onClick={() => props.onAction()}
         >
 
-          <Icon style={{ fontSize: 18 }} color="primary">done_all</Icon>
-
-        </IconButton>
-
-      </div>
-  );
-};
-
-const FilterNotSeenButton = (props) => {
-  if (props.isSeen) {
-    return (
-        <div className='not-seen-filter-button active'>
-
-          <IconButton
-            onClick={() => props.onClick()}
-          >
-
-            <Icon style={{ fontSize: 30 }} color="disabled">done_all</Icon>
-
-          </IconButton>
-
-        </div>
-    );
-  }
-
-  return (
-      <div className='not-seen-filter-button'>
-
-        <IconButton
-          onClick={() => props.onClick()}
-        >
-
-          <Icon style={{ fontSize: 18 }} color="disabled">done_all</Icon>
-
-        </IconButton>
-
-      </div>
-  );
-};
-
-const AddIconButton = (props) => {
-  return (
-      <div className='add-comment-button'>
-
-        <IconButton
-          onClick={e => props.onSubmit(e)}
-        >
-
-          <Icon style={{ fontSize: 48 }} color="secondary">add_circle</Icon>
-
-        </IconButton>
-
-      </div>
-  );
-};
-
-const EditIconButton = (props) => {
-  return (
-      <div className='edit-comment-button'>
-
-        <IconButton
-          onClick={() => props.onClick()}
-        >
-
-          <Icon style={{ fontSize: 24 }} color="secondary">edit</Icon>
-
-        </IconButton>
-
-      </div>
-  );
-};
-
-const CancelEditIconButton = (props) => {
-  return (
-      <div className='cancel-edit-comment-button'>
-
-        <IconButton
-          onClick={() => props.onClick()}
-        >
-
-          <Icon style={{ fontSize: 24 }} color="secondary">cancel</Icon>
-
-        </IconButton>
-
-      </div>
-  );
-};
-
-const SubmitEditIconButton = (props) => {
-  return (
-      <div className='submit-edit-comment-button'>
-
-        <IconButton
-          onClick={() => props.onSubmit()}
-        >
-
-          <Icon style={{ fontSize: 24 }} color="secondary">done</Icon>
+          <Icon style={props.styleBis} color={props.colorBis}>{props.icon}</Icon>
 
         </IconButton>
 
@@ -177,12 +49,6 @@ const SubmitEditIconButton = (props) => {
 };
 
 export {
-  RemoveIconButton,
+  GenericButton,
   SeenButton,
-  FilterSeenButton,
-  FilterNotSeenButton,
-  AddIconButton,
-  EditIconButton,
-  CancelEditIconButton,
-  SubmitEditIconButton
 };

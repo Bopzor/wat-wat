@@ -5,13 +5,13 @@ import {
   SortableHandle,
   arrayMove,
 } from 'react-sortable-hoc';
-import { RemoveIconButton } from '../IconsButton/IconsButton.js';
+import { GenericButton } from '../IconsButton/IconsButton.js';
 import { ListSeen, SortIcon,  } from '../SimpleIcons/SimpleIcons.js';
-import './MoviesList.css'
+import './MoviesList.css';
 
 const DragHandle = SortableHandle(() => <SortIcon />);
 
-const SortableItem = SortableElement(props => {
+const SortableMovieItem = SortableElement(props => {
   return (
     <li className='item-list'>
 
@@ -25,7 +25,13 @@ const SortableItem = SortableElement(props => {
 
       <DragHandle />
 
-      <RemoveIconButton onClick={() => props.removeMovie(props.movie)}/>
+      <GenericButton
+        className="remove-button"
+        onAction={() => props.removeMovie(props.movie)}
+        style={{ fontSize: 24 }}
+        color="secondary"
+        icon="remove_circle"
+      />
 
     </li>
   );
@@ -39,7 +45,7 @@ const SortableList = SortableContainer(props => {
 
       <ul className='movies-list'>
         {movies.map((movie, index) => (
-          <SortableItem
+          <SortableMovieItem
             key={`movie-${index}`}
             index={index}
             movie={movie}
@@ -55,7 +61,7 @@ const SortableList = SortableContainer(props => {
 
 class MoviesList extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = { movies: this.props.movies };
   }
@@ -66,7 +72,7 @@ class MoviesList extends Component {
     return movies;
   }
 
-  onSortEnd = ({oldIndex, newIndex}) => {
+  onSortEnd = ({ oldIndex, newIndex }) => {
     const movies = this.state.movies.slice();
     const newMoviesOrder = arrayMove(movies, oldIndex, newIndex);
     const places = {};
@@ -93,7 +99,7 @@ class MoviesList extends Component {
         onTitleClick={movie => this.props.onTitleClick(movie)}
         removeMovie={movie => this.props.removeMovie(movie)}
       />
-    )
+    );
   }
 }
 
