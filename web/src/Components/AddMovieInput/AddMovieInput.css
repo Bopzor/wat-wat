@@ -1,18 +1,13 @@
-.input-and-filters {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  height: 50px;
-}
-
 .filters {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
+  height: 50px;
 }
 
 .react-autosuggest__input {
   display: flex;
+  width: 90%;
   height: 30px;
   padding-left: 40px;
   font-size: 12pt;

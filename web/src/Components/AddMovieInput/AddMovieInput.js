@@ -81,7 +81,7 @@ class AddMovieInput extends Component {
   };
 
   onSuggestionSelected = (event, { suggestion }) => {
-      this.setState({ title: suggestion.title});
+      this.setState({ title: suggestion.title });
   };
 
   onSuggestionHighlighted = ({ suggestion }) => {
@@ -106,31 +106,29 @@ class AddMovieInput extends Component {
     return (
       <div>
 
-        <div className='input-and-filters'>
-          <div className='filters'>
+        <div className='filters'>
 
-            <SeenButton
-              className="seen-filter-button"
-              onAction={() => this.props.onFilterSeenClick()}
-              isSeen={this.props.isSeen.seen}
-              style={{ fontSize: 30 }}
-              styleBis={{ fontSize: 18 }}
-              color="disabled"
-              colorBis="disabled"
-              icon="done_all"
-            />
-            <SeenButton
-              className="not-seen-filter-button"
-              onAction={() => this.props.onFilterNotSeenClick()}
-              isSeen={this.props.isSeen.notSeen}
-              style={{ fontSize: 30 }}
-              styleBis={{ fontSize: 18 }}
-              color="primary"
-              colorBis="primary"
-              icon="done_all"
-            />
+          <SeenButton
+            className="seen-filter-button"
+            onAction={() => this.props.onFilterSeenClick()}
+            isSeen={this.props.isSeen.seen}
+            style={{ fontSize: 30 }}
+            styleBis={{ fontSize: 18 }}
+            color="disabled"
+            colorBis="disabled"
+            icon="done_all"
+          />
+          <SeenButton
+            className="not-seen-filter-button"
+            onAction={() => this.props.onFilterNotSeenClick()}
+            isSeen={this.props.isSeen.notSeen}
+            style={{ fontSize: 30 }}
+            styleBis={{ fontSize: 18 }}
+            color="primary"
+            colorBis="primary"
+            icon="done_all"
+          />
 
-          </div>
         </div>
 
           <form className='form-add-movie-title' onSubmit={onSubmit}>
