@@ -14,14 +14,14 @@ const renderSuggestion = suggestion => {
     );
 };
 
-const renderSuggestionsContainer = (highlighted, { containerProps , children }) => {
+const renderSuggestionsContainer = (highlighted_poster, { containerProps , children }) => {
   return (
     <div {...containerProps}>
       <div className="suggestions-container">
         <div className="suggestions-list">{children}</div>
         <div className="highlighted-poster">
           <div className="highlighted-image-poster">
-            {highlighted && <img src={highlighted} alt='movie poster'/>}
+            {highlighted_poster && <img src={highlighted_poster} alt='movie poster'/>}
           </div>
         </div>
       </div>
