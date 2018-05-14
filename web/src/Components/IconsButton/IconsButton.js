@@ -7,7 +7,7 @@ const GenericButton = (props) => {
   return (
       <div className={props.className}>
         <IconButton
-          onClick={() => props.onAction()}
+          onClick={(e) => props.onAction(e)}
         >
 
           <Icon style={props.style} color={props.color}>{props.icon}</Icon>
