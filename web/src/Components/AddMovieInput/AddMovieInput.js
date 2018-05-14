@@ -131,21 +131,21 @@ class AddMovieInput extends Component {
 
         </div>
 
-          <form className='form-add-movie-title' onSubmit={onSubmit}>
-            <Autosuggest
-              id='add-movie-title'
-              suggestions={suggestions}
-              getSuggestionValue={getSuggestionValue}
-              renderSuggestion={renderSuggestion}
-              renderSuggestionsContainer={renderSuggestionsContainer.bind(null, highlighted && highlighted.poster)}
-              shouldRenderSuggestions={this.shouldRenderSuggestions}
-              inputProps={inputProps}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-              onSuggestionSelected={this.onSuggestionSelected}
-              onSuggestionHighlighted={this.onSuggestionHighlighted}
-            />
-          </form>
+        <form className='form-add-movie-title' onSubmit={onSubmit}>
+          <Autosuggest
+            id='add-movie-title'
+            suggestions={suggestions}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            renderSuggestionsContainer={renderSuggestionsContainer.bind(null, highlighted && highlighted.poster)}
+            shouldRenderSuggestions={this.shouldRenderSuggestions}
+            inputProps={inputProps}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            onSuggestionSelected={this.onSuggestionSelected}
+            onSuggestionHighlighted={this.onSuggestionHighlighted}
+          />
+        </form>
 
       </div>
     );
