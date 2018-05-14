@@ -9,11 +9,6 @@
 	height: auto;
 }
 
-.movie-detail-with-seen-button {
-	display: flex;
-	flex-direction: row;
-}
-
 .movie-details-with-title-infos {
 	display: flex;
 	flex-direction: column;
