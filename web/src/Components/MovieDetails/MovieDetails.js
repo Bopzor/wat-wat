@@ -30,7 +30,7 @@ class MovieDetails extends Component {
 
   render() {
     if (!this.props.movie) {
-      return <div className='movie-details' />;
+      return null;
     }
 
     return this.createMovieDetails(this.props.movie);
