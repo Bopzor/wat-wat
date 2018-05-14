@@ -24,7 +24,7 @@ class CommentInput extends Component {
     };
 
     return (
-      <div className="full-comment-input">
+      <div className="comment-input-wrapper">
 
         <form
           className="comment-input"
