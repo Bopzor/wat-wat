@@ -6,7 +6,7 @@ const MovieDetailsBlockInfos = (props) => {
   return (
     <div className='movie-details-block-infos'>
 
-      <div className='movie-details-poster'>
+      <div className='poster'>
         <img
           className="img"
           src={props.movie.poster}
@@ -14,36 +14,36 @@ const MovieDetailsBlockInfos = (props) => {
         />
       </div>
 
-      <div className='movie-details-with-title-infos'>
+      <div className='with-title-infos'>
 
-        <div className='movie-details-title'>
+        <div className='title'>
           {props.movie.title}
         </div>
 
-        <div className='movie-details-infos'>
+        <div className='infos'>
 
-          <div className='movie-details-released'>
-            <div className='movie-details-name-info'>Released: </div>
+          <div className='released'>
+            <div className='name-info'>Released: </div>
             {props.movie.released}
           </div>
 
-          <div className='movie-details-runtime'>
-            <div className='movie-details-name-info'>Runtime: </div>
+          <div className='runtime'>
+            <div className='name-info'>Runtime: </div>
             {props.movie.runtime}
           </div>
 
-          <div className='movie-details-director'>
-            <div className='movie-details-name-info'>Director: </div>
+          <div className='director'>
+            <div className='name-info'>Director: </div>
             {props.movie.director}
           </div>
 
-          <div className='movie-details-writer'>
-            <div className='movie-details-name-info'>Writer: </div>
+          <div className='writer'>
+            <div className='name-info'>Writer: </div>
             {props.movie.writer}
           </div>
 
-          <div className='movie-details-actors'>
-            <div className='movie-details-name-info'>Actors: </div>
+          <div className='actors'>
+            <div className='name-info'>Actors: </div>
             {props.movie.actors}
           </div>
 
