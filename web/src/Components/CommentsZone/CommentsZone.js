@@ -105,7 +105,7 @@ class CommentsZone extends Component {
   render() {
 
     return (
-      <div className='full-comments-zone'>
+      <div className='wrapper-comments'>
 
         <CommentInput
           onSubmitMovieComment={(author, comment) => this.props.onSubmitMovieComment(author, comment)}
