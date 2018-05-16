@@ -47,7 +47,7 @@ class CommentsZone extends Component {
 
                   <GenericButton
                     className="submit-edit-comment-button"
-                    onAction={() => {
+                    onClick={() => {
                       if (this.state.newComment) {
                         this.props.onSubmitUpdateComment(comment, this.state.newComment)
                           .then(() => this.setState({
@@ -63,7 +63,7 @@ class CommentsZone extends Component {
                   />
                   <GenericButton
                     className="cancel-edit-comment-button"
-                    onAction={() => this.setState({ editCommentId: null })}
+                    onClick={() => this.setState({ editCommentId: null })}
                     style={{ fontSize: 24 }}
                     color="secondary"
                     icon="cancel"
@@ -96,14 +96,14 @@ class CommentsZone extends Component {
 
             <GenericButton
               className="edit-comment-button"
-              onAction={() => this.onClick(comment)}
+              onClick={() => this.onClick(comment)}
               style={{ fontSize: 24 }}
               color="secondary"
               icon="edit"
             />
             <GenericButton
               className="remove-button"
-              onAction={() => this.props.removeMovieComment(comment)}
+              onClick={() => this.props.removeMovieComment(comment)}
               style={{ fontSize: 24 }}
               color="secondary"
               icon="remove_circle"

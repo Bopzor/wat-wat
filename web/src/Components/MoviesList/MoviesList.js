@@ -27,7 +27,7 @@ const SortableMovieItem = SortableElement(props => {
 
       <GenericButton
         className="remove-button"
-        onAction={() => props.removeMovie(props.movie)}
+        onClick={() => props.removeMovie(props.movie)}
         style={{ fontSize: 24 }}
         color="secondary"
         icon="remove_circle"

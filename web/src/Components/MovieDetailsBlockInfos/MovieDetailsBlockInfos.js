@@ -51,7 +51,7 @@ const MovieDetailsBlockInfos = (props) => {
 
         <SeenButton
           className="seen-movie-button"
-          onAction={movie => props.setSeenOnClick(movie)}
+          onClick={movie => props.setSeenOnClick(movie)}
           isSeen={props.movie.seen}
           style={{ fontSize: 48 }}
           styleBis={{ fontSize: 48 }}

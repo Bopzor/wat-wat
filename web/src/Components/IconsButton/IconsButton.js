@@ -7,7 +7,7 @@ const GenericButton = (props) => {
   return (
       <div className={props.className}>
         <IconButton
-          onClick={(e) => props.onAction(e)}
+          onClick={(e) => props.onClick(e)}
         >
 
           <Icon style={props.style} color={props.color}>{props.icon}</Icon>
@@ -22,7 +22,7 @@ const SeenButton = (props) => {
     return (
         <div className={props.className}>
           <IconButton
-            onClick={() => props.onAction()}
+            onClick={() => props.onClick()}
           >
 
             <Icon style={props.style} color={props.color}>{props.icon}</Icon>
@@ -37,7 +37,7 @@ const SeenButton = (props) => {
       <div className={props.className}>
 
         <IconButton
-          onClick={() => props.onAction()}
+          onClick={() => props.onClick()}
         >
 
           <Icon style={props.styleBis} color={props.colorBis}>{props.icon}</Icon>

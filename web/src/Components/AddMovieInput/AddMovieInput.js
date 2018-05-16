@@ -110,7 +110,7 @@ class AddMovieInput extends Component {
 
           <SeenButton
             className="seen-filter-button"
-            onAction={() => this.props.onFilterSeenClick()}
+            onClick={() => this.props.onFilterSeenClick()}
             isSeen={this.props.isSeen.seen}
             style={{ fontSize: 30 }}
             styleBis={{ fontSize: 18 }}
@@ -120,7 +120,7 @@ class AddMovieInput extends Component {
           />
           <SeenButton
             className="not-seen-filter-button"
-            onAction={() => this.props.onFilterNotSeenClick()}
+            onClick={() => this.props.onFilterNotSeenClick()}
             isSeen={this.props.isSeen.notSeen}
             style={{ fontSize: 30 }}
             styleBis={{ fontSize: 18 }}

@@ -47,7 +47,7 @@ class CommentInput extends Component {
 
           <GenericButton
             className="add-comment-button"
-            onAction={e => onSubmit(e)}
+            onClick={e => onSubmit(e)}
             style={{ fontSize: 48 }}
             color="secondary"
             icon="add_circle"
