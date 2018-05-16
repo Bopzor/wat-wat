@@ -6,8 +6,8 @@
 
 .movie-details-block-infos .img {
 	float: left;
-	max-height: 50%;
-	height: auto;
+	max-height: 380px;
+	width: auto;
 	padding-right: 40px;
 }
 

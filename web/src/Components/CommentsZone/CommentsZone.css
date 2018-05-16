@@ -1,9 +1,6 @@
 .wrapper-comments {
-	flex: 1;
+	height: 50%;
 	border-top: 1px dashed #CCC;
-}
-
-.comments-zone {
 	overflow: auto;
 }
 
