@@ -17,8 +17,9 @@
   margin-right: 10px;
 }
 
-.edit-comment-button {
-  width: 40px;
+.edit-comment-button > button {
+  width: 24px;
+  height: 24px;
 }
 
 .seen-movie-button {
