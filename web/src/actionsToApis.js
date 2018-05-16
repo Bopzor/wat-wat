@@ -136,8 +136,8 @@ export function setPlaces(places) {
     }),
     body: JSON.stringify({
     order: places,
-  }),
-};
+    }),
+  };
 
    return myFetch(url, opts)
     .then(movie => {
