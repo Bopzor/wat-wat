@@ -63,7 +63,7 @@ class MoviesList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { movies: this.props.movies };
+    this.state = {};
   }
 
   static getDerivedStateFromProps(nextProps) {
