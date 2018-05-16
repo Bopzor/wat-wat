@@ -140,13 +140,15 @@ export function setPlaces(places) {
   };
 
    return myFetch(url, opts)
-    .then(movie => {
-      parseDateMovie(movie);
-      for(var i = 0; i < movie.comments.length; i++) {
-        parseDateComment(movie.comments[i]);
+    .then(movies => {
+      for(var i = 0; i < movies.length; i++) {
+        parseDateMovie(movies[i]);
+        for(var j = 0; j < movies[i].comments.length; j++) {
+          parseDateComment(movies[i].comments[j]);
+        }
       }
 
-      return movie;
+      return movies;
     });
  }
 
