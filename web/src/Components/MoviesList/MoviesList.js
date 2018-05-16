@@ -38,7 +38,7 @@ const SortableMovieItem = SortableElement(props => {
 });
 
 const SortableList = SortableContainer(props => {
-  const movies = props.movies;
+  const { movies, onTitleClick, removeMovie } = props;
 
   return (
     <div className='list'>
@@ -49,8 +49,8 @@ const SortableList = SortableContainer(props => {
             key={`movie-${index}`}
             index={index}
             movie={movie}
-            onTitleClick={movie => props.onTitleClick(movie)}
-            removeMovie={movie => props.removeMovie(movie)}
+            onTitleClick={movie => onTitleClick(movie)}
+            removeMovie={movie => removeMovie(movie)}
           />
         ))}
       </ul>
