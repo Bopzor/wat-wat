@@ -7,6 +7,7 @@
 
 .react-autosuggest__input {
   display: flex;
+  flex-direction: row;
   width: 90%;
   height: 30px;
   padding-left: 40px;
@@ -26,6 +27,7 @@
 
 .react-autosuggest__suggestions-container--open {
   display: flex;
+  flex-direction: row;
   position: absolute;
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
