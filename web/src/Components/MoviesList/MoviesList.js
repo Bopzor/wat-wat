@@ -11,53 +11,61 @@ import './MoviesList.css';
 
 const DragHandle = SortableHandle(() => <SortIcon />);
 
-const SortableMovieItem = SortableElement(props => {
-  return (
-    <li className='item-list'>
+class MovieItem extends Component {
+  render () {
+    return (
+      <li className='item-list'>
 
-      <ListSeen isSeen={props.movie.seen} />
-      <span
-        className='title-item'
-        onClick={() => props.onTitleClick(props.movie)}
-      >
-        {props.movie.title}
-      </span>
+        <ListSeen isSeen={this.props.movie.seen} />
+        <span
+          className='title-item'
+          onClick={() => this.props.onTitleClick(this.props.movie)}
+        >
+          {this.props.movie.title}
+        </span>
 
-      <DragHandle />
+        <DragHandle />
 
-      <GenericButton
-        className="remove-button"
-        onClick={() => props.removeMovie(props.movie)}
-        style={{ fontSize: 24 }}
-        color="secondary"
-        icon="remove_circle"
-      />
+        <GenericButton
+          className="remove-button"
+          onClick={() => this.props.removeMovie(this.props.movie)}
+          style={{ fontSize: 24 }}
+          color="secondary"
+          icon="remove_circle"
+        />
 
-    </li>
-  );
-});
+      </li>
+    );
+  }
+}
 
-const SortableList = SortableContainer(props => {
-  const { movies, onTitleClick, removeMovie } = props;
+const SortableMovieItem = SortableElement(MovieItem);
 
-  return (
-    <div className='list'>
+class MoviesSortableList extends Component {
+  render () {
+    const { movies, onTitleClick, removeMovie } = this.props;
 
-      <ul className='movies-list'>
-        {movies.map((movie, index) => (
-          <SortableMovieItem
-            key={`movie-${index}`}
-            index={index}
-            movie={movie}
-            onTitleClick={movie => onTitleClick(movie)}
-            removeMovie={movie => removeMovie(movie)}
-          />
-        ))}
-      </ul>
+    return (
+      <div className='list'>
 
-    </div>
-  );
-});
+        <ul className='movies-list'>
+          {movies.map((movie, index) => (
+            <SortableMovieItem
+              key={`movie-${index}`}
+              index={index}
+              movie={movie}
+              onTitleClick={movie => onTitleClick(movie)}
+              removeMovie={movie => removeMovie(movie)}
+            />
+          ))}
+        </ul>
+
+      </div>
+    );
+  }
+}
+
+const SortableList = SortableContainer(MoviesSortableList);
 
 class MoviesList extends Component {
   constructor(props) {
