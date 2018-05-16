@@ -21,6 +21,8 @@ class CommentsZone extends Component {
     }
 
   createMovieComment(comment) {
+    const date = comment.createdAt.toDateString();
+    const upDate = comment.updatedAt.toDateString();
 
     if(this.state.editCommentId === comment.id) {
       return (
@@ -28,7 +30,13 @@ class CommentsZone extends Component {
 
             <div className='comment-text'>
 
-              <div className='comment-author'>{comment.author} :</div>
+              <div className="comment-header">
+                <div className='comment-author'>{comment.author} :</div>
+                <div className="comment-date">{date}
+                <span className="comment-upDate">{upDate}</span>
+                </div>
+              </div>
+
               <div className='edit-comment-input'>
                 <textarea
                   className='edit-comment-textarea'
@@ -71,30 +79,37 @@ class CommentsZone extends Component {
     return (
       <div key={comment.id} className='comment'>
 
-        <div className='comment-text'>
+         <div className="comment-header">
+              <div className='comment-author'>{comment.author} :</div>
 
-          <div className='comment-author'>{comment.author} : </div>
-          <div className='comment-message'>{comment.comment}</div>
-
+              <div className="comment-date">{date}
+                <span className="comment-upDate">{upDate}</span>
+              </div>
         </div>
 
-        <div className='comment-buttons'>
+        <div className='comment-main'>
 
-          <GenericButton
-            className="edit-comment-button"
-            onAction={() => this.onClick(comment)}
-            style={{ fontSize: 24 }}
-            color="secondary"
-            icon="edit"
-          />
-          <GenericButton
-            className="remove-button"
-            onAction={() => this.props.removeMovieComment(comment)}
-            style={{ fontSize: 24 }}
-            color="secondary"
-            icon="remove_circle"
-          />
+          <div className='comment-message'>{comment.comment}</div>
 
+
+          <div className='comment-buttons'>
+
+            <GenericButton
+              className="edit-comment-button"
+              onAction={() => this.onClick(comment)}
+              style={{ fontSize: 24 }}
+              color="secondary"
+              icon="edit"
+            />
+            <GenericButton
+              className="remove-button"
+              onAction={() => this.props.removeMovieComment(comment)}
+              style={{ fontSize: 24 }}
+              color="secondary"
+              icon="remove_circle"
+            />
+
+          </div>
         </div>
 
       </div>
