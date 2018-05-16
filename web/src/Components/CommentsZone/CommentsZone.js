@@ -22,7 +22,6 @@ class CommentsZone extends Component {
 
   createMovieComment(comment) {
 
-
     if(this.state.editCommentId === comment.id) {
       return (
           <div key={comment.id} className='comment'>
@@ -74,7 +73,7 @@ class CommentsZone extends Component {
 
         <div className='comment-text'>
 
-          <div className='comment-author'>{comment.author} :</div>
+          <div className='comment-author'>{comment.author} : </div>
           <div className='comment-message'>{comment.comment}</div>
 
         </div>
@@ -103,6 +102,7 @@ class CommentsZone extends Component {
 }
 
   render() {
+    const comments = this.props.movie.comments.sort((c1, c2) => c1.createdAt < c2.createdAt);
 
     return (
       <div className='wrapper-comments'>
@@ -112,7 +112,7 @@ class CommentsZone extends Component {
         />
 
         <div className='comments-zone'>
-          {this.props.movie.comments.map(comment => this.createMovieComment(comment))}
+          {comments.map(comment => this.createMovieComment(comment))}
         </div>
 
       </div>
