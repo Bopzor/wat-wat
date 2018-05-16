@@ -5,6 +5,8 @@
  * }
  *
  * Movie: {
+ *    id: number,
+ *    createdAt: Date,
  *    title: string,
  *    plot: string,
  *    release: string,
@@ -16,11 +18,10 @@
  * }
  *
  * Comment: {
- *    [id: int]: int,
  *    comment: string,
  *    author: string,
- *    createdAt: string,
- *    uptadedAt: string,
+ *    createdAt: Date,
+ *    uptadedAt: Date,
  * }
  *
  * getMovies() -> Promise<Movie[]>
@@ -49,7 +50,6 @@ const API_URL = `${BASE_URL}${BASE_API_URL}`;
 
 const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8';
 
-
 function myFetch(url, opts) {
   opts = opts || {};
 
@@ -70,6 +70,16 @@ function myFetch(url, opts) {
     });
 }
 
+function parseDateMovie(movie) {
+  movie.createdAt = new Date(Date.parse(movie.createdAt));
+  movie.updatedAt = new Date(Date.parse(movie.updatedAt));
+}
+
+function parseDateComment(comment) {
+  comment.createdAt = new Date(Date.parse(comment.createdAt));
+  comment.updatedAt = new Date(Date.parse(comment.updatedAt));
+}
+
 /**
  * Requests to Wat-Wat API:
  */
@@ -77,7 +87,17 @@ function myFetch(url, opts) {
 export function getMovies() {
   const url = API_URL;
 
-  return myFetch(url);
+  return myFetch(url)
+    .then(movies => {
+      for(var i = 0; i < movies.length; i++) {
+        parseDateMovie(movies[i]);
+        for(var j = 0; j < movies[i].comments.length; j++) {
+          parseDateComment(movies[i].comments[j]);
+        }
+      }
+
+      return movies;
+    });
 }
 
 export function addMovie(movie) {
@@ -90,7 +110,12 @@ export function addMovie(movie) {
     body: JSON.stringify(movie),
   };
 
-  return myFetch(url, opts);
+  return myFetch(url, opts)
+    .then(movie => {
+      parseDateMovie(movie);
+
+      return movie;
+    });
 }
 
 export function removeMovie(movie) {
@@ -114,7 +139,15 @@ export function setPlaces(places) {
   }),
 };
 
-   return myFetch(url, opts);
+   return myFetch(url, opts)
+    .then(movie => {
+      parseDateMovie(movie);
+      for(var i = 0; i < movie.comments.length; i++) {
+        parseDateComment(movie.comments[i]);
+      }
+
+      return movie;
+    });
  }
 
 export function setMovieSeen(movie, seen) {
@@ -129,7 +162,15 @@ export function setMovieSeen(movie, seen) {
     }),
   };
 
-  return myFetch(url, opts);
+  return myFetch(url, opts)
+    .then(movie => {
+    parseDateMovie(movie);
+    for(var i = 0; i < movie.comments.length; i++) {
+      parseDateComment(movie.comments[i]);
+    }
+
+    return movie;
+  });
 }
 
 export function addComment(movie, author, comment) {
@@ -145,7 +186,15 @@ export function addComment(movie, author, comment) {
     }),
   };
 
-  return myFetch(url, opts);
+  return myFetch(url, opts)
+    .then(movie => {
+      parseDateMovie(movie);
+      for(var i = 0; i < movie.comments.length; i++) {
+        parseDateComment(movie.comments[i]);
+      }
+
+      return movie;
+    });
 }
 
 export function removeComment(movie, comment) {
@@ -170,7 +219,15 @@ export function updateComment(movie, comment, newComment) {
     }),
   };
 
-  return myFetch(url, opts);
+  return myFetch(url, opts)
+    .then(movie => {
+    parseDateMovie(movie);
+    for(var i = 0; i < movie.comments.length; i++) {
+      parseDateComment(movie.comments[i]);
+    }
+
+    return movie;
+  });
 }
 
 /**
