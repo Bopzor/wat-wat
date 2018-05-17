@@ -5,7 +5,8 @@
 }
 
 .wrapper-details {
-	flex: 1;
+	max-height: 60%;
+	overflow: auto;
 }
 
 .movie-details-plot {

@@ -1,5 +1,5 @@
 .wrapper-comments {
-	height: 50%;
+	flex: 1;
 	border-top: 1px dashed #CCC;
 	overflow-y: auto;
 }
@@ -26,7 +26,6 @@
 .comment-text {
 	display: flex;
 	flex-direction: column;
-	flex: 1;
 }
 
 .comment-date {
@@ -60,8 +59,12 @@
 	font-size: 11pt;
 }
 
+.comment-message {
+	text-align: justify;
+}
+
 .comment-buttons {
-	padding-right: 10px;
+	padding: 0 10px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -73,7 +76,6 @@
 }
 
 .edit-comment-textarea {
-	display: flex;
 	flex: 1;
 	border: 1px solid #BBB;
 	margin-left: 20px;
@@ -83,4 +85,10 @@
 .edit-comment-buttons {
 	display: flex;
 	flex-direction: row;
+}
+
+@media screen and (max-width: 1100px) {
+	.wrapper-comment {
+		flex: 2;
+	}
 }
