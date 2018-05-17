@@ -109,9 +109,9 @@ class AddMovieInput extends Component {
         <div className='filters'>
 
           <SeenButton
-            className="seen-filter-button"
-            onClick={() => this.props.onFilterSeenClick()}
-            isSeen={this.props.isSeen.seen}
+            className="not-seen-filter-button"
+            onClick={() => this.props.onFilterNotSeenClick()}
+            isSeen={this.props.isSeen.notSeen}
             style={{ fontSize: 30 }}
             styleBis={{ fontSize: 18 }}
             color="disabled"
@@ -119,9 +119,9 @@ class AddMovieInput extends Component {
             icon="done_all"
           />
           <SeenButton
-            className="not-seen-filter-button"
-            onClick={() => this.props.onFilterNotSeenClick()}
-            isSeen={this.props.isSeen.notSeen}
+            className="seen-filter-button"
+            onClick={() => this.props.onFilterSeenClick()}
+            isSeen={this.props.isSeen.seen}
             style={{ fontSize: 30 }}
             styleBis={{ fontSize: 18 }}
             color="primary"
