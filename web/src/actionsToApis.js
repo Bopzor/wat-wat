@@ -48,7 +48,7 @@ const BASE_URL = 'http://localhost:4269';
 const BASE_API_URL = '/api/movies';
 const API_URL = `${BASE_URL}${BASE_API_URL}`;
 
-const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=8ce98bc8';
+const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=' + process.env.REACT_APP_OMDB_API_KEY;
 
 function myFetch(url, opts) {
   opts = opts || {};
