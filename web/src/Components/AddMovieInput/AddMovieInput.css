@@ -1,0 +1,88 @@
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  height: 50px;
+}
+
+.react-autosuggest__input {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: 30px;
+  padding-left: 40px;
+  font-size: 12pt;
+  border: none;
+  outline: none;
+}
+
+.react-autosuggest__container {
+  position: relative;
+}
+
+.react-autosuggest__suggestions-container {
+  display: none;
+  width: 100%;
+}
+
+.react-autosuggest__suggestions-container--open {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 12pt;
+  top: 42px;
+  width: 100%;
+  max-height: 257px;
+  overflow-y: auto;
+  z-index: 2;
+}
+
+.react-autosuggest__suggestions-list {
+  padding-left: 40px;
+  padding-right: 20px;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 20px 0;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  color: #EF6C00;
+  font-size: 14pt;
+}
+
+.suggestion {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.suggestion-title {
+  z-index: 3;
+}
+
+.suggestions-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.suggestions-list {
+  flex: 5;
+}
+
+.highlighted-poster {
+  flex: 6;
+}
+
+.highlighted-image-poster {
+  position: fixed;
+}
+
+.highlighted-poster img {
+  max-height: 256px;
+}

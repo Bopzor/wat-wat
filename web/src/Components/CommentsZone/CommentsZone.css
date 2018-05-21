@@ -1,0 +1,94 @@
+.wrapper-comments {
+	flex: 1;
+	border-top: 1px dashed #CCC;
+	overflow-y: auto;
+}
+
+.comment-main {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 10px 0 10px 40px;
+	font-size: 10pt;
+}
+
+.comment:nth-child(odd) {
+	background-color: #E6E6E6;
+}
+
+.comment-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 0 20px;
+}
+
+.comment-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.comment-date {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	font-size: 0.8em;
+	color: #666;
+}
+
+.comment-date .comment-upDate {
+	visibility: hidden;
+	position: absolute;
+	width: 100%;
+  top: 5px;
+  right: 105%;
+  padding: 5px 2px;
+  background-color: #CCC;
+  text-align: center;
+  z-index: 1;
+}
+
+.comment-date:hover .comment-upDate {
+	visibility: visible;
+}
+
+.comment-author {
+	display: inline;
+	font-weight: bold;
+	padding-bottom: 2px;
+	font-size: 11pt;
+}
+
+.comment-message {
+	text-align: justify;
+}
+
+.comment-buttons {
+	padding: 0 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.edit-comment-input {
+	display: flex;
+	flex-direction: row;
+}
+
+.edit-comment-textarea {
+	flex: 1;
+	border: 1px solid #BBB;
+	margin-left: 20px;
+	background-color: transparent;
+}
+
+.edit-comment-buttons {
+	display: flex;
+	flex-direction: row;
+}
+
+@media screen and (max-width: 1100px) {
+	.wrapper-comment {
+		flex: 2;
+	}
+}

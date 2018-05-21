@@ -1,0 +1,27 @@
+ .list {
+	overflow: auto;
+}
+
+.item-list {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-bottom: 1px solid #CCC;
+	height: 20px;
+	padding: 10px 0;
+	pointer-events: auto !important;
+}
+
+.item-list:first-child {
+	border-top: 1px solid #CCC;	
+}
+
+.title-item {
+	flex: 2;
+	font-size: 16pt;
+}
+
+.title-item:hover {
+	font-size: 18pt;
+	cursor: pointer;
+} 
