@@ -23,7 +23,6 @@ class App extends Component {
   componentDidMount() {
     return actions.getMovies()
       .then(movies => {
-        console.log('Success: ', movies);
         this.setState({ movies });
       })
       .catch(error => console.error('Error: ', error));
