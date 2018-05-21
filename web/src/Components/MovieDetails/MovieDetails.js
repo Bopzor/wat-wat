@@ -6,14 +6,14 @@ import './MovieDetails.css';
 class MovieDetails extends Component {
   createMovieDetails(movie) {
     return (
-      <div className='movie-details'>
+      <div className="movie-details">
         <div className="wrapper-details">
           <MovieDetailsBlockInfos
             movie={movie}
             setSeenOnClick={() => this.props.setSeen(movie)}
           />
 
-          <div className='movie-details-plot'>
+          <div className="movie-details-plot">
             <span>{movie.plot}</span>
           </div>
         </div>
@@ -30,9 +30,8 @@ class MovieDetails extends Component {
   }
 
   render() {
-    if (!this.props.movie) {
+    if (!this.props.movie)
       return null;
-    }
 
     return this.createMovieDetails(this.props.movie);
   }

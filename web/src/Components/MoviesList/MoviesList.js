@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   SortableContainer,
   SortableElement,
@@ -6,19 +6,19 @@ import {
   arrayMove,
 } from 'react-sortable-hoc';
 import { GenericButton } from '../IconsButton/IconsButton.js';
-import { ListSeen, SortIcon,  } from '../SimpleIcons/SimpleIcons.js';
+import { ListSeen, SortIcon } from '../SimpleIcons/SimpleIcons.js';
 import './MoviesList.css';
 
 const DragHandle = SortableHandle(() => <SortIcon />);
 
 class MovieItem extends Component {
-  render () {
+  render() {
     return (
-      <li className='item-list'>
+      <li className="item-list">
 
         <ListSeen isSeen={this.props.movie.seen} />
         <span
-          className='title-item'
+          className="title-item"
           onClick={() => this.props.onTitleClick(this.props.movie)}
         >
           {this.props.movie.title}
@@ -42,13 +42,13 @@ class MovieItem extends Component {
 const SortableMovieItem = SortableElement(MovieItem);
 
 class MoviesSortableList extends Component {
-  render () {
+  render() {
     const { movies, onTitleClick, removeMovie } = this.props;
 
     return (
-      <div className='list'>
+      <div className="list">
 
-        <ul className='movies-list'>
+        <ul className="movies-list">
           {movies.map((movie, index) => (
             <SortableMovieItem
               key={`movie-${index}`}
@@ -96,14 +96,14 @@ class MoviesList extends Component {
   };
 
   render() {
-    const movies = this.state.movies;
+    const { movies } = this.state;
 
     return (
       <SortableList
         movies={movies}
         onSortEnd={this.onSortEnd}
         useDragHandle={true}
-        lockAxis='y'
+        lockAxis="y"
         onTitleClick={movie => this.props.onTitleClick(movie)}
         removeMovie={movie => this.props.removeMovie(movie)}
       />

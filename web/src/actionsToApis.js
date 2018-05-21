@@ -48,7 +48,7 @@ const BASE_URL = 'http://localhost:4269';
 const BASE_API_URL = '/api/movies';
 const API_URL = `${BASE_URL}${BASE_API_URL}`;
 
-const OMDB_API_URL = 'http://www.omdbapi.com/?apikey=' + process.env.REACT_APP_OMDB_API_KEY;
+const OMDB_API_URL = `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}`;
 
 function myFetch(url, opts) {
   opts = opts || {};
@@ -57,11 +57,10 @@ function myFetch(url, opts) {
     .then(res => {
       const contentType = res.headers.get('Content-Type');
 
-      if (/^application\/json/.exec(contentType)) {
+      if (/^application\/json/.exec(contentType))
         return res.json();
-      } else if (/^text/.exec(contentType)) {
+      else if (/^text/.exec(contentType))
         return res.text();
-      }
 
     })
     .catch(error => {
@@ -89,11 +88,10 @@ export function getMovies() {
 
   return myFetch(url)
     .then(movies => {
-      for(var i = 0; i < movies.length; i++) {
+      for (let i = 0; i < movies.length; i++) {
         parseDateMovie(movies[i]);
-        for(var j = 0; j < movies[i].comments.length; j++) {
+        for (let j = 0; j < movies[i].comments.length; j++)
           parseDateComment(movies[i].comments[j]);
-        }
       }
 
       return movies;
@@ -106,7 +104,7 @@ export function addMovie(movie) {
     method: 'POST',
     headers: new Headers({
       'Content-Type': 'application/json',
-  }),
+    }),
     body: JSON.stringify(movie),
   };
 
@@ -135,22 +133,21 @@ export function setPlaces(places) {
       'Content-Type': 'application/json',
     }),
     body: JSON.stringify({
-    order: places,
+      order: places,
     }),
   };
 
-   return myFetch(url, opts)
+  return myFetch(url, opts)
     .then(movies => {
-      for(var i = 0; i < movies.length; i++) {
+      for (let i = 0; i < movies.length; i++) {
         parseDateMovie(movies[i]);
-        for(var j = 0; j < movies[i].comments.length; j++) {
+        for (let j = 0; j < movies[i].comments.length; j++)
           parseDateComment(movies[i].comments[j]);
-        }
       }
 
       return movies;
     });
- }
+}
 
 export function setMovieSeen(movie, seen) {
   const url = `${API_URL}/${movie.id}`;
@@ -166,13 +163,12 @@ export function setMovieSeen(movie, seen) {
 
   return myFetch(url, opts)
     .then(movie => {
-    parseDateMovie(movie);
-    for(var i = 0; i < movie.comments.length; i++) {
-      parseDateComment(movie.comments[i]);
-    }
+      parseDateMovie(movie);
+      for (let i = 0; i < movie.comments.length; i++)
+        parseDateComment(movie.comments[i]);
 
-    return movie;
-  });
+      return movie;
+    });
 }
 
 export function addComment(movie, author, comment) {
@@ -183,17 +179,16 @@ export function addComment(movie, author, comment) {
       'Content-Type': 'application/json',
     }),
     body: JSON.stringify({
-      comment: comment,
-      author: author,
+      comment,
+      author,
     }),
   };
 
   return myFetch(url, opts)
     .then(movie => {
       parseDateMovie(movie);
-      for(var i = 0; i < movie.comments.length; i++) {
+      for (let i = 0; i < movie.comments.length; i++)
         parseDateComment(movie.comments[i]);
-      }
 
       return movie;
     });
@@ -223,13 +218,12 @@ export function updateComment(movie, comment, newComment) {
 
   return myFetch(url, opts)
     .then(movie => {
-    parseDateMovie(movie);
-    for(var i = 0; i < movie.comments.length; i++) {
-      parseDateComment(movie.comments[i]);
-    }
+      parseDateMovie(movie);
+      for (let i = 0; i < movie.comments.length; i++)
+        parseDateComment(movie.comments[i]);
 
-    return movie;
-  });
+      return movie;
+    });
 }
 
 /**
@@ -241,7 +235,7 @@ export function getMovieDetails(title) {
 
   return myFetch(url)
     .then(result => {
-      if(result.Response !== 'True')
+      if (result.Response !== 'True')
         return null;
 
       return {
@@ -262,7 +256,7 @@ export function searchMovieTitle(query) {
 
   return myFetch(url)
     .then(result => {
-      if(result.Response !== 'True')
+      if (result.Response !== 'True')
         return [];
 
       return result.Search.map(searchedMovie => ({

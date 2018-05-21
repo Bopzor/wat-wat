@@ -8,13 +8,13 @@ class CommentInput extends Component {
 
     this.state = {
       author: '',
-      comment: ''
+      comment: '',
     };
   }
 
   render() {
 
-    const onSubmit= e => {
+    const onSubmit = e => {
       e.preventDefault();
       this.props.onSubmitMovieComment(this.state.author, this.state.comment)
         .then(() => this.setState({
@@ -45,13 +45,13 @@ class CommentInput extends Component {
 
         </form>
 
-          <GenericButton
-            className="add-comment-button"
-            onClick={e => onSubmit(e)}
-            style={{ fontSize: 48 }}
-            color="secondary"
-            icon="add_circle"
-          />
+        <GenericButton
+          className="add-comment-button"
+          onClick={e => onSubmit(e)}
+          style={{ fontSize: 48 }}
+          color="secondary"
+          icon="add_circle"
+        />
 
       </div>
     );

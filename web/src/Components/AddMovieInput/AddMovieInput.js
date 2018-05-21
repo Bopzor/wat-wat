@@ -8,28 +8,24 @@ const timeOut = 500;
 
 const getSuggestionValue = suggestion => suggestion.title;
 
-const renderSuggestion = suggestion => {
-    return (
-      <div>
-        {suggestion.title}
-      </div>
-    );
-};
+const renderSuggestion = suggestion => (
+  <div>
+    {suggestion.title}
+  </div>
+);
 
-const renderSuggestionsContainer = (highlighted_poster, { containerProps , children }) => {
-  return (
-    <div {...containerProps}>
-      <div className="suggestions-container">
-        <div className="suggestions-list">{children}</div>
-        <div className="highlighted-poster">
-          <div className="highlighted-image-poster">
-            {highlighted_poster && <img src={highlighted_poster} alt='movie poster'/>}
-          </div>
+const renderSuggestionsContainer = (highlighted_poster, { containerProps, children }) => (
+  <div {...containerProps}>
+    <div className="suggestions-container">
+      <div className="suggestions-list">{children}</div>
+      <div className="highlighted-poster">
+        <div className="highlighted-image-poster">
+          {highlighted_poster && <img src={highlighted_poster} alt="movie poster"/>}
         </div>
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 class AddMovieInput extends Component {
   constructor(props) {
@@ -49,14 +45,11 @@ class AddMovieInput extends Component {
     });
   };
 
-  shouldRenderSuggestions = value => {
-    return value.trim().length > 3;
-  };
+  shouldRenderSuggestions = value => value.trim().length > 3;
 
   onSuggestionsFetchRequested = ({ value, reason }) => {
-    if (reason === 'input-focused') {
+    if (reason === 'input-focused')
       return;
-    }
 
     if (reason === 'input-changed') {
 
@@ -76,12 +69,12 @@ class AddMovieInput extends Component {
 
   onSuggestionsClearRequested = () => {
     this.setState({
-      suggestions: []
+      suggestions: [],
     });
   };
 
   onSuggestionSelected = (event, { suggestion }) => {
-      this.setState({ title: suggestion.title });
+    this.setState({ title: suggestion.title });
   };
 
   onSuggestionHighlighted = ({ suggestion }) => {
@@ -106,7 +99,7 @@ class AddMovieInput extends Component {
     return (
       <div>
 
-        <div className='filters'>
+        <div className="filters">
 
           <SeenButton
             className="not-seen-filter-button"
@@ -131,9 +124,9 @@ class AddMovieInput extends Component {
 
         </div>
 
-        <form className='form-add-movie-title' onSubmit={onSubmit}>
+        <form className="form-add-movie-title" onSubmit={onSubmit}>
           <Autosuggest
-            id='add-movie-title'
+            id="add-movie-title"
             suggestions={suggestions}
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}

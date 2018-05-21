@@ -16,8 +16,8 @@ class App extends Component {
     filter: {
       seen: false,
       notSeen: false,
-    loadingTitle: false,
     },
+    loadingTitle: false,
   };
 
   componentDidMount() {
@@ -38,9 +38,8 @@ class App extends Component {
 
     return actions.getMovieDetails(title)
       .then(movie => {
-        if (movie === null) {
-          return alert(title + ' not found.');
-        }
+        if (movie === null)
+          return alert(`${title}not found.`);
 
         return actions.addMovie(movie)
           .then(movie => {
@@ -69,7 +68,7 @@ class App extends Component {
       filter: {
         seen: !isSeen,
         notSeen: false,
-      }
+      },
     });
   }
 
@@ -78,10 +77,10 @@ class App extends Component {
 
     this.setState({
       displayMovieId: null,
-        filter: {
-          seen: false,
-          notSeen: !isNotSeen,
-      }
+      filter: {
+        seen: false,
+        notSeen: !isNotSeen,
+      },
     });
   }
 
@@ -126,7 +125,7 @@ class App extends Component {
             seen: false,
             notSeen: false,
           },
-         });
+        });
       });
   }
 
@@ -148,13 +147,13 @@ class App extends Component {
         const movies = this.state.movies.slice();
         const movieIdx = this.findMovieIndex(movie);
         const comments = movie.comments.slice();
-        const commentIdx = comments.findIndex(c => c.id === comment.id);
+        const commentIdx = comments.findIndex(com => com.id === comment.id);
 
         comments.splice(commentIdx, 1);
 
-        const movieUpdated = {...movie, comments};
+        const movieUpdated = { ...movie, comments };
 
-        movies.splice(movieIdx,1 , movieUpdated);
+        movies.splice(movieIdx, 1, movieUpdated);
 
         this.setState({ movies });
       })
@@ -186,16 +185,16 @@ class App extends Component {
       moviesDisplay = movies.filter(m => m.seen);
 
     return (
-      <div className='page'>
+      <div className="page">
 
         <div className="page-title">
           <h1>Whatcha Watchin?</h1>
           <h3>(Wat-Wat?)</h3>
         </div>
 
-        <div className='content-page'>
+        <div className="content-page">
 
-          <div className='left-side'>
+          <div className="left-side">
 
             <AddMovieInput
               onSubmitMovieTitle={title => this.handleSubmitTitle(title)}
@@ -203,7 +202,7 @@ class App extends Component {
               onFilterSeenClick={() => this.handleFilterSeenClick()}
               isSeen={this.state.filter}
             />
-            {loadingTitle && <LinearProgress color='secondary' />}
+            {loadingTitle && <LinearProgress color="secondary" />}
 
             <MoviesList
               movies={moviesDisplay}
@@ -219,9 +218,15 @@ class App extends Component {
             <MovieDetails
               movie={displayMovie}
               setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
-              onSubmitMovieComment={(displayMovie, author, comment)=> this.handleSubmitComment(displayMovie, author, comment)}
-              removeComment={(displayMovie, comment)=> this.handleRemoveComment(displayMovie, comment)}
-              updateEditedComment={(displayMovie, comment, newComment) => this.handleSubmitEditedComment(displayMovie, comment, newComment)}
+              onSubmitMovieComment={
+                (displayMovie, author, comment) =>
+                  this.handleSubmitComment(displayMovie, author, comment)
+              }
+              removeComment={(displayMovie, comment) => this.handleRemoveComment(displayMovie, comment)}
+              updateEditedComment={
+                (displayMovie, comment, newComment) =>
+                  this.handleSubmitEditedComment(displayMovie, comment, newComment)
+              }
             />
 
           </div>
