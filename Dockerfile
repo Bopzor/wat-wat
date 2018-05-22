@@ -1,16 +1,18 @@
 FROM node:8
 
+RUN mkdir /db
+
 RUN mkdir /opt/app
 WORKDIR /opt/app
 
 COPY . /opt/app
 
-ENV REACT_APP_API_URL=
+ARG REACT_APP_OMDB_API_KEY
+ARG REACT_APP_API_URL
+
+ENV NODE_ENV=production
 
 RUN yarn
 RUN yarn build
-
-EXPOSE 4269
-EXPOSE 3000
 
 ENTRYPOINT ["node", "main.js"]
