@@ -3,20 +3,27 @@ To keep a trace of changes.
   
 
 ## [Unrealesed]
-+ The two sides of the page stay at the same size when movie detail is showed  
-+ Better management of the poster size  
-+ Movie details are removed when the movie is delete  
+
+
+## [2.0.0] - 2018-05-22
+### Added
 + Restart from scratch with React
 + Comments movies (add, delete, update)
++ Autosuggestion to add movie
++ Add progress bar on movie title submit
++ Display alert on movie not found
 + The possibility to note if the movie is already seen
 + Filter movies list by seen or not or both
-+ Autosuggestion to add movie
-+ Display alert on movie not found
-+ Add progress bar on movie title submit
 + Use media query for screen size under 1100px
-+ Returns the full movie instead of the comment only
 
-  
+### Fixed
++ The two sides of the page stay at the same size when movie detail is showed  
++ Better management of the poster size  
+
+###Changed
++ Movie details are removed when the movie is delete  
++ Returns the full movie instead of the comment only
++ Adapt DB to new features
 
 ## [1.2.0] - 2018-03-23  
 ### Added    
