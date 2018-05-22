@@ -38,7 +38,7 @@ class App extends Component {
     return actions.getMovieDetails(title)
       .then(movie => {
         if (movie === null)
-          return alert(`${title}not found.`);
+          return alert(`${title} not found.`);
 
         return actions.addMovie(movie)
           .then(movie => {
