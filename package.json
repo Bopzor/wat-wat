@@ -1,6 +1,6 @@
 {
   "name": "wat-wat",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "watcha watchin'",
   "main": "main.js",
   "scripts": {
@@ -8,8 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd web && yarn build",
     "postinstall": "cd web && yarn",
-    "docker:build": "docker build -t wat-wat .",
-    "docker:run": "docker run -dt --name wat-wat-container -e REACT_APP_API_URL= wat-wat"
+    "docker:build": "docker build --build-arg REACT_APP_API_URL=${REACT_APP_API_URL} --build-arg REACT_APP_OMDB_API_KEY=${REACT_APP_OMDB_API_KEY} -t wat-wat .",
+    "docker:run": "docker run -dt --name wat-wat-container -v ${PWD}/db:/db -u $(id -u):$(id -g) -e PORT=8080 -p 4444:8080 wat-wat"
   },
   "repository": {
     "type": "git",
