@@ -10,7 +10,7 @@ const pkg = require('../package');
 const PORT = process.env['PORT'] || 4269;
 
 const api = express.Router();
-const sequelize = new Sequelize('sqlite:db.sqlite');
+const sequelize = new Sequelize('sqlite:/db/db.sqlite');
 
 const Movie = sequelize.define('movie', {
   title: Sequelize.STRING,
