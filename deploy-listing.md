@@ -5,6 +5,7 @@
 2. Merge  
 3. After merge  
 4. Deploy    
+5. After deploy
 
 ## 1. Before merge   
 Test show, hide, add, delete, sort. And all other feature of wat-wat.  
@@ -22,7 +23,7 @@ Test show, hide, add, delete, sort. And all other feature of wat-wat.
 
 ## 3. After merge   
 Edit CHANGELOG.md file
-`git add package.json`  
+`git add CHANGELOG.md`  
 `git commit -m 'update CHANGELOG.md'`
 Change version in package.json  
 `git add package.json`  
@@ -32,20 +33,19 @@ Change version in package.json
 `git push --tags`
   
 ## 4. Deploy   
-`ssh twix`  
+`ssh twix2`  
 `source /opt/nvm/nvm.sh`  
 `cd /var/www/movies-list`  
 `git status`  
 `git pull origin mep`: update repository  
 `rm -rf node_modules`: remove dependencies   
-`npm install`: install dependencies  
-`sh .bundle.sh "http://wat-wat.nilslayet.com"`. get output.js file  
-Start server with tmux 
-+ to attach an existing tmux session  
-    `tmux a`    
-+ to start a new tmux session  
-    `tmux`  
-    
-`source /opt/nvm/nvm.ssh`    
-`NODE_ENV=production PORT=$$$$ node ./main.js`: start server    
-`ctrl-b d`: press ctrl and b, realese, then press *d* to detach the current session 
+`yarn`: install dependencies
+`export REACT_APP_API_URL=<api_url>`: create environment variable for api url
+`export REACT_APP_OMDB_API_KEY=<apikey>`: create environment variable for omdb apikey
+`yarn docker:build`: build docker image
+`yarn docker:run`: run docker container
+
+##5. After deploy
+`git pull`
+`git checkout master`
+`git merge mep`
