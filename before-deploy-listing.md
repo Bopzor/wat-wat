@@ -41,7 +41,7 @@ Change version in package.json
 `REACT_APP_API_URL=<api_url> REACT_APP_OMDB_API_KEY=<apikey> yarn docker:build`: build docker image
 `yarn docker:run`: run docker container
 
-##5. After deploy
+## 5. After deploy
 `git push`
 `git checkout master`
 `git pull`
