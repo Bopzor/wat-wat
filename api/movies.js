@@ -47,6 +47,7 @@ const create = (req, res, next) => {
     actors: req.body.actors || 'Unknown',
     poster: req.body.poster || 'Unknown',
     seen: req.body.seen || false,
+    imdbId: req.body.imdbId || null,
   };
 
   Movie.max('place')
