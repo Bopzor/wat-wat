@@ -42,6 +42,12 @@
  *
  * getMovieDetails(title: sting) -> Promise<Movie>
  * searchMovieTitle(query: string) -> Promise<searchedMovie[]>
+ *
+ * Magnet: string
+ *
+ * Request to YTS API:
+ * getMagnet(imdbId: string) -> Promise<Magnet[]>
+ *
  */
 
 const BASE_URL = process.env.REACT_APP_API_URL;
@@ -49,6 +55,17 @@ const BASE_API_URL = '/api/movies';
 const API_URL = `${BASE_URL}${BASE_API_URL}`;
 
 const OMDB_API_URL = `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}`;
+const YTS_API_URL = 'https://yts.am/api/v2/list_movies.json?query_term=';
+const ytsClients = [
+  'tracker.coppersurfer.tk:6969',
+  'open.demonii.com:1337',
+  'tracker.publicbt.com:80',
+  '9.rarbg.me:2710/announce',
+  'p4p.arenabg.com:1337',
+  'tracker.internetwarriors.net:1337',
+  'torrent.gresille.org:80/announce',
+  'tracker.openbittorrent.com:80',
+];
 
 function myFetch(url, opts) {
   opts = opts || {};
@@ -57,10 +74,11 @@ function myFetch(url, opts) {
     .then(res => {
       const contentType = res.headers.get('Content-Type');
 
-      if (/^application\/json/.exec(contentType))
+      if (/^application\/json/.exec(contentType)) {
         return res.json();
-      else if (/^text/.exec(contentType))
+      } else if (/^text/.exec(contentType)) {
         return res.text();
+      }
 
     })
     .catch(error => {
@@ -79,6 +97,12 @@ function parseDateComment(comment) {
   comment.updatedAt = new Date(Date.parse(comment.updatedAt));
 }
 
+function createMagnet(torrent) {
+  const magnet = `magnet:?xt=urn:btih:${torrent.hash}${ytsClients.join('&tr=udp://')}`;
+
+  return magnet;
+}
+
 /**
  * Requests to Wat-Wat API:
  */
@@ -90,8 +114,9 @@ export function getMovies() {
     .then(movies => {
       for (let i = 0; i < movies.length; i++) {
         parseDateMovie(movies[i]);
-        for (let j = 0; j < movies[i].comments.length; j++)
+        for (let j = 0; j < movies[i].comments.length; j++) {
           parseDateComment(movies[i].comments[j]);
+        }
       }
 
       return movies;
@@ -141,8 +166,9 @@ export function setPlaces(places) {
     .then(movies => {
       for (let i = 0; i < movies.length; i++) {
         parseDateMovie(movies[i]);
-        for (let j = 0; j < movies[i].comments.length; j++)
+        for (let j = 0; j < movies[i].comments.length; j++) {
           parseDateComment(movies[i].comments[j]);
+        }
       }
 
       return movies;
@@ -164,8 +190,9 @@ export function setMovieSeen(movie, seen) {
   return myFetch(url, opts)
     .then(movie => {
       parseDateMovie(movie);
-      for (let i = 0; i < movie.comments.length; i++)
+      for (let i = 0; i < movie.comments.length; i++) {
         parseDateComment(movie.comments[i]);
+      }
 
       return movie;
     });
@@ -187,8 +214,9 @@ export function addComment(movie, author, comment) {
   return myFetch(url, opts)
     .then(movie => {
       parseDateMovie(movie);
-      for (let i = 0; i < movie.comments.length; i++)
+      for (let i = 0; i < movie.comments.length; i++) {
         parseDateComment(movie.comments[i]);
+      }
 
       return movie;
     });
@@ -219,9 +247,9 @@ export function updateComment(movie, comment, newComment) {
   return myFetch(url, opts)
     .then(movie => {
       parseDateMovie(movie);
-      for (let i = 0; i < movie.comments.length; i++)
+      for (let i = 0; i < movie.comments.length; i++) {
         parseDateComment(movie.comments[i]);
-
+      }
       return movie;
     });
 }
@@ -235,10 +263,12 @@ export function getMovieDetails(title) {
 
   return myFetch(url)
     .then(result => {
-      if (result.Response !== 'True')
+      if (result.Response !== 'True') {
         return null;
+      }
 
       return {
+        imdbId: result.imdbID,
         title: result.Title,
         plot: result.Plot,
         released: result.Released,
@@ -256,8 +286,9 @@ export function searchMovieTitle(query) {
 
   return myFetch(url)
     .then(result => {
-      if (result.Response !== 'True')
+      if (result.Response !== 'True') {
         return [];
+      }
 
       return result.Search.map(searchedMovie => ({
         title: searchedMovie.Title,
@@ -266,4 +297,26 @@ export function searchMovieTitle(query) {
       }));
     })
     .catch(error => console.error('Error:', error));
+}
+
+/**
+ * Requests to YTS API:
+ */
+
+export function getMagnet(imdbId) {
+  const url = `${YTS_API_URL}${imdbId}`;
+
+  return myFetch(url)
+    .then(result => {
+      if (result.data.movie_count <= 0) {
+        return null;
+      }
+
+      return result.data.movies[0].torrents.map(torrent => ({
+        link: createMagnet(torrent),
+        size: torrent.size,
+        quality: torrent.quality,
+        imdbId: torrent.imdb_code,
+      }));
+    });
 }

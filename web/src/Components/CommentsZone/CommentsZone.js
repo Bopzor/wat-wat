@@ -24,7 +24,7 @@ class CommentsZone extends Component {
     const date = comment.createdAt.toDateString();
     const upDate = comment.updatedAt.toDateString();
 
-    if (this.state.editCommentId === comment.id)
+    if (this.state.editCommentId === comment.id) {
       return (
         <div key={comment.id} className="comment">
 
@@ -48,12 +48,13 @@ class CommentsZone extends Component {
                 <GenericButton
                   className="submit-edit-comment-button"
                   onClick={() => {
-                    if (this.state.newComment)
+                    if (this.state.newComment) {
                       this.props.onSubmitUpdateComment(comment, this.state.newComment)
                         .then(() => this.setState({
                           editCommentId: null,
                           newComment: '',
                         }));
+                    }
 
                     this.setState({ editCommentId: null });
                   }}
@@ -74,6 +75,7 @@ class CommentsZone extends Component {
           </div>
         </div>
       );
+    }
 
     return (
       <div key={comment.id} className="comment">

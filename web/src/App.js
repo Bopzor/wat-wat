@@ -18,11 +18,14 @@ class App extends Component {
       notSeen: false,
     },
     loadingTitle: false,
+    displayMagnets: false,
+    magnets: [],
   };
 
   componentDidMount() {
     return actions.getMovies()
       .then(movies => {
+        console.log('Success: ', movies);
         this.setState({ movies });
       })
       .catch(error => console.error('Error: ', error));
@@ -37,8 +40,9 @@ class App extends Component {
 
     return actions.getMovieDetails(title)
       .then(movie => {
-        if (movie === null)
+        if (movie === null) {
           return alert(`${title} not found.`);
+        }
 
         return actions.addMovie(movie)
           .then(movie => {
@@ -84,8 +88,11 @@ class App extends Component {
   }
 
   handleTitleClick(movie) {
-    movie.id === this.state.displayMovieId ?
-      this.setState({ displayMovieId: null }) : this.setState({ displayMovieId: movie.id });
+    this.setState({
+      displayMovieId: movie.id === this.state.displayMovieId ? null : movie.id,
+      displayMagnets: false,
+      magnets: [],
+    });
   }
 
   handleRemoveMovie(movie) {
@@ -125,6 +132,17 @@ class App extends Component {
             notSeen: false,
           },
         });
+      });
+  }
+
+  handleGetMagnet(movie) {
+    return actions.getMagnet(movie.imdbId)
+      .then(magnets => {
+        if (magnets && magnets.length > 0) {
+          return new Promise(resolve => {
+            this.setState({ magnets }, resolve);
+          });
+        }
       });
   }
 
@@ -172,16 +190,16 @@ class App extends Component {
   }
 
   render() {
-    const { movies, displayMovieId, filter, loadingTitle } = this.state;
+    const { movies, displayMovieId, filter, loadingTitle, displayMagnets, magnets } = this.state;
 
     const displayMovie = movies.find(m => m.id === displayMovieId);
     let moviesDisplay = movies;
 
-    if (!filter.seen && filter.notSeen)
+    if (!filter.seen && filter.notSeen) {
       moviesDisplay = movies.filter(m => !m.seen);
-
-    else if (filter.seen && !filter.notSeen)
+    } else if (filter.seen && !filter.notSeen) {
       moviesDisplay = movies.filter(m => m.seen);
+    }
 
     return (
       <div className="page">
@@ -216,7 +234,10 @@ class App extends Component {
 
             <MovieDetails
               movie={displayMovie}
+              displayMagnets={displayMagnets}
+              magnets={magnets}
               setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
+              getMagnet={displayMovie => this.handleGetMagnet(displayMovie)}
               onSubmitMovieComment={
                 (displayMovie, author, comment) =>
                   this.handleSubmitComment(displayMovie, author, comment)

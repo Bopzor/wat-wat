@@ -3,12 +3,13 @@ import Icon from 'material-ui/Icon';
 import './SimpleIcons.css';
 
 const ListSeen = props => {
-  if (!props.isSeen)
+  if (!props.isSeen) {
     return (
       <div className="list-seen-movie-icon">
         <Icon style={{ fontSize: 18 }} color="disabled">done_all</Icon>
       </div>
     );
+  }
 
   return (
     <div className="list-seen-movie-icon">
@@ -23,7 +24,14 @@ const SortIcon = () => (
   </div>
 );
 
+const LinkIcon = () => (
+  <div className="link-icon">
+    <Icon style={{ fontSize: 24 }} color="primary">link</Icon>
+  </div>
+);
+
 export {
   ListSeen,
   SortIcon,
+  LinkIcon,
 };

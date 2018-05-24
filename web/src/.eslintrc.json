@@ -24,8 +24,7 @@
   "rules": {
         "arrow-body-style": ["error", "as-needed"],
         "arrow-parens": ["error", "as-needed"],
-        "brace-style": ["error", "1tbs"],
-        "curly": ["error", "multi"],
+        "curly": ["error", "all"],
         "dot-location": ["error", "property"],
         "indent": ["error", 2],
         "no-empty": ["error", { "allowEmptyCatch": true }],
@@ -39,7 +38,7 @@
         "comma-spacing": ["error"],
         "comma-style": ["error", "last"],
         "eol-last": ["error", "always"],
-        "id-length": ["warn", { "min": 3, "exceptions": ["e", "i", "j", "m"] }],
+        "id-length": ["warn", { "min": 3, "exceptions": ["e", "i", "j", "m", "id"] }],
         "jsx-quotes": ["error", "prefer-double"],
         "keyword-spacing": ["error"],
         "linebreak-style": ["error", "unix"],

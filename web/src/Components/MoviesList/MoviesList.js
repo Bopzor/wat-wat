@@ -89,8 +89,9 @@ class MoviesList extends Component {
       movies: newMoviesOrder,
     });
 
-    for (let i = 0; i < newMoviesOrder.length; i++)
+    for (let i = 0; i < newMoviesOrder.length; i++) {
       places[newMoviesOrder[i].id] = i + 1;
+    }
 
     this.props.sendSortPlaces(places);
   };
