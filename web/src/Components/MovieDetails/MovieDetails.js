@@ -10,6 +10,8 @@ class MovieDetails extends Component {
     super(props);
 
     this.state = {
+      displayMagnets: false,
+      movie: null,
       copied: false,
     };
   }
@@ -19,7 +21,7 @@ class MovieDetails extends Component {
       return {};
     }
 
-    const displayMagnets = prevState.movie && prevState.movie.id === nextProps.movie.id;
+    const displayMagnets = (prevState.movie && prevState.movie.id) === (nextProps.movie && nextProps.movie.id);
 
     return ({
       movie: nextProps.movie,
