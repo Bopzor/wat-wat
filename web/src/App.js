@@ -192,7 +192,7 @@ class App extends Component {
   render() {
     const { movies, displayMovieId, filter, loadingTitle, magnets } = this.state;
 
-    const displayMovie = movies.find(m => m.id === displayMovieId);
+    const displayMovie = movies.find(m => m.id === displayMovieId) || null;
     let moviesDisplay = movies;
 
     if (!filter.seen && filter.notSeen) {
