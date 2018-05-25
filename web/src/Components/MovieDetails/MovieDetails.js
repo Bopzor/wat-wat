@@ -17,15 +17,36 @@ class MovieDetails extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    const nextState = {};
+
     if (nextProps.movie === null) {
-      return {};
+      nextState.movie = null;
+      nextState.displayMagnets = false;
     }
 
-    const displayMagnets = (prevState.movie && prevState.movie.id) === (nextProps.movie && nextProps.movie.id);
+    if (nextProps.movie) {
+      const displayMagnets = prevState.movie && prevState.movie.id === nextProps.movie.id;
+      nextState.movie = nextProps.movie;
 
-    return ({
-      movie: nextProps.movie,
-      displayMagnets,
+      if (displayMagnets && prevState.displayMagnets) {
+        nextState.displayMagnets = true;
+      }
+
+      if ((displayMagnets && !prevState.displayMagnets) || (!displayMagnets && prevState.displayMagnets)) {
+        nextState.displayMagnets = false;
+      }
+
+    }
+
+    return nextState;
+  }
+
+  setState(state, cb) {
+    super.setState(state, () => {
+      console.log('setState', JSON.parse(JSON.stringify(state)));
+      if (typeof cb === 'function') {
+        cb();
+      }
     });
   }
 
@@ -103,7 +124,7 @@ class MovieDetails extends Component {
   }
 
   render() {
-    if (!this.props.movie) {
+    if (!this.state.movie) {
       return null;
     }
 
