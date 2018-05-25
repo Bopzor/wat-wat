@@ -14,15 +14,22 @@ class MovieDetails extends Component {
     };
   }
 
-  static getDerivedStateFromProps(nextProps) {
-    const displayMagnets = { displayMagnets: nextProps.displayMagnets };
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.movie === null) {
+      return {};
+    }
 
-    return displayMagnets;
+    const displayMagnets = prevState.movie && prevState.movie.id === nextProps.movie.id;
+
+    return ({
+      movie: nextProps.movie,
+      displayMagnets,
+    });
   }
 
   handleClik(movie) {
     return this.props.getMagnet(movie)
-      .then(() => this.setState({ displayMagnets: !this.state.displayMagnets }));
+      .then(() => this.setState({ displayMagnets: true }));
   }
 
   createMovieDetails(movie, magnets) {
@@ -98,7 +105,7 @@ class MovieDetails extends Component {
       return null;
     }
 
-    return this.createMovieDetails(this.props.movie, this.props.magnets);
+    return this.createMovieDetails(this.state.movie, this.props.magnets);
   }
 }
 

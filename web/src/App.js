@@ -18,7 +18,6 @@ class App extends Component {
       notSeen: false,
     },
     loadingTitle: false,
-    displayMagnets: false,
     magnets: [],
   };
 
@@ -191,7 +190,7 @@ class App extends Component {
   }
 
   render() {
-    const { movies, displayMovieId, filter, loadingTitle, displayMagnets, magnets } = this.state;
+    const { movies, displayMovieId, filter, loadingTitle, magnets } = this.state;
 
     const displayMovie = movies.find(m => m.id === displayMovieId);
     let moviesDisplay = movies;
@@ -235,7 +234,6 @@ class App extends Component {
 
             <MovieDetails
               movie={displayMovie}
-              displayMagnets={displayMagnets}
               magnets={magnets}
               setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
               getMagnet={displayMovie => this.handleGetMagnet(displayMovie)}
