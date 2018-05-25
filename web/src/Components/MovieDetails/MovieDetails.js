@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import MovieDetailsBlockInfos from '../MovieDetailsBlockInfos/MovieDetailsBlockInfos.js';
-import { GenericButton } from '../IconsButton/IconsButton.js';
 import CommentsZone from '../CommentsZone/CommentsZone.js';
 import { LinkIcon } from '../SimpleIcons/SimpleIcons.js';
 import './MovieDetails.css';
@@ -28,13 +27,18 @@ class MovieDetails extends Component {
 
   createMovieDetails(movie, magnets) {
     let magnetsLink = null;
+    let magnetsLinkButton = (
+      <button
+        className="magnet-get-button"
+        type="button"
+        onClick={() => this.handleClik(movie)}>
+          Get torrent
+      </button>
+    );
 
     if (this.state.displayMagnets) {
-      if (magnets.length > 0) {
-        magnetsLink = magnets.map(magnet => this.createMagnets(magnet));
-      } else {
-        magnetsLink = this.createMagnets(null);
-      }
+      magnetsLinkButton = null;
+      magnetsLink = this.createMagnets(magnets);
     }
 
     return (
@@ -51,13 +55,7 @@ class MovieDetails extends Component {
         </div>
 
         <div className="magnet-wrapper">
-          <GenericButton
-            className="get-magnet-button"
-            onClick={() => this.handleClik(movie)}
-            style={{ fontSize: 48 }}
-            color="secondary"
-            icon="movie"
-          />
+          {magnetsLinkButton}
           {magnetsLink}
         </div>
 
@@ -72,26 +70,27 @@ class MovieDetails extends Component {
     );
   }
 
-  createMagnets(magnet) {
-    if (magnet === null) {
+  createMagnets(magnets) {
+    if (magnets.length === 0) {
       return <div className="no-magnet">No link for this movie</div>;
     }
 
-    return (
-      <div key={magnet.imdbId} className="magnet" >
+    return magnets.map(magnet => (
+      <div key={magnet.hash} className="magnet" >
         <CopyToClipboard
           text={magnet.link}
           onCopy={() => this.setState({ copied: true })}
         >
-          <span>
+          <span className="magnet-link-wrapper">
             <LinkIcon className="magnet-link-icon"/>
-            <div className="magnet-tooltip"><span className="magnet-quality">{magnet.quality}</span>
-              <span className="magnet-size">{magnet.size}</span>
+            <div className="magnet-infos-wrapper">
+              <div className="magnet-quality">{magnet.quality}</div>
+              <div className="magnet-size">{magnet.size}</div>
             </div>
           </span>
         </CopyToClipboard>
       </div>
-    );
+    ));
   }
 
   render() {

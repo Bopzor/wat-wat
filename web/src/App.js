@@ -26,7 +26,9 @@ class App extends Component {
     return actions.getMovies()
       .then(movies => {
         console.log('Success: ', movies);
-        this.setState({ movies });
+        this.setState({
+          movies,
+        });
       })
       .catch(error => console.error('Error: ', error));
   }
@@ -90,7 +92,6 @@ class App extends Component {
   handleTitleClick(movie) {
     this.setState({
       displayMovieId: movie.id === this.state.displayMovieId ? null : movie.id,
-      displayMagnets: false,
       magnets: [],
     });
   }

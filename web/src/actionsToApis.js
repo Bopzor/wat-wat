@@ -316,7 +316,7 @@ export function getMagnet(imdbId) {
         link: createMagnet(torrent),
         size: torrent.size,
         quality: torrent.quality,
-        imdbId: torrent.imdb_code,
+        hash: torrent.hash,
       }));
     });
 }

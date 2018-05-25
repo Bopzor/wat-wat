@@ -11,50 +11,54 @@
 
 .movie-details-plot {
 	text-align: center;
-	padding: 25px 20px 25px 10px;
+	padding: 25px 20px 20px 10px;
 	clear: both;
 }
 
-.get-magnet-button {
-	padding: 0 10px;
+.magnet-get-button {
+	cursor: pointer;
+	width: 100px;
+	margin: 10px;
+	padding: 10px 0;
+	border: none;
+	border-radius: 5px;
+	background-color: #EF6C00;
+	text-align: center;
+	color: whitesmoke;
+	font-size: 16px;
+	font-weight: bold;
 }
 
 .magnet-wrapper {
+	margin-left: 40px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 }
 
 .magnet {
-	display: flex;
-	width: 100%;
+	margin-right: 40px;
+	padding-bottom: 10px;
+	width: 100px;
 }
 
-.magnet-tooltip {
-	position: relative;
+.magnet-link-wrapper {
+	display: flex;
+	flex-direction: row;
 	cursor: pointer;
+}
+
+.magnet-infos-wrapper {
+	text-align: center;
+	padding-left: 7px;
+	color: #5e5f60;
 }
 
 .magnet-size {
 	font-size: 12px;
-	visibility: hidden;
-	color: #666;
-	background-color: #CCC;
-	text-align: center;
-	width: 50px;
-	padding: 5px 2px;
-	position: absolute;
-	top: -5px;
-	z-index: 1;
 }
 
-.magnet-tooltip:hover .magnet-size {
-	visibility: visible;
-}
 
-.magnet:hover {
-	cursor: pointer;
-}
 
 @media screen and (max-width: 1100px) {
 	.movie-details-plot {
