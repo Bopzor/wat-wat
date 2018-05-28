@@ -5,6 +5,7 @@ import theme from './theme.js';
 import MoviesList from './Components/MoviesList/MoviesList.js';
 import MovieDetails from './Components/MovieDetails/MovieDetails.js';
 import AddMovieInput from './Components/AddMovieInput/AddMovieInput.js';
+import SnackBar from './Components/SnackBar/SnackBar.js';
 import * as actions from './actionsToApis';
 import './reset.css';
 import './App.css';
@@ -19,6 +20,8 @@ class App extends Component {
     },
     loadingTitle: false,
     magnets: [],
+    open: false,
+    message: '',
   };
 
   componentDidMount() {
@@ -36,13 +39,37 @@ class App extends Component {
     return this.state.movies.findIndex(m => m.id === movie.id);
   }
 
+  handleSnackBarClose(event, reason){
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({
+      open: false,
+      message: '',
+    });
+  }
+
   handleSubmitTitle(title) {
     this.setState({ loadingTitle: true });
+
 
     return actions.getMovieDetails(title)
       .then(movie => {
         if (movie === null) {
-          return alert(`${title} not found.`);
+          return this.setState({
+            message :`${title} not found.`,
+            open: true,
+          });
+        }
+
+        const findIndex = this.state.movies.findIndex(m => m.imdbID === movie.imdbID);
+
+        if (findIndex !== -1) {
+          return this.setState({
+            message :`${movie.title} already in the list.`,
+            open: true,
+          });
         }
 
         return actions.addMovie(movie)
@@ -190,7 +217,7 @@ class App extends Component {
   }
 
   render() {
-    const { movies, displayMovieId, filter, loadingTitle, magnets } = this.state;
+    const { movies, displayMovieId, filter, loadingTitle, magnets, open, message } = this.state;
 
     const displayMovie = movies.find(m => m.id === displayMovieId) || null;
     let moviesDisplay = movies;
@@ -203,6 +230,12 @@ class App extends Component {
 
     return (
       <div className="page">
+
+        <SnackBar
+          open={open}
+          onClose={() => this.handleSnackBarClose()}
+          message={message}
+        />
 
         <div className="page-title">
           <h1>Whatcha Watchin?</h1>
@@ -258,3 +291,4 @@ class App extends Component {
 }
 
 export default () => <MuiThemeProvider theme={theme}><App /></MuiThemeProvider>;
+
