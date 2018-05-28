@@ -63,7 +63,7 @@ class App extends Component {
           });
         }
 
-        const findIndex = this.state.movies.findIndex(m => m.imdbID === movie.imdbID);
+        const findIndex = this.state.movies.findIndex(m => m.imdbId === movie.imdbId);
 
         if (findIndex !== -1) {
           return this.setState({
