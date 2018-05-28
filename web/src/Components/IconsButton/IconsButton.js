@@ -16,7 +16,7 @@ const GenericButton = props => (
 );
 
 const SeenButton = props => {
-  if (props.isSeen)
+  if (props.isSeen) {
     return (
       <div className={props.className}>
         <IconButton
@@ -29,6 +29,7 @@ const SeenButton = props => {
 
       </div>
     );
+  }
 
   return (
     <div className={props.className}>
