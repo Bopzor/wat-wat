@@ -22,6 +22,7 @@ class App extends Component {
     magnets: [],
     open: false,
     message: '',
+    active: null,
   };
 
   componentDidMount() {
@@ -69,6 +70,7 @@ class App extends Component {
           return this.setState({
             message :`${movie.title} already in the list.`,
             open: true,
+            active: movie.imdbId,
           });
         }
 
@@ -217,7 +219,16 @@ class App extends Component {
   }
 
   render() {
-    const { movies, displayMovieId, filter, loadingTitle, magnets, open, message } = this.state;
+    const {
+      movies,
+      displayMovieId,
+      filter,
+      loadingTitle,
+      magnets,
+      open,
+      message,
+      active,
+    } = this.state;
 
     const displayMovie = movies.find(m => m.id === displayMovieId) || null;
     let moviesDisplay = movies;
@@ -259,6 +270,7 @@ class App extends Component {
               onTitleClick={movie => this.handleTitleClick(movie)}
               removeMovie={movie => this.handleRemoveMovie(movie)}
               sendSortPlaces={places => this.handleSortingMovies(places)}
+              active={active}
             />
 
           </div>
@@ -291,4 +303,3 @@ class App extends Component {
 }
 
 export default () => <MuiThemeProvider theme={theme}><App /></MuiThemeProvider>;
-

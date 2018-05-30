@@ -5,6 +5,7 @@ import {
   SortableHandle,
   arrayMove,
 } from 'react-sortable-hoc';
+import ScrollIntoViewIfNeeded from 'react-scroll-into-view-if-needed';
 import { GenericButton } from '../IconsButton/IconsButton.js';
 import { ListSeen, SortIcon } from '../SimpleIcons/SimpleIcons.js';
 import './MoviesList.css';
@@ -13,28 +14,39 @@ const DragHandle = SortableHandle(() => <SortIcon />);
 
 class MovieItem extends Component {
   render() {
+    let activeMovie = false;
+
+    if (this.props.active === this.props.movie.imdbId){
+      activeMovie = true;
+    }
+
     return (
-      <li className="item-list">
+      <ScrollIntoViewIfNeeded
+        className={activeMovie ? "wrapper-scroll-active" : "wrapper-scroll-inactive"}
+        active={activeMovie}
+      >
+        <li className="item-list">
 
-        <ListSeen isSeen={this.props.movie.seen} />
-        <span
-          className="title-item"
-          onClick={() => this.props.onTitleClick(this.props.movie)}
-        >
-          {this.props.movie.title}
-        </span>
+          <ListSeen isSeen={this.props.movie.seen} />
+          <span
+            className="title-item"
+            onClick={() => this.props.onTitleClick(this.props.movie)}
+          >
+            {this.props.movie.title}
+          </span>
 
-        <DragHandle />
+          <DragHandle />
 
-        <GenericButton
-          className="remove-button"
-          onClick={() => this.props.removeMovie(this.props.movie)}
-          style={{ fontSize: 24 }}
-          color="secondary"
-          icon="remove_circle"
-        />
+          <GenericButton
+            className="remove-button"
+            onClick={() => this.props.removeMovie(this.props.movie)}
+            style={{ fontSize: 24 }}
+            color="secondary"
+            icon="remove_circle"
+          />
 
-      </li>
+        </li>
+      </ScrollIntoViewIfNeeded>
     );
   }
 }
@@ -43,7 +55,7 @@ const SortableMovieItem = SortableElement(MovieItem);
 
 class MoviesSortableList extends Component {
   render() {
-    const { movies, onTitleClick, removeMovie } = this.props;
+    const { movies, onTitleClick, removeMovie, active } = this.props;
 
     return (
       <div className="list">
@@ -56,6 +68,7 @@ class MoviesSortableList extends Component {
               movie={movie}
               onTitleClick={movie => onTitleClick(movie)}
               removeMovie={movie => removeMovie(movie)}
+              active={active}
             />
           ))}
         </ul>
@@ -107,6 +120,7 @@ class MoviesList extends Component {
         lockAxis="y"
         onTitleClick={movie => this.props.onTitleClick(movie)}
         removeMovie={movie => this.props.removeMovie(movie)}
+        active={this.props.active}
       />
     );
   }

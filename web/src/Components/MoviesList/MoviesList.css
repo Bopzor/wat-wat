@@ -12,7 +12,7 @@
 	pointer-events: auto !important;
 }
 
-.item-list:first-child {
+.wrapper-item:first-child {
 	border-top: 1px solid #CCC;	
 }
 
@@ -25,3 +25,14 @@
 	font-size: 18pt;
 	cursor: pointer;
 } 
+
+.wrapper-scroll-active {
+	background-color: #fff;
+	animation: highlight 1s;
+}
+
+@keyframes highlight {
+    0% 	{background-color: #fff;}
+    50% {background-color: #ef6c00;}
+    100%{background-color: #fff;}
+}
