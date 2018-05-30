@@ -68,7 +68,7 @@ class App extends Component {
 
         if (findIndex !== -1) {
           return this.setState({
-            message :`${movie.title} already in the list.`,
+            message :`${movie.title} is already in the list.`,
             open: true,
             active: movie.imdbId,
           });
