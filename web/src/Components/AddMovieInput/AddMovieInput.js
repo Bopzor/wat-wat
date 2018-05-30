@@ -48,8 +48,9 @@ class AddMovieInput extends Component {
   shouldRenderSuggestions = value => value.trim().length > 3;
 
   onSuggestionsFetchRequested = ({ value, reason }) => {
-    if (reason === 'input-focused')
+    if (reason === 'input-focused'){
       return;
+    }
 
     if (reason === 'input-changed') {
 
