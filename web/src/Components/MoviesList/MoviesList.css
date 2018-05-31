@@ -36,3 +36,14 @@
     50% {background-color: #ef6c00;}
     100%{background-color: #fff;}
 }
+
+@media screen and (max-width: 400px) {
+	.title-item {
+		font-size: 10pt;
+	}
+
+	.title-item:hover {
+		font-size: 10pt;
+	}
+
+}

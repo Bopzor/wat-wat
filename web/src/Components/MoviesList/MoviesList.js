@@ -22,7 +22,7 @@ class MovieItem extends Component {
 
     return (
       <ScrollIntoViewIfNeeded
-        className={activeMovie ? "wrapper-scroll-active" : "wrapper-scroll-inactive"}
+        className={activeMovie ? 'wrapper-scroll-active' : 'wrapper-scroll-inactive'}
         active={activeMovie}
       >
         <li className="item-list">
@@ -55,7 +55,7 @@ const SortableMovieItem = SortableElement(MovieItem);
 
 class MoviesSortableList extends Component {
   render() {
-    const { movies, onTitleClick, removeMovie, active } = this.props;
+    const { movies, onTitleClick, removeMovie, active, displayMovie } = this.props;
 
     return (
       <div className="list">
@@ -69,6 +69,7 @@ class MoviesSortableList extends Component {
               onTitleClick={movie => onTitleClick(movie)}
               removeMovie={movie => removeMovie(movie)}
               active={active}
+              displayMovie={displayMovie}
             />
           ))}
         </ul>
@@ -121,6 +122,7 @@ class MoviesList extends Component {
         onTitleClick={movie => this.props.onTitleClick(movie)}
         removeMovie={movie => this.props.removeMovie(movie)}
         active={this.props.active}
+        displayMovie={this.props.displayMovie}
       />
     );
   }

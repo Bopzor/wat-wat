@@ -271,11 +271,12 @@ class App extends Component {
               removeMovie={movie => this.handleRemoveMovie(movie)}
               sendSortPlaces={places => this.handleSortingMovies(places)}
               active={active}
+              displayMovie={displayMovie}
             />
 
           </div>
 
-          <div className="right-side">
+          <div className={displayMovieId === null ? 'right-side-hidden' : 'right-side'}>
 
             <MovieDetails
               movie={displayMovie}
