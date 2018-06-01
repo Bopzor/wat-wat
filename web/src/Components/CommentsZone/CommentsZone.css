@@ -92,3 +92,9 @@
 		flex: 2;
 	}
 }
+
+@media screen and (max-width: 400px) {
+	.wrapper-comments {
+		display: none;
+	}
+}

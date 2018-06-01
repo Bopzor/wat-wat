@@ -46,4 +46,12 @@
 		font-size: 10pt;
 	}
 
+	.unselected-title {
+		display: none;
+	}
+
+	.selected-title .sort-movie-icon {
+		display: none;
+	}
+
 }

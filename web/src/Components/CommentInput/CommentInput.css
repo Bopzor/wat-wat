@@ -19,3 +19,9 @@ textarea, input {
 	border: none;
 }
 
+
+@media screen and (max-width: 400px) {
+	.comment-input-wrapper {
+		display: none;
+	}
+}

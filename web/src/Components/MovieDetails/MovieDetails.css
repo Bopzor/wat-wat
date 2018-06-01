@@ -69,3 +69,15 @@
 			padding: 15px 20px 15px 10px;
 	}
 }
+
+@media screen and (max-width: 400px) {
+	.wrapper-details {
+		flex: 1;
+		max-height: 100%;
+	}
+
+	.magnet-wrapper {
+		align-self: center;
+		margin: 0;
+	}
+}

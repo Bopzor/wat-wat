@@ -131,7 +131,10 @@ class App extends Component {
 
         movies.splice(this.findMovieIndex(movie), 1);
 
-        this.setState({ movies });
+        this.setState({
+          movies,
+          displayMovieId: null,
+        });
       })
       .catch(error => console.error('Error: ', error));
   }

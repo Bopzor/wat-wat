@@ -20,9 +20,17 @@ class MovieItem extends Component {
       activeMovie = true;
     }
 
+    let selectedTitle = 'unselected-title';
+
+    if (this.props.displayMovie && this.props.displayMovie.imdbId === this.props.movie.imdbId) {
+      selectedTitle = 'selected-title';
+    } else if (this.props.displayMovie === null) {
+      selectedTitle = 'no-title-seected';
+    }
+
     return (
       <ScrollIntoViewIfNeeded
-        className={activeMovie ? 'wrapper-scroll-active' : 'wrapper-scroll-inactive'}
+        className={selectedTitle + ' ' + (activeMovie ? 'wrapper-scroll-active' : 'wrapper-scroll-inactive')}
         active={activeMovie}
       >
         <li className="item-list">

@@ -63,8 +63,17 @@ html, body, #root, .page {
     flex-direction: column;
   }
 
+  .left-side {
+    border: none;
+    overflow: auto;
+  }
+
   .right-side {
-    flex: 4;
+    flex: 3;
     display: flex;
+  }
+
+  .right-side-hidden {
+    display: none;
   }
 }

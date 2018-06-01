@@ -45,3 +45,13 @@
 		font-size: 12px;
 	}
 }
+
+@media screen and (max-width: 400px) {
+	.movie-details-block-infos {
+		margin-left: 10px;
+	}
+
+	.movie-details-block-infos .img {
+		padding-right: 10px;
+	}
+}
