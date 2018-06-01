@@ -82,7 +82,7 @@
   max-height: 256px;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 530px) {
   .highlighted-poster {
     display: none;
   }

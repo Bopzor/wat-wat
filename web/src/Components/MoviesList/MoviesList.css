@@ -37,7 +37,7 @@
     100%{background-color: #fff;}
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 530px) {
 	.title-item {
 		font-size: 10pt;
 	}

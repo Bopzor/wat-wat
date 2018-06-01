@@ -70,7 +70,7 @@
 	}
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 530px) {
 	.wrapper-details {
 		flex: 1;
 		max-height: 100%;

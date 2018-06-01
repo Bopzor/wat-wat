@@ -46,7 +46,7 @@
 	}
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 530px) {
 	.movie-details-block-infos {
 		margin-left: 10px;
 	}
