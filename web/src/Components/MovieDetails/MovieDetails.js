@@ -85,8 +85,10 @@ class MovieDetails extends Component {
         </div>
 
         <div className="magnet-wrapper">
-          {magnetsLinkButton}
-          {magnetsLink}
+          <a href={magnetsLinkButton}>
+            {magnetsLinkButton}
+            {magnetsLink}
+          </a>
         </div>
 
         <CommentsZone

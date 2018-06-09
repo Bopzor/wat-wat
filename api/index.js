@@ -10,35 +10,28 @@ const pkg = require('../package');
 const PORT = process.env['PORT'] || 4269;
 
 const api = express.Router();
+
+const createMovie = require('../models/movie');
+const createComment = require('../models/comment');
+
 const sequelize = new Sequelize('sqlite:/home/vio/Projects/movies-list/db/db.sqlite');
 
-const Movie = sequelize.define('movie', {
-  title: Sequelize.STRING,
-  plot: Sequelize.STRING,
-  released: Sequelize.STRING,
-  runtime: Sequelize.INTEGER,
-  director: Sequelize.STRING,
-  writer: Sequelize.STRING,
-  actors: Sequelize.STRING,
-  poster: Sequelize.STRING,
-  place: { type: Sequelize.INTEGER, allowNull: false, unique: true },
-  seen: Sequelize.BOOLEAN,
-  imdbId: Sequelize.STRING,
-});
+const Movie = createMovie(sequelize, Sequelize.DataTypes);
+const Comment = createComment(sequelize, Sequelize.DataTypes);
 
-const Comment = sequelize.define('comment', {
-  comment: Sequelize.STRING,
-  author: Sequelize.STRING,
-});
+const models = {
+  Movie,
+  Comment,
+};
 
-Movie.hasMany(Comment);
-Comment.belongsTo(Movie);
+Movie.associate(models);
+Comment.associate(models);
 
 api.use(cors());
 api.use(bodyParser.json());
 api.use(bodyParser.urlencoded({ extended: true }));
 
-Promise.all([
+Promise.all([ 
     Movie.sync(),
     Comment.sync(),
   ])
