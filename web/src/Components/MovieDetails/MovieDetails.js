@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import MovieDetailsBlockInfos from '../MovieDetailsBlockInfos/MovieDetailsBlockInfos.js';
 import CommentsZone from '../CommentsZone/CommentsZone.js';
 import { LinkIcon } from '../SimpleIcons/SimpleIcons.js';
@@ -43,7 +42,6 @@ class MovieDetails extends Component {
 
   setState(state, cb) {
     super.setState(state, () => {
-      console.log('setState', JSON.parse(JSON.stringify(state)));
       if (typeof cb === 'function') {
         cb();
       }
@@ -108,10 +106,7 @@ class MovieDetails extends Component {
 
     return magnets.map(magnet => (
       <div key={magnet.hash} className="magnet" >
-        <CopyToClipboard
-          text={magnet.link}
-          onCopy={() => this.setState({ copied: true })}
-        >
+        <a href={magnet.link}>
           <span className="magnet-link-wrapper">
             <LinkIcon className="magnet-link-icon"/>
             <div className="magnet-infos-wrapper">
@@ -119,7 +114,7 @@ class MovieDetails extends Component {
               <div className="magnet-size">{magnet.size}</div>
             </div>
           </span>
-        </CopyToClipboard>
+        </a>
       </div>
     ));
   }
