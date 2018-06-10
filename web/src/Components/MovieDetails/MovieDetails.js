@@ -50,7 +50,8 @@ class MovieDetails extends Component {
     });
   }
 
-  handleClik(movie) {
+  handleClik(e, movie) {
+    e.preventDefault();
     return this.props.getMagnet(movie)
       .then(() => this.setState({ displayMagnets: true }));
   }
@@ -61,7 +62,7 @@ class MovieDetails extends Component {
       <button
         className="magnet-get-button"
         type="button"
-        onClick={() => this.handleClik(movie)}>
+        onClick={(e) => this.handleClik(e, movie)}>
           Get torrent
       </button>
     );
@@ -85,10 +86,8 @@ class MovieDetails extends Component {
         </div>
 
         <div className="magnet-wrapper">
-          <a href={magnetsLinkButton}>
-            {magnetsLinkButton}
-            {magnetsLink}
-          </a>
+          {magnetsLinkButton}
+          {magnetsLink}
         </div>
 
         <CommentsZone
