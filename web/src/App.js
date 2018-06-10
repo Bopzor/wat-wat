@@ -78,7 +78,7 @@ class App extends Component {
           .then(movie => {
             const movies = this.state.movies.slice();
 
-            movies.push(movie);
+            movies.splice(0, 0, movie);
 
             this.setState({
               movies,
