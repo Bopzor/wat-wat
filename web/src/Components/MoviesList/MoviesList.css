@@ -2,6 +2,10 @@
 	overflow: auto;
 }
 
+.movies-list:first-child {
+	border-top: 1px solid #CCC;
+}
+
 .item-list {
 	display: flex;
 	flex-direction: row;
@@ -10,10 +14,6 @@
 	height: 20px;
 	padding: 10px 0;
 	pointer-events: auto !important;
-}
-
-.wrapper-item:first-child {
-	border-top: 1px solid #CCC;	
 }
 
 .title-item {
