@@ -1,7 +1,7 @@
 html, body, #root, .page {
   width: 100%;
   height: 100%;
-  font-family: Cabin;
+  font-family: Cabin, sans-serif;
 }
 
 .page {
@@ -15,12 +15,12 @@ html, body, #root, .page {
 }
 
 .page-title h1 {
-  font-family: Bangers;
+  font-family: Bangers, serif;
   font-size: 42pt;
 }
 
 .page-title h3 {
-  font-family: Bangers;
+  font-family: Bangers, serif;
   font-size: 24pt;
 }
 
