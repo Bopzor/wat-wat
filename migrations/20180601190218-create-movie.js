@@ -19,7 +19,7 @@ module.exports = {
       },
       runtime: {
         type: Sequelize.INTEGER
-      },,
+      },
       director: {
         type: Sequelize.STRING,
       },
@@ -55,5 +55,5 @@ module.exports = {
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('movies');
-  }
+  },
 };

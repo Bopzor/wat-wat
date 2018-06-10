@@ -5,7 +5,7 @@ const router = express.Router();
 const Op = Sequelize.Op;
 
 const getMovie = (req, res, next, id) => {
-  const Movie = req.models.Movie;
+  const Movie = req.sequelize.models.movie;
 
   Movie.findById(id, { include: [{ all: true }] })
     .then(movie => {
@@ -20,7 +20,7 @@ const getMovie = (req, res, next, id) => {
 };
 
 const list = (req, res, next) => {
-  const Movie = req.models.Movie;
+  const Movie = req.sequelize.models.movie;
 
   Movie.findAll({
     order: ['place'],
@@ -35,7 +35,7 @@ const get = (req, res, next) => {
 };
 
 const create = (req, res, next) => {
-  const Movie = req.models.Movie;
+  const Movie = req.sequelize.models.movie;
 
   const body = {
     title: req.body.title || 'Unknown',
@@ -73,7 +73,7 @@ const sort = (req, res, next) => {
   // order = { id: place }
   // ex: { 5: 1, 2: 2, 6: 3, 1: 4 }
 
-  const Movie = req.models.Movie;
+  const Movie = req.sequelize.models.movie;
   let order = req.body.order;
 
   if (!order)
@@ -104,7 +104,7 @@ const sort = (req, res, next) => {
 };
 
 const comment = (req, res, next) => {
-  const Movie = req.models.Movie;
+  const Movie = req.sequelize.models.movie;
 
   const body = {
     comment: req.body.comment || '',

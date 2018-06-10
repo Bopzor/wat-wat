@@ -50,10 +50,12 @@
  *
  */
 
+/* eslint-disable-next-line no-undef */
 const BASE_URL = process.env.REACT_APP_API_URL;
 const BASE_API_URL = '/api/movies';
 const API_URL = `${BASE_URL}${BASE_API_URL}`;
 
+/* eslint-disable-next-line no-undef */
 const OMDB_API_URL = `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}`;
 const YTS_API_URL = 'https://yts.am/api/v2/list_movies.json?query_term=';
 const ytsClients = [

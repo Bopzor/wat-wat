@@ -1,8 +1,6 @@
 const path = require('path');
 const express = require('express');
 
-const Sequelize = require('sequelize');
-
 const api = require('./api');
 
 const PORT = process.env['PORT'] || 4269;
