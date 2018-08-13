@@ -9,7 +9,8 @@
     "build": "cd web && yarn build",
     "postinstall": "cd web && yarn",
     "docker:build": "docker build --build-arg REACT_APP_API_URL --build-arg REACT_APP_OMDB_API_KEY -t wat-wat .",
-    "docker:run": "docker run -dt --name wat-wat-container -v ${PWD}/db:/db -u $(id -u):$(id -g) -e PORT=8080 -p 4444:8080 wat-wat",
+    "docker:run": "docker run -dt --name wat-wat-container -v ${PWD}/db:/opt/app/db -u $(id -u):$(id -g) -e PORT=8080 -p 4444:8080 wat-wat",
+    "prod": "sequelize db:migrate && sequelize db:seed:all && node main.js",
     "sequelize": "sequelize"
   },
   "repository": {
