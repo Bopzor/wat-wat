@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: true,
     paranoid: true,
-    version: true,
   });
 
   Movie.associate = function(db) {

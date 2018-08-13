@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: true,
     paranoid: true,
-    version: true,
   });
 
   Comment.associate = function(db) {
