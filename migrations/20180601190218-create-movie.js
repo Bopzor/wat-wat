@@ -9,35 +9,44 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       plot: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       released: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       runtime: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       director: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       writer: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       actors: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       poster: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       place: {
-        type: Sequelize.INTEGER,
         allowNull: false,
+        type: Sequelize.INTEGER,
         unique: true,
       },
       seen: {
+        allowNull: false,
         type: Sequelize.BOOLEAN,
       },
       imdbId: {
@@ -49,6 +58,9 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE,
+      },
+      deletedAt: {
         type: Sequelize.DATE,
       },
     });

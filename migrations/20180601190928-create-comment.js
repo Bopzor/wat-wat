@@ -9,10 +9,20 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       comment: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       author: {
+        allowNull: false,
         type: Sequelize.STRING,
+      },
+      movieId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'movies',
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
@@ -20,6 +30,9 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE,
+      },
+      deletedAt: {
         type: Sequelize.DATE,
       },
     });
