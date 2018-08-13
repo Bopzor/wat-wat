@@ -16,25 +16,19 @@ const {
   comment: Comment,
 } = sequelize.models;
 
-Promise.all([
-  Movie.sync(),
-  Comment.sync(),
-])
-  .then(() => {
-    api.use(cors());
-    api.use(bodyParser.json());
-    api.use(bodyParser.urlencoded({ extended: true }));
+api.use(cors());
+api.use(bodyParser.json());
+api.use(bodyParser.urlencoded({ extended: true }));
 
-    api.use((req, res, next) => {
-      req.sequelize = sequelize;
-      next();
-    });
+api.use((req, res, next) => {
+  req.sequelize = sequelize;
+  next();
+});
 
-    api.use('/movies', movies);
-    api.use((err, req, res, next) => {
-      console.error(err.stack);
-      res.status(500).end(err.toString());
-    });
-  });
+api.use('/movies', movies);
+api.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).end(err.toString());
+});
 
 module.exports = api;
