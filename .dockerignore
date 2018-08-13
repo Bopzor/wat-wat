@@ -2,3 +2,4 @@ Dockerfile
 .git*
 *.md
 *.jpg
+web/node_modules
