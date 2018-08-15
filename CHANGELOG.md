@@ -4,6 +4,15 @@ To keep a trace of changes.
 
 ## [Unrealesed]
 
+## [2.1.0] - 2018-08-14
+### Added
++ Get and show magnets links of movies
++ Use docker to start wat-wat api
++ Migration and seeders process
+
+### Changed
++ Use snack bars to display errors to the user
++ Responsive design
 
 ## [2.0.0] - 2018-05-22
 ### Added
@@ -20,7 +29,7 @@ To keep a trace of changes.
 + The two sides of the page stay at the same size when movie detail is showed  
 + Better management of the poster size  
 
-###Changed
+### Changed
 + Movie details are removed when the movie is delete  
 + Returns the full movie instead of the comment only
 + Adapt DB to new features
