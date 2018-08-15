@@ -33,12 +33,14 @@ Change version in package.json
 `git push --tags`
 
 ## 4. Deploy
-`ssh twix2`
+`ssh twix`
 `source /opt/nvm/nvm.sh`
 `cd /var/www/movies-list`
 `git status`
 `git pull origin mep`: update repository
-`REACT_APP_API_URL=<api_url> REACT_APP_OMDB_API_KEY=<apikey> yarn docker:build`: build docker image
+`export REACT_APP_API_URL=<api_url>`
+`export REACT_APP_OMDB_API_KEY=<apikey>`
+`yarn docker:build`: build docker image
 `yarn docker:run`: run docker container
 
 ## 5. After deploy
@@ -46,3 +48,4 @@ Change version in package.json
 `git checkout master`
 `git pull`
 `git merge mep`
+
