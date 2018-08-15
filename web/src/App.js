@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { MuiThemeProvider } from 'material-ui/styles';
-import { LinearProgress } from 'material-ui/Progress';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { LinearProgress } from '@material-ui/core/LinearProgress';
 import theme from './theme.js';
 import MoviesList from './Components/MoviesList/MoviesList.js';
 import MovieDetails from './Components/MovieDetails/MovieDetails.js';
@@ -28,7 +28,6 @@ class App extends Component {
   componentDidMount() {
     return actions.getMovies()
       .then(movies => {
-        console.log('Success: ', movies);
         this.setState({
           movies,
         });
