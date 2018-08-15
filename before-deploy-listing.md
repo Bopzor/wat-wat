@@ -35,7 +35,7 @@ Change version in package.json
 ## 4. Deploy
 `ssh twix`
 `source /opt/nvm/nvm.sh`
-`cd /var/www/movies-list`
+`cd /var/www/nils.cx/wat-wat/web`
 `git status`
 `git pull origin mep`: update repository
 `export REACT_APP_API_URL=<api_url>`
