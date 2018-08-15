@@ -4,6 +4,10 @@ To keep a trace of changes.
 
 ## [Unrealesed]
 
+## [2.1.1] - 2018-08-15
+### Fixed
++ Fix material ui components display by updating material ui
+
 ## [2.1.0] - 2018-08-14
 ### Added
 + Get and show magnets links of movies
