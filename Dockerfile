@@ -19,4 +19,4 @@ ARG REACT_APP_API_URL
 
 RUN yarn build
 
-ENTRYPOINT ["npm", "run", "prod"]
+CMD ["npm", "run", "prod"]
