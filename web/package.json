@@ -3,15 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^1.1.0",
+    "@material-ui/core": "^1.5.0",
     "eslint": "4.x",
-    "material-ui": "^1.0.0-beta.40",
-    "react": "^16.4.0",
+    "react": "^16.4.2",
     "react-autosuggest": "^9.3.4",
     "react-copy-to-clipboard": "^5.0.1",
-    "react-dom": "^16.3.1",
+    "react-dom": "^16.4.2",
     "react-scripts": "1.1.4",
-    "react-scroll-into-view-if-needed": "^2.1.1",
+    "react-scroll-into-view-if-needed": "^2.1.6",
     "react-sortable-hoc": "^0.6.8"
   },
   "scripts": {
@@ -23,9 +22,9 @@
     "sequelize": "sequelize"
   },
   "devDependencies": {
-    "babel-eslint": "8",
+    "babel-eslint": "^8.2.6",
     "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-react": "^7.7.0"
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-react": "^7.11.1"
   }
 }
