@@ -4,6 +4,10 @@ To keep a trace of changes.
 
 ## [Unrealesed]
 
+## [2.1.2] - 2018-08-26
+### Fixed
++ Fix magnet link url
+
 ## [2.1.1] - 2018-08-15
 ### Fixed
 + Fix material ui components display by updating material ui
