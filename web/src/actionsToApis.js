@@ -100,7 +100,9 @@ function parseDateComment(comment) {
 }
 
 function createMagnet(torrent) {
-  const magnet = `magnet:?xt=urn:btih:${torrent.hash}${ytsClients.join('&tr=udp://')}`;
+  let magnet = `magnet:?xt=urn:btih:${torrent.hash}`;
+  magnet += `&dn=${torrent.url}`;
+  magnet += `&tr=udp://${ytsClients.join('&tr=udp://')}`;
 
   return magnet;
 }
