@@ -23,7 +23,7 @@ const list = (req, res, next) => {
   const Movie = req.sequelize.models.movie;
 
   Movie.findAll({
-    order: ['place'],
+    order: [['place', 'DESC']],
     include: [{ all: true }],
   })
     .then(movies => res.json(movies))
@@ -72,7 +72,7 @@ const remove = (req, res, next) => {
 
 const sort = (req, res, next) => {
   // order = { id: place }
-  // ex: { 5: 1, 2: 2, 6: 3, 1: 4 }
+  // ex: { 5: 1 }
 
   const Movie = req.sequelize.models.movie;
   let order = req.body.order;
@@ -80,28 +80,49 @@ const sort = (req, res, next) => {
   if (!order)
     return res.status(400).end('missing field order');
 
-  const updateMovies = movies => req.sequelize.transaction(function(t) {
-    const updateMovie = movie => movie.update({ place: -order[movie.id] }, { transaction: t });
+  const { prev, next: nxt } = order;
 
+  return req.sequelize.transaction(function(t) {
     return Promise.resolve()
-      .then(() => Promise.all(movies.map(updateMovie)))
-      .then(() => Promise.all(movies.map(m => m.update({ place: -m.previous('place') }, { transaction: t }))));
-  });
+      .then(() => {
+        return Movie.update({ place: null }, {
+          where: {
+            place: prev,
+          },
+          transaction: t,
+        });
+      })
+      .then(() => {
+        const c = prev < nxt ? -1 : 1;
 
-  return Movie.findAll({
-      where: {
-        id: {
-          [Op.in]: Object.keys(order),
-        },
-      },
-    })
-    .then(updateMovies)
-    .then(() => Movie.findAll({
-      order: ['place'],
-      include: [{ all: true }],
-    }))
-    .then(movies => res.json(movies))
-    .catch(next);
+        return Movie.increment('place', {
+          by: c,
+          paranoid: false,
+          transaction: t,
+          where: {
+            place: {
+              [Op.between]: [Math.min(prev, nxt), Math.max(prev, nxt)],
+            },
+          },
+        });
+      })
+      .then(() => {
+        return Movie.update({ place: nxt }, {
+          where: {
+            place: null,
+          },
+          transaction: t,
+        });
+      })
+      .then(() => {
+        return Movie.findAll({
+          order: [['place', 'DESC']],
+          include: [{ all: true }],
+        });
+      })
+      .then(movies => res.json(movies))
+      .catch(next);
+  });
 };
 
 const comment = (req, res, next) => {
