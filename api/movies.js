@@ -82,47 +82,50 @@ const sort = (req, res, next) => {
 
   const { prev, next: nxt } = order;
 
-  return req.sequelize.transaction(function(t) {
-    return Promise.resolve()
-      .then(() => {
-        return Movie.update({ place: null }, {
-          where: {
-            place: prev,
-          },
-          transaction: t,
-        });
-      })
-      .then(() => {
-        const c = prev < nxt ? -1 : 1;
+  return Promise.resolve()
+    .then(() => {
+      return Movie.update({ place: null }, {
+        where: {
+          place: prev,
+        }
+      });
+    })
+    .then(() => Movie.findAll({
+      where: {
+        place: {
+          [Op.between]: [Math.min(prev, nxt), Math.max(prev, nxt)],
+        },
+        id: {
+          [Op.not]: order.id,
+        },
+      },
+    }))
+    .then(movies => {
+      Promise.all(movies.map(movie => {
+        let f = null;
 
-        return Movie.increment('place', {
-          by: c,
-          paranoid: false,
-          transaction: t,
-          where: {
-            place: {
-              [Op.between]: [Math.min(prev, nxt), Math.max(prev, nxt)],
-            },
-          },
-        });
-      })
-      .then(() => {
-        return Movie.update({ place: nxt }, {
-          where: {
-            place: null,
-          },
-          transaction: t,
-        });
-      })
-      .then(() => {
-        return Movie.findAll({
-          order: [['place', 'DESC']],
-          include: [{ all: true }],
-        });
-      })
-      .then(movies => res.json(movies))
-      .catch(next);
-  });
+        if (prev < nxt) {
+          f = movie.update({ place: movie.place - 1 });
+        } else {
+          f = movie.update({ place: -(movie.place + 1) })
+          .then(() => movie.update({ place: -movie.place }));
+        }
+
+        return f
+      }))}
+    )
+    .then(() => {
+      return Movie.findById(order.id)
+      .then (movie => movie.update({ place: nxt }))
+    })
+    .then(() => {
+      return Movie.findAll({
+        order: [['place', 'DESC']],
+        include: [{ all: true }],
+      });
+    })
+    .then(movies => res.json(movies))
+    .catch(next);
 };
 
 const comment = (req, res, next) => {
