@@ -1,8 +1,17 @@
-# Changelog  
-To keep a trace of changes.  
-  
+# Changelog
+To keep a trace of changes.
+
 
 ## [Unrealesed]
+
+## [2.1.3] - 2018-10-06
+### Fixed
++ Fix add movie (wrong query for max place)
++ Fix sort movie
+
+## [2.1.2] - 2018-08-26
+### Fixed
++ Fix magnet link url
 
 ## [2.1.1] - 2018-08-15
 ### Fixed
@@ -30,36 +39,36 @@ To keep a trace of changes.
 + Use media query for screen size under 1100px
 
 ### Fixed
-+ The two sides of the page stay at the same size when movie detail is showed  
-+ Better management of the poster size  
++ The two sides of the page stay at the same size when movie detail is showed
++ Better management of the poster size
 
 ### Changed
-+ Movie details are removed when the movie is delete  
++ Movie details are removed when the movie is delete
 + Returns the full movie instead of the comment only
 + Adapt DB to new features
 
-## [1.2.0] - 2018-03-23  
-### Added    
-+ New route: /api/version  
-  
+## [1.2.0] - 2018-03-23
+### Added
++ New route: /api/version
 
-## [1.1.1] - 2018-03-23  
-### Fixed  
-+ Remove mistakes that have been made with the last merge  
-  
 
-## [1.1.0] - 2018-03-23  
-### Added  
-+ Use script bundle.sh to set the base url  
+## [1.1.1] - 2018-03-23
+### Fixed
++ Remove mistakes that have been made with the last merge
 
-### Changed  
-+ New design. Now movie detail is showed on the right side of the page  
-  
 
-## [1.0.0] - 2018-03-11  
-### Added  
-+ Just everything. This is the first time wat-wat is in production  
-+ Add a movie to the list  
-+ Delete a movie from the list  
-+ Sort movies  
+## [1.1.0] - 2018-03-23
+### Added
++ Use script bundle.sh to set the base url
+
+### Changed
++ New design. Now movie detail is showed on the right side of the page
+
+
+## [1.0.0] - 2018-03-11
+### Added
++ Just everything. This is the first time wat-wat is in production
++ Add a movie to the list
++ Delete a movie from the list
++ Sort movies
 + Show/hide movie detail

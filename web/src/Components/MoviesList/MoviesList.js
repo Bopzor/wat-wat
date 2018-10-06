@@ -104,16 +104,25 @@ class MoviesList extends Component {
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     const movies = this.state.movies.slice();
+    const prev = movies[oldIndex].place;
     const newMoviesOrder = arrayMove(movies, oldIndex, newIndex);
-    const places = {};
+    let nxt = null;
+
+    if (oldIndex !== newIndex) {
+      nxt = movies[newIndex].place;
+
+    } else {
+      return;
+    }
+
+    const places = {
+      prev,
+      nxt,
+    };
 
     this.setState({
       movies: newMoviesOrder,
     });
-
-    for (let i = 0; i < newMoviesOrder.length; i++) {
-      places[newMoviesOrder[i].id] = i + 1;
-    }
 
     this.props.sendSortPlaces(places);
   };

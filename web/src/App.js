@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { LinearProgress } from '@material-ui/core/LinearProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import theme from './theme.js';
 import MoviesList from './Components/MoviesList/MoviesList.js';
 import MovieDetails from './Components/MovieDetails/MovieDetails.js';
