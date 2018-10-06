@@ -71,71 +71,55 @@ const remove = (req, res, next) => {
 };
 
 const sort = (req, res, next) => {
-  // order = { id: int, next: int, prev: int }
-  // ex: { 5: 1, next: 3, prev: 1 }
+  // order = { prev: int, nxt: int }
+  // ex: { prev: 3, nxt: 1 }
 
   const Movie = req.sequelize.models.movie;
   let order = req.body.order;
+  const { prev, nxt } = order;
 
   if (!order)
     return res.status(400).end('missing field order');
+  else if (prev === nxt)
+    return Movie.findAll({
+        order: [['place', 'DESC']],
+        include: [{ all: true }],
+      })
+      .then(movies => res.json(movies))
+      .catch(next);
 
-  const { prev, next: nxt } = order;
 
   return req.sequelize.transaction(function(t) {
     return Promise.resolve()
-      .then(() => {
-        return Movie.update({ place: null }, {
-          where: {
-            place: prev,
+      .then(() => Movie.update({ place: -nxt }, {
+        where: {
+          place: prev,
+        },
+        transaction: t,
+      }))
+      .then(() => Movie.update({ place: req.sequelize.literal(`-(place + ${prev < nxt ? -1 : 1})`) }, {
+        where: {
+          place: {
+            [Op.between]: [Math.min(prev, nxt), Math.max(prev, nxt)],
           },
-          transaction: t,
-        });
-      })
-      .then(() => {
-        if (prev < nxt) {
-          return Movie.update({ place: req.sequelize.literal('place + -1') }, {
-            where: {
-              place: {
-                [Op.between]: [Math.min(prev, nxt), Math.max(prev, nxt)],
-              },
-            },
-            transaction: t,
-          });
-        } else {
-          return Movie.update({ place: req.sequelize.literal('-(place + 1)') }, {
-            where: {
-              place: {
-                [Op.between]: [Math.min(prev, nxt), Math.max(prev, nxt)],
-              },
-            },
-            transaction: t,
-          })
-          .then(() => Movie.update({ place: req.sequelize.literal('-place') }, {
-            where: {
-              place: {
-                [Op.lt]: 0,
-              },
-            },
-            transaction: t,
-          }));
-        }
-      })
-      .then(() => {
-        return Movie.update({ place: nxt }, {
-          where: {
-            place: null,
+        },
+        paranoid: false,
+        transaction: t,
+      }))
+      .then(() => Movie.update({ place: req.sequelize.literal('-place') }, {
+        where: {
+          place: {
+            [Op.lt]: 0,
           },
-          transaction: t,
-        });
-      })
-      .then(() => {
-        return Movie.findAll({
-          order: [['place', 'DESC']],
-          include: [{ all: true }],
-          transaction: t,
-        });
-      })
+        },
+        paranoid: false,
+        transaction: t,
+      }))
+      .then(() => Movie.findAll({
+        order: [['place', 'DESC']],
+        include: [{ all: true }],
+        transaction: t,
+      }))
       .then(movies => res.json(movies))
       .catch(next);
   });
