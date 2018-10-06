@@ -5,6 +5,7 @@ output.js
 *.log
 *.sublime-*
 .env
-./db
+db
 package-lock.json
 init.sh
+seeders/db.movies.json
