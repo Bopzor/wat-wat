@@ -7,3 +7,4 @@ output.js
 .env
 ./db
 package-lock.json
+init.sh
