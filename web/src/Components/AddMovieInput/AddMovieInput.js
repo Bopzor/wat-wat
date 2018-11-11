@@ -95,14 +95,14 @@ class AddMovieInput extends Component {
     this.setState({ highlighted: suggestion });
   };
 
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.onSubmitMovieTitle(this.state.title)
+      .then(() => this.setState({ title: '' }));
+  };
+
   render() {
     const { title, suggestions, highlighted } = this.state;
-
-    const onSubmit = e => {
-      e.preventDefault();
-      this.props.onSubmitMovieTitle(title)
-        .then(() => this.setState({ title: '' }));
-    };
 
     const inputProps = {
       placeholder: 'New Movie Title',
@@ -138,7 +138,7 @@ class AddMovieInput extends Component {
 
         </div>
 
-        <form className="form-add-movie-title" onSubmit={onSubmit}>
+        <form className="form-add-movie-title" onSubmit={this.onSubmit}>
           <Autosuggest
             id="add-movie-title"
             suggestions={suggestions}
