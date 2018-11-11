@@ -53,18 +53,30 @@ class AddMovieInput extends Component {
     }
 
     if (reason === 'input-changed') {
-
       clearTimeout(this.timeout);
 
       this.timeout = setTimeout(() => {
+
         searchMovieTitle(value)
           .then(movies => {
             if (!movies.length) {
-              this.setState({ suggestions: [] });
+              let prevValue = value.split(' ');
+
+              prevValue.splice(prevValue.length - 1, 1);
+
+              searchMovieTitle(prevValue.join(' '))
+                .then(movies => {
+                  if (!movies.length) {
+                    this.setState({ suggestions: [] });
+                  }
+
+                  this.setState({ suggestions: movies });
+                })
             }
 
             this.setState({ suggestions: movies });
           });
+
       }, timeOut);
     }
   };
