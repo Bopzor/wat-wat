@@ -22,7 +22,8 @@ class App extends Component {
     magnets: [],
     open: false,
     message: '',
-    active: null,
+    active: '',
+    title: null,
   };
 
   componentDidMount() {
@@ -47,6 +48,8 @@ class App extends Component {
     this.setState({
       open: false,
       message: '',
+      title: null,
+      active: '',
     });
   }
 
@@ -59,6 +62,7 @@ class App extends Component {
         if (movie === null) {
           return this.setState({
             message :`${title} not found.`,
+            title,
             open: true,
           });
         }
@@ -90,6 +94,27 @@ class App extends Component {
       })
       .catch(error => console.error('Error:', error))
       .then(() => this.setState({ loadingTitle: false }));
+  }
+
+  handleAddItAnyway(title) {
+    const movie = { title };
+
+    this.handleSnackBarClose()
+
+    return actions.addMovie(movie)
+      .then(movie => {
+        const movies = this.state.movies.slice();
+
+        movies.splice(0, 0, movie);
+
+        this.setState({
+          movies,
+          filter: {
+            seen: false,
+            notSeen: false,
+          },
+        });
+      });
   }
 
   handleFilterSeenClick() {
@@ -230,6 +255,7 @@ class App extends Component {
       open,
       message,
       active,
+      title,
     } = this.state;
 
     const displayMovie = movies.find(m => m.id === displayMovieId) || null;
@@ -247,7 +273,9 @@ class App extends Component {
         <SnackBar
           open={open}
           onClose={() => this.handleSnackBarClose()}
+          onAdd={(title) => this.handleAddItAnyway(title)}
           message={message}
+          title={title}
         />
 
         <div className="page-title">
