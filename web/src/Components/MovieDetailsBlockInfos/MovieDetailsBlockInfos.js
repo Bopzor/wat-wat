@@ -2,15 +2,31 @@ import React from 'react';
 import { SeenButton } from '../IconsButton/IconsButton.js';
 import './MovieDetailsBlockInfos.css';
 
+const renderPoster = (poster, title) => {
+  if (poster === 'Unknown') {
+    return (
+      <img
+        className="img"
+        src="default_poster.jpg"
+        alt={title}
+      />
+    )
+  }
+
+  return (
+    <img
+      className="img"
+      src={poster}
+      alt={title}
+    />
+  )
+}
+
 const MovieDetailsBlockInfos = props => (
   <div className="movie-details-block-infos">
 
     <div className="poster">
-      <img
-        className="img"
-        src={props.movie.poster}
-        alt={props.movie.title}
-      />
+      {renderPoster(props.movie.poster, props.movie.title)}
     </div>
 
     <div className="with-title-infos">

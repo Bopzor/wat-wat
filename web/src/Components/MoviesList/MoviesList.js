@@ -25,7 +25,7 @@ class MovieItem extends Component {
     if (this.props.displayMovie && this.props.displayMovie.imdbId === this.props.movie.imdbId) {
       selectedTitle = 'selected-title';
     } else if (this.props.displayMovie === null) {
-      selectedTitle = 'no-title-seected';
+      selectedTitle = 'no-title-selected';
     }
 
     return (
