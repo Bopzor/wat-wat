@@ -53,18 +53,30 @@ class AddMovieInput extends Component {
     }
 
     if (reason === 'input-changed') {
-
       clearTimeout(this.timeout);
 
       this.timeout = setTimeout(() => {
+
         searchMovieTitle(value)
           .then(movies => {
             if (!movies.length) {
-              this.setState({ suggestions: [] });
+              let prevValue = value.split(' ');
+
+              prevValue.splice(prevValue.length - 1, 1);
+
+              searchMovieTitle(prevValue.join(' '))
+                .then(movies => {
+                  if (!movies.length) {
+                    this.setState({ suggestions: [] });
+                  }
+
+                  this.setState({ suggestions: movies });
+                })
             }
 
             this.setState({ suggestions: movies });
           });
+
       }, timeOut);
     }
   };
@@ -83,14 +95,14 @@ class AddMovieInput extends Component {
     this.setState({ highlighted: suggestion });
   };
 
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.onSubmitMovieTitle(this.state.title)
+      .then(() => this.setState({ title: '' }));
+  };
+
   render() {
     const { title, suggestions, highlighted } = this.state;
-
-    const onSubmit = e => {
-      e.preventDefault();
-      this.props.onSubmitMovieTitle(title)
-        .then(() => this.setState({ title: '' }));
-    };
 
     const inputProps = {
       placeholder: 'New Movie Title',
@@ -126,7 +138,7 @@ class AddMovieInput extends Component {
 
         </div>
 
-        <form className="form-add-movie-title" onSubmit={onSubmit}>
+        <form className="form-add-movie-title" onSubmit={this.onSubmit}>
           <Autosuggest
             id="add-movie-title"
             suggestions={suggestions}
