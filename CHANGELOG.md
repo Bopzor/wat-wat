@@ -4,6 +4,14 @@ To keep a trace of changes.
 
 ## [Unrealesed]
 
+## [2.2.0] - 2018-11-21
+### Added
++ Possible to add a movie title if the movie is not on OMDB
++ Display default image for movie poster
+
+### Fixed
++ Search with last word if title not found (Issue #8)
+
 ## [2.1.3] - 2018-10-06
 ### Fixed
 + Fix add movie (wrong query for max place)
