@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const movies = require('./movies');
+const movies = require('./api/movies');
 
 const cors = require('cors');
 app.use(cors());

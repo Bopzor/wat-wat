@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
 
-const { Sequelize, movie: Movie, sequelize, comment: Comment } = require('./models');
+const { Sequelize, movie: Movie, sequelize, comment: Comment } = require('../models');
 const Op = Sequelize.Op;
 
 const listMovies = (req, res, next) => {
