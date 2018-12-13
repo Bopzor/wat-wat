@@ -15,6 +15,7 @@
  *    writers: string,
  *    actors: string,
  *    poster: string,
+ *    imdb: string,
  * }
  *
  * Comment: {
@@ -89,14 +90,17 @@ function myFetch(url, opts) {
     });
 }
 
-function parseDateMovie(movie) {
-  movie.createdAt = new Date(Date.parse(movie.createdAt));
-  movie.updatedAt = new Date(Date.parse(movie.updatedAt));
+function parseTimestamp(obj) {
+  obj.createdAt = new Date(Date.parse(obj.createdAt));
+  obj.updatedAt = new Date(Date.parse(obj.updatedAt));
 }
 
-function parseDateComment(comment) {
-  comment.createdAt = new Date(Date.parse(comment.createdAt));
-  comment.updatedAt = new Date(Date.parse(comment.updatedAt));
+function formatTimestamp(movie) {
+  parseTimestamp(movie);
+
+  for (let i = 0; i < movie.comments.length; i++) {
+    parseTimestamp(movie.comments[i]);
+  }
 }
 
 function createMagnet(torrent) {
@@ -117,10 +121,7 @@ export function getMovies() {
   return myFetch(url)
     .then(movies => {
       for (let i = 0; i < movies.length; i++) {
-        parseDateMovie(movies[i]);
-        for (let j = 0; j < movies[i].comments.length; j++) {
-          parseDateComment(movies[i].comments[j]);
-        }
+        formatTimestamp(movies[i]);
       }
 
       return movies;
@@ -139,7 +140,7 @@ export function addMovie(movie) {
 
   return myFetch(url, opts)
     .then(movie => {
-      parseDateMovie(movie);
+      parseTimestamp(movie);
 
       return movie;
     });
@@ -169,10 +170,7 @@ export function setPlaces(places) {
   return myFetch(url, opts)
     .then(movies => {
       for (let i = 0; i < movies.length; i++) {
-        parseDateMovie(movies[i]);
-        for (let j = 0; j < movies[i].comments.length; j++) {
-          parseDateComment(movies[i].comments[j]);
-        }
+        formatTimestamp(movies[i]);
       }
 
       return movies;
@@ -193,10 +191,7 @@ export function setMovieSeen(movie, seen) {
 
   return myFetch(url, opts)
     .then(movie => {
-      parseDateMovie(movie);
-      for (let i = 0; i < movie.comments.length; i++) {
-        parseDateComment(movie.comments[i]);
-      }
+      formatTimestamp(movie);
 
       return movie;
     });
@@ -217,10 +212,7 @@ export function addComment(movie, author, comment) {
 
   return myFetch(url, opts)
     .then(movie => {
-      parseDateMovie(movie);
-      for (let i = 0; i < movie.comments.length; i++) {
-        parseDateComment(movie.comments[i]);
-      }
+      formatTimestamp(movie);
 
       return movie;
     });
@@ -250,10 +242,8 @@ export function updateComment(movie, comment, newComment) {
 
   return myFetch(url, opts)
     .then(movie => {
-      parseDateMovie(movie);
-      for (let i = 0; i < movie.comments.length; i++) {
-        parseDateComment(movie.comments[i]);
-      }
+      formatTimestamp(movie);
+
       return movie;
     });
 }
