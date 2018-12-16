@@ -90,16 +90,13 @@ function myFetch(url, opts) {
     });
 }
 
-function parseTimestamp(obj) {
-  obj.createdAt = new Date(Date.parse(obj.createdAt));
-  obj.updatedAt = new Date(Date.parse(obj.updatedAt));
-}
-
 function formatTimestamp(movie) {
-  parseTimestamp(movie);
+  movie.createdAt = new Date(Date.parse(movie.createdAt));
+  movie.updatedAt = new Date(Date.parse(movie.updatedAt));
 
   for (let i = 0; i < movie.comments.length; i++) {
-    parseTimestamp(movie.comments[i]);
+    movie.comments[i].createdAt = new Date(Date.parse(movie.comments[i].createdAt));
+    movie.comments[i].updatedAt = new Date(Date.parse(movie.comments[i].updatedAt));
   }
 }
 
@@ -140,7 +137,7 @@ export function addMovie(movie) {
 
   return myFetch(url, opts)
     .then(movie => {
-      parseTimestamp(movie);
+      formatTimestamp(movie);
 
       return movie;
     });
