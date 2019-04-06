@@ -3,7 +3,7 @@ import { SeenButton } from '../IconsButton/IconsButton.js';
 import './MovieDetailsBlockInfos.css';
 
 const renderPoster = (poster, title) => {
-  if (poster === 'Unknown') {
+  if (poster === 'N/A' || poster === 'Unknown') {
     return (
       <img
         className="img"
