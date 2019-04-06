@@ -1,14 +1,14 @@
 const express = require('express');
+
 const router = express.Router();
 
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
-
 const { Sequelize, movie: Movie, sequelize, comment: Comment } = require('../models');
 const Op = Sequelize.Op;
 
-const listMovies = (req, res, next) => {
+const getMoviesList = (req, res, next) => {
   Movie.findAll({ order: [['place', 'DESC']], include: [{ model: Comment }] })
     .then(movies => res.json(movies))
     .catch(next);
@@ -105,7 +105,7 @@ const sortMovies = (req, res, next) => {
 
 const deleteMovie = (req, res, next) => {
   req.movie.destroy()
-    .then(() => res.end())
+    .then(() => res.status(204).end())
     .catch(next);
 };
 
@@ -152,7 +152,7 @@ const deleteComment = (req, res, next) => {
 router.param('movieId', getMovieById);
 router.param('commentId', getCommentById);
 
-router.get('/', listMovies);
+router.get('/', getMoviesList);
 router.post('/', createMovie);
 
 router.get('/:movieId', getMovie);
