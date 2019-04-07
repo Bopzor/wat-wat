@@ -6,8 +6,8 @@ import {
   arrayMove,
 } from 'react-sortable-hoc';
 import ScrollIntoViewIfNeeded from 'react-scroll-into-view-if-needed';
-import { GenericButton } from '../IconsButton/IconsButton.js';
-import { ListSeen, SortIcon } from '../SimpleIcons/SimpleIcons.js';
+import { GenericButton, SeenButton } from '../IconsButton/IconsButton.js';
+import { SortIcon } from '../SimpleIcons/SimpleIcons.js';
 import './MoviesList.css';
 
 const DragHandle = SortableHandle(() => <SortIcon />);
@@ -35,7 +35,16 @@ class MovieItem extends Component {
       >
         <li className="item-list">
 
-          <ListSeen isSeen={this.props.movie.seen} />
+          <SeenButton
+            className="seen-movie-button"
+            onClick={() => this.props.setSeenOnClick(this.props.movie)}
+            isSeen={this.props.movie.seen}
+            style={{ fontSize: 18 }}
+            styleBis={{ fontSize: 18 }}
+            color="primary"
+            colorBis="disabled"
+            icon="done_all"
+          />
           <span
             className="title-item"
             onClick={() => this.props.onTitleClick(this.props.movie)}
@@ -63,7 +72,7 @@ const SortableMovieItem = SortableElement(MovieItem);
 
 class MoviesSortableList extends Component {
   render() {
-    const { movies, onTitleClick, removeMovie, active, displayMovie } = this.props;
+    const { movies, onTitleClick, removeMovie, active, displayMovie, setSeenOnClick } = this.props;
 
     return (
       <div className="list">
@@ -74,6 +83,7 @@ class MoviesSortableList extends Component {
               key={`movie-${index}`}
               index={index}
               movie={movie}
+              setSeenOnClick={() => setSeenOnClick(movie)}
               onTitleClick={movie => onTitleClick(movie)}
               removeMovie={movie => removeMovie(movie)}
               active={active}
@@ -136,6 +146,7 @@ class MoviesList extends Component {
         onSortEnd={this.onSortEnd}
         useDragHandle={true}
         lockAxis="y"
+        setSeenOnClick={movie => this.props.setSeen(movie)}
         onTitleClick={movie => this.props.onTitleClick(movie)}
         removeMovie={movie => this.props.removeMovie(movie)}
         active={this.props.active}
