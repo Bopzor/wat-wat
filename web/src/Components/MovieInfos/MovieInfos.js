@@ -40,13 +40,13 @@ const MovieInfos = (props) => {
               {title}
               <div className="released-runtime">
                 <div className="released">
-                  {props.movie.released}
+                  { released }
                 </div>
 
                 <div className="separator">/</div>
 
                 <div className="runtime">
-                  {props.movie.runtime}
+                  { runtime }
                 </div>
               </div>
             </div>
@@ -67,17 +67,17 @@ const MovieInfos = (props) => {
 
             <div className="director">
               <span className="name-info">Director: </span>
-              {props.movie.director}
+              { director }
             </div>
 
             <div className="writer">
               <span className="name-info">Writer: </span>
-              {props.movie.writer}
+              { writer }
             </div>
 
             <div className="actors">
               <span className="name-info">Actors: </span>
-              {props.movie.actors}
+              { actors }
             </div>
           </div>
 
