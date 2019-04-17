@@ -1,42 +1,33 @@
 const express = require('express');
-const Sequelize = require('sequelize');
 
 const router = express.Router();
+
+const bodyParser = require('body-parser');
+router.use(bodyParser.json());
+
+const { Sequelize, movie: Movie, sequelize, comment: Comment } = require('../models');
 const Op = Sequelize.Op;
 
-const getMovie = (req, res, next, id) => {
-  const Movie = req.sequelize.models.movie;
-
-  Movie.findById(id, { include: [{ all: true }] })
-    .then(movie => {
-      if (!movie)
-        res.status(404).end('Movie not found');
-      else {
-        req.movie = movie;
-        next();
-      }
-    })
-    .catch(next);
-};
-
-const list = (req, res, next) => {
-  const Movie = req.sequelize.models.movie;
-
-  Movie.findAll({
-    order: [['place', 'DESC']],
-    include: [{ all: true }],
-  })
+const getMoviesList = (req, res, next) => {
+  Movie.findAll({ order: [['place', 'DESC']], include: [{ model: Comment }] })
     .then(movies => res.json(movies))
     .catch(next);
 };
 
-const get = (req, res, next) => {
+const getMovieById = (req, res, next, id) => {
+  Movie.findById(id, { include: [{ model: Comment }] })
+    .then(movie => {
+      req.movie = movie;
+      next();
+    })
+    .catch(next);
+};
+
+const getMovie = (req, res, next) => {
   res.json(req.movie);
 };
 
-const create = (req, res, next) => {
-  const Movie = req.sequelize.models.movie;
-
+const createMovie = (req, res, next) => {
   const body = {
     title: req.body.title || 'Unknown',
     plot: req.body.plot || 'Unknown',
@@ -46,35 +37,22 @@ const create = (req, res, next) => {
     writer: req.body.writer || 'Unknown',
     actors: req.body.actors || 'Unknown',
     poster: req.body.poster || 'Unknown',
-    seen: req.body.seen || false,
+    seen: false,
     imdbId: req.body.imdbId || null,
   };
 
-  Movie.max('place', {paranoid: false})
-    .then(place => Movie.create({ ...body, place: (place || 0) + 1 }))
-    .then(movie => Movie.findById(movie.id, { include: [{ all: true }] }))
-    .then(movie => res.status(201).json(movie))
-    .catch(next);
-
-};
-
-const update = (req, res, next) => {
-  req.movie.update(req.body)
+  Movie.max('place', { paranoid: false })
+    .then(place => {
+      body.place = (place || 0) + 1;
+      return Movie.create(body)
+    })
+    .then(movie => Movie.findById(movie.id, { include: [{ model: Comment }] }))
     .then(movie => res.json(movie))
     .catch(next);
 };
 
-const remove = (req, res, next) => {
-  req.movie.destroy()
-    .then(() => res.end())
-    .catch(next);
-};
-
-const sort = (req, res, next) => {
-  // order = { prev: int, nxt: int }
-  // ex: { prev: 3, nxt: 1 }
-
-  const Movie = req.sequelize.models.movie;
+const sortMovies = (req, res, next) => {
+  const Movie = sequelize.models.movie;
   let order = req.body.order;
   const { prev, nxt } = order;
 
@@ -82,14 +60,14 @@ const sort = (req, res, next) => {
     return res.status(400).end('missing field order');
   else if (prev === nxt)
     return Movie.findAll({
-        order: [['place', 'DESC']],
-        include: [{ all: true }],
-      })
+      order: [['place', 'DESC']],
+      include: [{ all: true }],
+    })
       .then(movies => res.json(movies))
       .catch(next);
 
 
-  return req.sequelize.transaction(function(t) {
+  return sequelize.transaction(function (t) {
     return Promise.resolve()
       .then(() => Movie.update({ place: -nxt }, {
         where: {
@@ -97,7 +75,7 @@ const sort = (req, res, next) => {
         },
         transaction: t,
       }))
-      .then(() => Movie.update({ place: req.sequelize.literal(`-(place + ${prev < nxt ? -1 : 1})`) }, {
+      .then(() => Movie.update({ place: sequelize.literal(`-(place + ${prev < nxt ? -1 : 1})`) }, {
         where: {
           place: {
             [Op.between]: [Math.min(prev, nxt), Math.max(prev, nxt)],
@@ -106,7 +84,7 @@ const sort = (req, res, next) => {
         paranoid: false,
         transaction: t,
       }))
-      .then(() => Movie.update({ place: req.sequelize.literal('-place') }, {
+      .then(() => Movie.update({ place: sequelize.literal('-place') }, {
         where: {
           place: {
             [Op.lt]: 0,
@@ -125,58 +103,65 @@ const sort = (req, res, next) => {
   });
 };
 
-const comment = (req, res, next) => {
-  const Movie = req.sequelize.models.movie;
+const deleteMovie = (req, res, next) => {
+  req.movie.destroy()
+    .then(() => res.status(204).end())
+    .catch(next);
+};
 
+const updateMovie = (req, res, next) => {
+  req.movie.update(req.body)
+    .then(movie => res.json(movie))
+    .catch(next);
+};
+
+const getCommentById = (req, res, next, id) => {
+  req.movie.getComments({ where: { id: id } })
+    .then(comments => {
+      req.comment = comments[0];
+      next();
+    })
+    .catch(next);
+};
+
+const createComment = (req, res, next) => {
   const body = {
     comment: req.body.comment || '',
     author: req.body.author || 'Anonymous',
   };
 
-  req.movie.createComment(body)
-    .then(() => Movie.findById(req.params.id, { include: [{ all: true }] }))
+  return req.movie.createComment(body)
+    .then(() => Movie.findById(req.params.movieId, { include: [{ model: Comment }] }))
     .then(movie => res.json(movie))
-    .catch(next);
-};
-
-const getComment = (req, res, next, commentId) => {
-  req.movie.getComments({ where: { id: commentId } })
-    .then(comments => {
-      if (!comments.length)
-        res.status(404).json('Comment not found');
-      else {
-        req.comment = comments[0];
-        next();
-      }
-    })
     .catch(next);
 };
 
 const updateComment = (req, res, next) => {
   req.comment.update(req.body)
-    .then(comment => comment.getMovie({ include: [{ all: true }] }))
+    .then(comment => comment.getMovie({ include: [{ model: Comment }] }))
     .then(movie => res.json(movie))
     .catch(next);
-}
+};
 
-const removeComment = (req, res, next) => {
+const deleteComment = (req, res, next) => {
   req.comment.destroy()
-    .then(() => res.status(204).end())
+    .then(() => res.end())
     .catch(next);
-}
+};
 
-router.param('id', getMovie);
-router.param('commentId', getComment);
+router.param('movieId', getMovieById);
+router.param('commentId', getCommentById);
 
-router.get('/', list);
-router.get('/:id', get);
-router.post('/', create);
-router.put('/:id', update);
-router.delete('/:id', remove);
-router.post('/sort', sort);
+router.get('/', getMoviesList);
+router.post('/', createMovie);
 
-router.post('/:id/comments', comment);
-router.put('/:id/comments/:commentId', updateComment);
-router.delete('/:id/comments/:commentId', removeComment);
+router.get('/:movieId', getMovie);
+router.post('/sort', sortMovies)
+router.put('/:movieId', updateMovie);
+router.delete('/:movieId', deleteMovie);
+
+router.post('/:movieId/comments', createComment);
+router.put('/:movieId/comments/:commentId', updateComment);
+router.delete('/:movieId/comments/:commentId', deleteComment);
 
 module.exports = router;

@@ -1,0 +1,90 @@
+.movie-poster-title-seen-infos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.movie-poster-title-seen-infos .infos {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.wrapper-title-seen{
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 15px 20px 15px;
+}
+
+.movie-poster-title-seen-infos .title {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+
+.wrapper-infos {
+  display: flex;
+  flex-direction: column;
+  margin: 0 15px;
+}
+
+.wrapper-infos .name-info {
+  font-size: 12pt;
+  font-weight: bold;
+  line-height: 2;
+  margin-right: 5px;
+}
+
+.director, .actors, .writer {
+  margin-bottom: 5px;
+}
+
+.released-runtime {
+  display: flex;
+  flex-direction: row;
+  font-size: initial;
+  font-weight: initial;
+  margin-top: 5px;
+  justify-content: center;
+}
+
+.released-runtime .separator {
+  margin: 0 15px;
+}
+
+.movie-plot {
+  text-align: center;
+  margin: 15px;
+}
+
+@media screen and (max-width: 1200px) {
+  .movie-poster-title-seen-infos {
+    flex-direction: column;
+  }
+
+  .wrapper-title-seen {
+    justify-content: center;
+  }
+
+  .title {
+    margin-right: 15px;
+    text-align: center;
+  }
+
+  .poster {
+    text-align: center;
+  }
+
+  img.img {
+    width: 70%;
+  }
+
+  .movie-poster-title-seen-infos .infos {
+    min-width: 100%;
+  }
+
+}

@@ -32,9 +32,7 @@ class CommentsZone extends Component {
 
             <div className="comment-header">
               <div className="comment-author">{comment.author} :</div>
-              <div className="comment-date">{date}
-                <span className="comment-upDate">{upDate}</span>
-              </div>
+              <div className="comment-date" title={upDate}>{date}</div>
             </div>
 
             <div className="edit-comment-input">
@@ -83,9 +81,7 @@ class CommentsZone extends Component {
         <div className="comment-header">
           <div className="comment-author">{comment.author} :</div>
 
-          <div className="comment-date">{date}
-            <span className="comment-upDate">{upDate}</span>
-          </div>
+          <div className="comment-date" title={upDate}>{date}</div>
         </div>
 
         <div className="comment-main">

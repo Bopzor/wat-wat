@@ -297,6 +297,7 @@ class App extends Component {
 
             <MoviesList
               movies={moviesDisplay}
+              setSeen={displayMovie => this.handleSetSeenClick(displayMovie)}
               onTitleClick={movie => this.handleTitleClick(movie)}
               removeMovie={movie => this.handleRemoveMovie(movie)}
               sendSortPlaces={places => this.handleSortingMovies(places)}

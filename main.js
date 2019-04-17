@@ -1,13 +1,16 @@
-const path = require('path');
 const express = require('express');
-
-const api = require('./api');
-
-const PORT = process.env['PORT'] || 4269;
 const app = express();
 
-app.use(express.static(path.resolve('web', 'build')));
-app.use('/api', api);
+const movies = require('./api/movies');
 
-console.log('Starting server on port ' + PORT);
-app.listen(PORT);
+const cors = require('cors');
+app.use(cors());
+
+app.use('/movies', movies);
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).end(err.toString());
+});
+
+app.listen(4269, () => console.log('API listening on port 4269'));

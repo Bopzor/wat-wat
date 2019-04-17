@@ -15,6 +15,7 @@
  *    writers: string,
  *    actors: string,
  *    poster: string,
+ *    imdb: string,
  * }
  *
  * Comment: {
@@ -52,7 +53,7 @@
 
 /* eslint-disable-next-line no-undef */
 const BASE_URL = process.env.REACT_APP_API_URL;
-const BASE_API_URL = '/api/movies';
+const BASE_API_URL = '/movies';
 const API_URL = `${BASE_URL}${BASE_API_URL}`;
 
 /* eslint-disable-next-line no-undef */
@@ -89,14 +90,14 @@ function myFetch(url, opts) {
     });
 }
 
-function parseDateMovie(movie) {
+function formatTimestamp(movie) {
   movie.createdAt = new Date(Date.parse(movie.createdAt));
   movie.updatedAt = new Date(Date.parse(movie.updatedAt));
-}
 
-function parseDateComment(comment) {
-  comment.createdAt = new Date(Date.parse(comment.createdAt));
-  comment.updatedAt = new Date(Date.parse(comment.updatedAt));
+  for (let i = 0; i < movie.comments.length; i++) {
+    movie.comments[i].createdAt = new Date(Date.parse(movie.comments[i].createdAt));
+    movie.comments[i].updatedAt = new Date(Date.parse(movie.comments[i].updatedAt));
+  }
 }
 
 function createMagnet(torrent) {
@@ -117,10 +118,7 @@ export function getMovies() {
   return myFetch(url)
     .then(movies => {
       for (let i = 0; i < movies.length; i++) {
-        parseDateMovie(movies[i]);
-        for (let j = 0; j < movies[i].comments.length; j++) {
-          parseDateComment(movies[i].comments[j]);
-        }
+        formatTimestamp(movies[i]);
       }
 
       return movies;
@@ -139,7 +137,7 @@ export function addMovie(movie) {
 
   return myFetch(url, opts)
     .then(movie => {
-      parseDateMovie(movie);
+      formatTimestamp(movie);
 
       return movie;
     });
@@ -169,10 +167,7 @@ export function setPlaces(places) {
   return myFetch(url, opts)
     .then(movies => {
       for (let i = 0; i < movies.length; i++) {
-        parseDateMovie(movies[i]);
-        for (let j = 0; j < movies[i].comments.length; j++) {
-          parseDateComment(movies[i].comments[j]);
-        }
+        formatTimestamp(movies[i]);
       }
 
       return movies;
@@ -193,10 +188,7 @@ export function setMovieSeen(movie, seen) {
 
   return myFetch(url, opts)
     .then(movie => {
-      parseDateMovie(movie);
-      for (let i = 0; i < movie.comments.length; i++) {
-        parseDateComment(movie.comments[i]);
-      }
+      formatTimestamp(movie);
 
       return movie;
     });
@@ -217,10 +209,7 @@ export function addComment(movie, author, comment) {
 
   return myFetch(url, opts)
     .then(movie => {
-      parseDateMovie(movie);
-      for (let i = 0; i < movie.comments.length; i++) {
-        parseDateComment(movie.comments[i]);
-      }
+      formatTimestamp(movie);
 
       return movie;
     });
@@ -250,10 +239,8 @@ export function updateComment(movie, comment, newComment) {
 
   return myFetch(url, opts)
     .then(movie => {
-      parseDateMovie(movie);
-      for (let i = 0; i < movie.comments.length; i++) {
-        parseDateComment(movie.comments[i]);
-      }
+      formatTimestamp(movie);
+
       return movie;
     });
 }

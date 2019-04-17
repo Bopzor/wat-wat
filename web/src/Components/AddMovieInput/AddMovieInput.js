@@ -10,7 +10,7 @@ const getSuggestionValue = suggestion => suggestion.title;
 
 const renderSuggestion = suggestion => (
   <div>
-    {suggestion.title}
+    { suggestion.title }
   </div>
 );
 
@@ -20,7 +20,12 @@ const renderSuggestionsContainer = (highlighted_poster, { containerProps, childr
       <div className="suggestions-list">{children}</div>
       <div className="highlighted-poster">
         <div className="highlighted-image-poster">
-          {highlighted_poster && <img src={highlighted_poster} alt="movie poster"/>}
+          { highlighted_poster &&
+            <img
+              src={highlighted_poster === "N/A" ? "default_poster.jpg" : highlighted_poster}
+              alt="movie poster"
+            />
+          }
         </div>
       </div>
     </div>

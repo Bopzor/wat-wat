@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MovieDetailsBlockInfos from '../MovieDetailsBlockInfos/MovieDetailsBlockInfos.js';
+import MovieInfos from '../MovieInfos/MovieInfos.js';
 import CommentsZone from '../CommentsZone/CommentsZone.js';
 import { LinkIcon } from '../SimpleIcons/SimpleIcons.js';
 import './MovieDetails.css';
@@ -54,6 +54,26 @@ class MovieDetails extends Component {
       .then(() => this.setState({ displayMagnets: true }));
   }
 
+  createMagnets(magnets) {
+    if (magnets.length === 0) {
+      return <div className="no-magnet">No link for this movie</div>;
+    }
+
+    return magnets.map(magnet => (
+      <div key={magnet.hash} className="magnet" >
+        <a href={magnet.link}>
+          <span className="magnet-link-wrapper">
+            <LinkIcon className="magnet-link-icon"/>
+            <div className="magnet-infos-wrapper">
+              <div className="magnet-quality">{magnet.quality}</div>
+              <div className="magnet-size">{magnet.size}</div>
+            </div>
+          </span>
+        </a>
+      </div>
+    ));
+  }
+
   createMovieDetails(movie, magnets) {
     let magnetsLink = null;
     let magnetsLinkButton = (
@@ -73,14 +93,10 @@ class MovieDetails extends Component {
     return (
       <div className="movie-details">
         <div className="wrapper-details">
-          <MovieDetailsBlockInfos
+          <MovieInfos
             movie={movie}
             setSeenOnClick={() => this.props.setSeen(movie)}
           />
-
-          <div className="movie-details-plot">
-            <span>{movie.plot}</span>
-          </div>
         </div>
 
         <div className="magnet-wrapper">
@@ -97,26 +113,6 @@ class MovieDetails extends Component {
 
       </div>
     );
-  }
-
-  createMagnets(magnets) {
-    if (magnets.length === 0) {
-      return <div className="no-magnet">No link for this movie</div>;
-    }
-
-    return magnets.map(magnet => (
-      <div key={magnet.hash} className="magnet" >
-        <a href={magnet.link}>
-          <span className="magnet-link-wrapper">
-            <LinkIcon className="magnet-link-icon"/>
-            <div className="magnet-infos-wrapper">
-              <div className="magnet-quality">{magnet.quality}</div>
-              <div className="magnet-size">{magnet.size}</div>
-            </div>
-          </span>
-        </a>
-      </div>
-    ));
   }
 
   render() {
