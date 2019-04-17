@@ -2,9 +2,6 @@ const express = require('express');
 
 const router = express.Router();
 
-const bodyParser = require('body-parser');
-router.use(bodyParser.json());
-
 const { Sequelize, movie: Movie, sequelize, comment: Comment } = require('../models');
 const Op = Sequelize.Op;
 
