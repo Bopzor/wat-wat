@@ -6,7 +6,6 @@
 
 .wrapper-details {
 	max-height: 60%;
-	overflow: auto;
 }
 
 .magnet-get-button {
@@ -71,6 +70,7 @@
 	.wrapper-details {
 		flex: 1;
 		max-height: 100%;
+		overflow: auto;
 	}
 
 	.magnet-wrapper {

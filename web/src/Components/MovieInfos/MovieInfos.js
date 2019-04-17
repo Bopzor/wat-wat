@@ -79,13 +79,17 @@ const MovieInfos = (props) => {
               <span className="name-info">Actors: </span>
               { actors }
             </div>
+
+            <div>
+              <span className="name-info">Plot: </span>
+              <div className="movie-plot">{ plot }</div>
+            </div>
           </div>
 
         </div>
 
       </div>
 
-      <div className="movie-plot">{ plot }</div>
 
 
     </div>
