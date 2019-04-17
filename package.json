@@ -6,29 +6,25 @@
   "scripts": {
     "start": "NODE_ENV=development nodemon main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd web && yarn build",
-    "postinstall": "cd web && yarn",
-    "docker:build": "docker build --build-arg REACT_APP_API_URL --build-arg REACT_APP_OMDB_API_KEY -t wat-wat .",
+    "docker:build": "docker build -t wat-wat .",
     "docker:run": "docker run -dt --name wat-wat-container -v ${PWD}/db:/opt/app/db -u $(id -u):$(id -g) -e PORT=8080 -p 4444:8080 wat-wat",
     "prod": "sequelize db:migrate && node main.js",
     "sequelize": "sequelize"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bopzor/movies-list.git"
+    "url": "git+https://github.com/bopzor/wat-wat.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bopzor/movies-list/issues"
+    "url": "https://github.com/bopzor/wat-wat/issues"
   },
-  "homepage": "https://github.com/bopzor/movies-list#readme",
+  "homepage": "https://github.com/bopzor/wat-wat#readme",
   "dependencies": {
-    "@material-ui/core": "^1.1.0",
     "bluebird": "^3.5.1",
     "cors": "^2.8.4",
     "express": "^4.16.2",
-    "react-scroll-into-view-if-needed": "^2.1.1",
     "sequelize": "^4.37.2",
     "sequelize-cli": "^4.0.0",
     "sqlite3": "^4.0.2"
