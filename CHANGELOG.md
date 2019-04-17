@@ -4,6 +4,17 @@ To keep a trace of changes.
 
 ## [Unrealesed]
 
+## [2.3.0] - 2019-04-17
+### Added
++ API documentation with Swagger
+
+### Fixed
++ Fix search result
+
+### Changed
++ New version of the API
++ Change how movie details are displayed
+
 ## [2.2.0] - 2018-11-21
 ### Added
 + Possible to add a movie title if the movie is not on OMDB
