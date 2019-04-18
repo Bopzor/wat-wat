@@ -97,11 +97,11 @@ class MovieDetails extends Component {
             movie={movie}
             setSeenOnClick={() => this.props.setSeen(movie)}
           />
-        </div>
 
-        <div className="magnet-wrapper">
-          {magnetsLinkButton}
-          {magnetsLink}
+          <div className="magnet-wrapper">
+            {magnetsLinkButton}
+            {magnetsLink}
+          </div>
         </div>
 
         <CommentsZone
