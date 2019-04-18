@@ -4,6 +4,14 @@ To keep a trace of changes.
 
 ## [Unrealesed]
 
+## [2.3.1] - 2019-04-18
+### Fixed
++ Fix mobile movie details display
++ API is retrospective (base url start with `/api`)
+
+### Changed
++ Remove front from Docker
+
 ## [2.3.0] - 2019-04-17
 ### Added
 + API documentation with Swagger

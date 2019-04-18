@@ -2,10 +2,12 @@
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	flex: 1;
 }
 
 .wrapper-details {
 	max-height: 60%;
+	margin-left: 15px;
 }
 
 .magnet-get-button {
