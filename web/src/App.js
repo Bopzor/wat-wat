@@ -7,7 +7,6 @@ import MovieDetails from './Components/MovieDetails/MovieDetails.js';
 import AddMovieInput from './Components/AddMovieInput/AddMovieInput.js';
 import SnackBar from './Components/SnackBar/SnackBar.js';
 import * as actions from './actionsToApis';
-import './reset.css';
 import './App.css';
 
 class App extends Component {
