@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'Bangers';
+  src: url('../fonts/Bangers/Bangers-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: auto;
+}
+
+@font-face {
+  font-family: 'Cabin';
+  src: url('../fonts/Cabin/Cabin-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: auto;
+}
+
+@font-face {
+  font-family: 'Cabin';
+  src: url('../fonts/Cabin/Cabin-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: auto;
+}
