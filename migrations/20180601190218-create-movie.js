@@ -23,7 +23,7 @@ module.exports = {
       },
       runtime: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       director: {
         allowNull: false,
