@@ -21,7 +21,7 @@ class App extends Component {
     magnets: [],
     open: false,
     message: '',
-    active: '',
+    active: null,
     title: null,
   };
 
@@ -48,7 +48,7 @@ class App extends Component {
       open: false,
       message: '',
       title: null,
-      active: '',
+      active: null,
     });
   }
 

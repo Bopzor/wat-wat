@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   	title: DataTypes.STRING,
   	plot: DataTypes.STRING,
   	released: DataTypes.STRING,
-  	runtime: DataTypes.INTEGER,
+  	runtime: DataTypes.STRING,
   	director: DataTypes.STRING,
   	writer: DataTypes.STRING,
   	actors: DataTypes.STRING,
